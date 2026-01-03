@@ -1,0 +1,102 @@
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx, epsfig}
+\usepackage{amsmath,mathrsfs,amsfonts,amssymb}
+\usepackage{floatflt}
+\usepackage{epic,ecltree}
+\usepackage{mathtext}
+\usepackage{fancybox}
+\usepackage{fancyhdr}
+\usepackage{multirow}
+\usepackage{enumerate}
+\usepackage{epstopdf}
+\usepackage{multicol}
+\usepackage{algorithm}
+\usepackage[noend]{algorithmic}
+\usepackage{tikz}
+\usepackage{blindtext}
+\usepackage{multido}
+\usepackage{booktabs}
+\usetheme{default}%{Singapore}%{Warsaw}%{Warsaw}%{Darmstadt}
+\usecolortheme{default}
+
+\setbeamerfont{title}{size=\Huge}
+\setbeamertemplate{footline}[frame number]{}
+
+\setbeamertemplate{section in toc}[sections numbered]
+
+\makeatletter
+\newcommand\HUGE{\@setfontsize\Huge{35}{40}}
+\makeatother    
+
+\setbeamerfont{title}{size=\HUGE}
+\beamertemplatenavigationsymbolsempty
+
+\usetikzlibrary{arrows,shapes,positioning,shadows,trees}
+
+\newcommand\myfootnote[1]{%
+  \vspace{-0.5cm}%
+  \tikz[remember picture,overlay]
+  \draw (current page.south west) +(1in + \oddsidemargin,0.5em)
+  node[anchor=south west,inner sep=0pt]{\parbox{\textwidth}{%
+      \rlap{\rule{10em}{0.4pt}}\raggedright\scriptsize \textit{#1}}};}
+
+\newcommand\myfootnotewithlink[2]{%
+  \vspace{-0.5cm}%
+  \tikz[remember picture,overlay]
+  \draw (current page.south west) +(1in + \oddsidemargin,0.5em)
+  node[anchor=south west,inner sep=0pt]{\parbox{\textwidth}{%
+      \rlap{\rule{10em}{0.4pt}}\raggedright\scriptsize\href{#1}{\textit{#2}}}};}
+
+\AtBeginSection[]
+      {
+      	\begin{frame}{Outline}
+      		\tableofcontents[currentsection]
+      	\end{frame}
+      }
+      \AtBeginSubsection[]{
+      	\begin{frame}{Outline}
+      		\tableofcontents[currentsection,currentsubsection]
+      	\end{frame}
+}
+
+\newcounter{noscounter} % Используется для nextonslide команды (обнуляется только на новом слайде)
+\newcounter{pcounter} % Используется для pause команды (обнуляется после использования eqpause)
+\newcounter{diffcounter} % Считает количество pause после формулы
+
+\newcommand{\nextonslide}[1]{%
+  \stepcounter{noscounter}% Прибавляем счетчик nextonslide
+  \stepcounter{pcounter}% Прибавляем счетчик pause
+  \stepcounter{diffcounter}% Прибавляем счетчик diffcounter
+  \onslide<\value{noscounter}->{#1}% Отображаем аргумент в скобках на слайде с номером noscounter
+}
+\newcommand{\resetonslide}{%
+    \setcounter{noscounter}{1}% Сбрасываем счетчик nextonslide
+    \setcounter{pcounter}{1}% Сбрасываем счетчик pause
+    \setcounter{diffcounter}{0}% Сбрасываем счетчик diffcounter
+}
+
+\newcommand{\eqpause}{%
+  \multido{\i=1+1}{\value{pcounter}}{\pause}% Повторяем pcounter раз команду pause
+  \stepcounter{noscounter}% Прибавляем счетчик nextonslide
+  \setcounter{pcounter}{1}% Сбрасываем счетчик pause
+}
+
+\newcommand{\eqpausediff}{% Вспомогательная команда, запускается автоматически после формул
+  \multido{\i=1+1}{\value{diffcounter}}{\pause}% Повторяем diffcounter раз команду pause
+  \addtocounter{pcounter}{-\value{diffcounter}}% Вычитаем из pcounter количество сделанных pause
+  \setcounter{diffcounter}{0}% Сбрасываем счетчик diffcounter
+}
+
+\newcommand\AtEndBoth[2]{% Применяем команду к multline и multline*
+  \AtEndEnvironment{#1}{#2}%
+  \AtEndEnvironment{#1*}{#2}%
+}
+
+\AtEndBoth{align}{\eqpausediff}
+\AtEndBoth{equation}{\eqpausediff}
+\AtEndBoth{multline}{\eqpausediff}
+
+\addtobeamertemplate{frametitle}{\resetonslide}{}% На каждом слайде сбрасываем счетчики
+
+\input{../utils/newcommands}
+\input{../utils/title}
