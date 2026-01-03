@@ -1,20 +1,25 @@
-# Deep Generative Models course, MIPT+YSDA, 2025
+# Deep Generative Models course, AIMasters, 2026
 
 ## Description
-The course is devoted to modern generative models (mostly in the application to computer vision).
+This course provides a deep dive into the theoretical foundations and practical applications of Deep Generative Models (DGM). While the primary focus is on Computer Vision, the principles covered are universal across modern AI.
 
-We will study the following types of generative models:
-- autoregressive models,
-- latent variable models,
-- adversarial models,
-- diffusion and score models,
-- flow matching.
+We bridge the gap between rigorous mathematical theory and state-of-the-art implementation. The curriculum is organized into five major pillars:
 
-Special attention is paid to the properties of various classes of generative models, their interrelationships, theoretical prerequisites and methods of quality assessment.
+- Likelihood-based Models: Autoregressive models and Normalizing Flows.
 
-The aim of the course is to introduce the student to widely used advanced methods of deep learning.
+- Latent Variable Models: Variational Autoencoders (VAE) and their hierarchical/discrete extensions.
 
-The course is accompanied by practical tasks that allow you to understand the principles of the considered models.
+- Adversarial Learning: Generative Adversarial Networks (GAN) and Wasserstein geometry.
+
+- Diffusion & Score-based Models: From DDPM to continuous-time SDEs and ODEs.
+
+- Flow Matching: The latest frontier in generative modeling and Optimal Transport.
+
+Special attention is given to the key properties of different generative model families, the connections between them, their theoretical foundations, and standard evaluation protocols.
+
+The goal of the course is to provide a solid introduction to state-of-the-art deep generative modeling methods used in practice and research.
+
+The course is supported by seminars and hands-on assignments that help build intuition through implementation and experiments.
 
 ## Contact the author to join the course or for any other questions :)
 
@@ -25,6 +30,7 @@ The course is accompanied by practical tasks that allow you to understand the pr
 
 | # | Date | Description | Slides |
 |---|---|---|---|
+<!---
 | 1 | September, 16 | <b>Lecture 1:</b> Logistics. Generative models overview and motivation. Problem statement. Divergence minimization framework. Autoregressive models (ImageGPT). | [slides](lectures/lecture1/Lecture1.pdf) |
 |  |  | <b>Seminar 1:</b> Introduction. Maximum likelihood estimation. Histograms. Bayes theorem. PixelCNN. VAR. | [slides](seminars/seminar1/) <a href="https://colab.research.google.com/github/r-isachenko/2024-DGM-MIPT-YSDA-course/blob/main/seminars/seminar1/PixelCNN.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> |
 | 2 | September, 23 | <b>Lecture 2:</b> Normalizing Flow (NF). Linear NF. Gaussian autoregressive NF. Coupling layer (RealNVP). Latent Variable Models (LVM). | [slides](lectures/lecture2/Lecture2.pdf) |
@@ -53,7 +59,6 @@ The course is accompanied by practical tasks that allow you to understand the pr
 |  |  | <b>Seminar 13:</b> Latent Diffusion Models. Code. | [slides](seminars/seminar13/seminar13_SD.ipynb) <a href="https://colab.research.google.com/github/r-isachenko/2024-DGM-MIPT-YSDA-course/blob/main/seminars/seminar13/seminar13_SD.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> |
 | 14 | December, 23 | <b>Lecture 14:</b> Discrete diffusion for sequence. Absorbing diffusion. Continuous-time masked diffusion language model. Course overview. | [slides](lectures/lecture14/Lecture14.pdf) |
 |  |  | <b>Seminar 14:</b>  The Final Recap| [slides](seminars/seminar14/seminar14.ipynb) |
-<!---
 -->
 
 ## Homeworks
@@ -61,13 +66,15 @@ The course is accompanied by practical tasks that allow you to understand the pr
 
 | Homework | Date | Deadline | Description | Link |
 |---------|------|-------------|--------|-------|
+
+<!---
 | 1 | September, 24 | October, 8 | <ol><li>Theory (f-divergence, curse of dimensionality, NF expressivity).</li><li>PixelCNN (autocomplete, receptive field) on MNIST.</li><li>ImageGPT on MNIST.</li></ol> | [![Open In Github](https://img.shields.io/static/v1.svg?logo=github&label=Repo&message=Open%20in%20Github&color=lightgrey)](homeworks/hw1.ipynb)<br>[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/r-isachenko/2025-DGM-MIPT-YSDA-course/blob/main/homeworks/hw1.ipynb) |
 | 2 | October, 9 | October, 23 | <ol><li>Theory (IWAE theory, Gaussian VAE, Probabilistic PCA).</li><li>RealNVP on MNIST.</li><li>ViTVAE on CIFAR10 data.</li></ol> | [![Open In Github](https://img.shields.io/static/v1.svg?logo=github&label=Repo&message=Open%20in%20Github&color=lightgrey)](homeworks/hw2.ipynb)<br>[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/r-isachenko/2025-DGM-MIPT-YSDA-course/blob/main/homeworks/hw2.ipynb) |
 | 3 | October, 24 | November, 07 | <ol><li>Theory (ELBO surgery, Conjugate functions, FID for Normal distributions).</li><li>VQ-VAE on MNIST.</li><li>Wasserstein GANs for CIFAR 10.</li></ol> | [![Open In Github](https://img.shields.io/static/v1.svg?logo=github&label=Repo&message=Open%20in%20Github&color=lightgrey)](homeworks/hw3.ipynb)<br>[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/r-isachenko/2025-DGM-MIPT-YSDA-course/blob/main/homeworks/hw3.ipynb) |
 | 4 | November, 08 | November, 22 | <ol><li>Theory (Implicit score matching, Conditioned reverse distribution).</li><li>Denoising score matching on 2D data.</li><li>NCSN on MNIST.</li></ol> | [![Open In Github](https://img.shields.io/static/v1.svg?logo=github&label=Repo&message=Open%20in%20Github&color=lightgrey)](homeworks/hw4.ipynb)<br>[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/r-isachenko/2025-DGM-MIPT-YSDA-course/blob/main/homeworks/hw4.ipynb) |
 | 5 | November, 23 | December, 7 | <ol><li>Theory (Gaussian diffusion, Strided sampling, Tweedie's formula).</li><li>DDPM on 2D data.</li><li>DDPM on MNIST with guidance.</li></ol> | [![Open In Github](https://img.shields.io/static/v1.svg?logo=github&label=Repo&message=Open%20in%20Github&color=lightgrey)](homeworks/hw5.ipynb)<br>[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/r-isachenko/2025-DGM-MIPT-YSDA-course/blob/main/homeworks/hw5.ipynb) |
 | 6 | December, 8 | December, 22 | <ol><li>Theory (KFP theorem, DDPM as SDE discretization, Covariance of forward SDE).</li><li>Flow matching on MNIST.</li><li>Rectified flow.</li><li>Flow matching with OT coupling.</li></ol> |  [![Open In Github](https://img.shields.io/static/v1.svg?logo=github&label=Repo&message=Open%20in%20Github&color=lightgrey)](homeworks/hw6.ipynb)<br>[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/r-isachenko/2025-DGM-MIPT-YSDA-course/blob/main/homeworks/hw6.ipynb) |
-
+-->
 
 ## Game rules
 - 6 homeworks each of 15 points = **90 points**
@@ -76,11 +83,15 @@ The course is accompanied by practical tasks that allow you to understand the pr
 ### Final grade: `min(floor(#points/10), 10)`
 
 ## Prerequisities
-- probability theory + statistics
-- machine learning + basics of deep learning
-- python + pytorch
+- **Math**: probability theory, basic statistics, and multivariate calculus
+- **ML**: fundamentals of machine learning and deep learning
+- **Programming**: confident Python; ability to read and modify research-style code.
+- **Tools**: PyTorch / basic GPU workflow is a plus.
+- **Optional**: information theory basics (entropy, KL divergence),
+- **Optional**: familiarity with numerical ODE/SDE concepts at a “black-box usage” level.
 
 ## Previous episodes
+- [2025, autumn, MIPT+YSDA](https://github.com/r-isachenko/2025-DGM-MIPT-YSDA-course)
 - [2025, spring, AIMasters](https://github.com/r-isachenko/2025-DGM-AIMasters-course)
 - [2024, autumn, MIPT+YSDA](https://github.com/r-isachenko/2024-DGM-MIPT-YSDA-course)
 - [2024, spring, AIMasters](https://github.com/r-isachenko/2024-DGM-AIMasters-course)
