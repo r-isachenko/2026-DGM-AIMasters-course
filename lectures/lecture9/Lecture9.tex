@@ -809,19 +809,19 @@
 	\begin{block}{Numerical Solution of ODEs}
 		\vspace{-0.5cm}
 		\[
-			\bpsi_t(\bx_0) = \int^{t_1}_{t_0} \bff_{\btheta}(\bx(t), t) d t  + \bx_0 \nextonslide{\approx {\color{teal}\texttt{ODESolve}_f(\bx_0, \btheta, t_0, t_1)}.}
+			\bpsi_t(\bx_0) = \int^{t_1}_{t_0} \bff_{\btheta}(\bx(t), t) d t  + \bx_0 \nextonslide{\approx {\color{teal}\ODESolve_f(\bx_0, \btheta, t_0, t_1)}.}
 		\]
 		\eqpause
-		Here, we require the numerical routine $\texttt{ODESolve}_f(\bx_0, \btheta, t_0, t_1)$.
+		Here, we require the numerical routine $\ODESolve_f(\bx_0, \btheta, t_0, t_1)$.
 	\end{block}
 \end{frame}
 %=======
 \begin{frame}{Numerical Solution of ODEs}
 	\myfootnotewithlink{https://en.wikipedia.org/wiki/Heun's\_method}{Image credit: https://en.wikipedia.org/wiki/Heun's\_method}   
 	\[
-		\bpsi_t(\bx_0) = \int^{t_1}_{t_0} \bff_{\btheta}(\bx(t), t) d t  + \bx_0 \approx {\color{teal}\texttt{ODESolve}_f(\bx_0, \btheta, t_0, t_1)}.
+		\bpsi_t(\bx_0) = \int^{t_1}_{t_0} \bff_{\btheta}(\bx(t), t) d t  + \bx_0 \approx {\color{teal}\ODESolve_f(\bx_0, \btheta, t_0, t_1)}.
 	\]
-	$\texttt{ODESolve}_f(\bx_0, \btheta, t_0, t_1)$ consists of sequence of iterative update steps.
+	$\ODESolve_f(\bx_0, \btheta, t_0, t_1)$ consists of sequence of iterative update steps.
 	\eqpause
 	\begin{block}{Euler Update Step}
 		\begin{minipage}[t]{0.5\columnwidth}
@@ -863,7 +863,7 @@
 		\]
 		\vspace{-0.3cm}
 	\end{block}
-	\begin{block}{Euler \texttt{ODESolve}}
+	\begin{block}{Euler \ODESolve}
 		\vspace{-0.3cm}
 		\[
 		    \bx(t + h) = \bx(t) + h \cdot \bff_{\btheta}(\bx(t), t)

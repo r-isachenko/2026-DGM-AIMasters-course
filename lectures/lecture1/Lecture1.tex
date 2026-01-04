@@ -404,8 +404,8 @@
 			\begin{itemize}
 				\item $d = 2$
 				\item $x_j \in \{0, 255\}$
-				\item $\bh_j = \mathrm{MLP}_{\btheta}(x_{j - 1}, x_{j - 2})$
-				\item $\bpi_j = \mathrm{softmax}(\bh_j)$
+				\item $\bh_j = \MLP_{\btheta}(x_{j - 1}, x_{j - 2})$
+				\item $\bpi_j = \softmax(\bh_j)$
 				\item $\pt(x_j | x_{j - 1}, x_{j - 2}) = \Cat(\bpi_j)$
 			\end{itemize}
 			}

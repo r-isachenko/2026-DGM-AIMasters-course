@@ -504,8 +504,8 @@
 			\begin{itemize}
 				\item $d = 2$
 				\item $x_j \in \{0, 255\}$
-				\item $\bh_j = \mathrm{MLP}_{\btheta}(x_{j - 1}, x_{j - 2})$
-				\item $\bpi_j = \mathrm{softmax}(\bh_j)$
+				\item $\bh_j = \MLP_{\btheta}(x_{j - 1}, x_{j - 2})$
+				\item $\bpi_j = \softmax(\bh_j)$
 				\item $\pt(x_j | x_{j - 1}, x_{j - 2}) = \Cat(\bpi_j)$
 			\end{itemize}
 			}
@@ -1274,7 +1274,7 @@
     \eqpause
 	\begin{itemize}
 		\item Here, $q(\bz)$ is any distribution such that $\int q(\bz) d\bz = 1$.
-		\item {\color{gray} We assume that $\text{supp}(q(\bz)) = \text{supp}(\pt(\bz | \bx)) = \bbR^{d}$}.
+		\item {\color{gray} We assume that $\supp(q(\bz)) = \supp(\pt(\bz | \bx)) = \bbR^{d}$}.
 	\end{itemize}
     \eqpause
 	\begin{block}{Variational Evidence Lower Bound (ELBO)}
@@ -1537,7 +1537,7 @@
 			q_{\bphi}(\bz| \bx) = \cN (\bmu_{\bphi}(\bx), \bsigma^2_{\bphi}(\bx)).
 		\]
 		Here, $\bmu_{\bphi}(\cdot)$ and $\bsigma_{\bphi}(\cdot)$ are parameterized functions (outputs of a neural network). \\
-		Thus, we can write $q_{\bphi}(\bz| \bx) = \text{NN}_{e, \bphi}(\bx)$, the \textbf{encoder}.
+		Thus, we can write $q_{\bphi}(\bz| \bx) = \NN_{e, \bphi}(\bx)$, the \textbf{encoder}.
 	\end{block}
 \end{frame}
 %=======
@@ -1557,7 +1557,7 @@
 		\eqpause
 		\vspace{-0.5cm} \\
 		The generative distribution $\pt(\bx | \bz)$ can be implemented as a neural network. \\
-		We may write $\pt(\bx | \bz) = \text{NN}_{d, \btheta}(\bz)$, called the \textbf{decoder}.
+		We may write $\pt(\bx | \bz) = \NN_{d, \btheta}(\bz)$, called the \textbf{decoder}.
 	\end{block}
 	\eqpause
 	\begin{block}{KL Term}
@@ -1675,8 +1675,8 @@
 \begin{frame}{Variational Autoencoder}
 	\myfootnotewithlink{https://arxiv.org/abs/2403.18103}{Chan S., Tutorial on Diffusion Models for Imaging and Vision, 2024}
 	\begin{itemize}
-		\item The encoder $q_{\bphi}(\bz| \bx) = \text{NN}_{e, \bphi}(\bx)$ outputs $\bmu_{\bphi}(\bx)$ and $\bsigma_{\bphi}(\bx)$.
-		\item The decoder $\pt(\bx | \bz) = \text{NN}_{d, \btheta}(\bz)$ outputs parameters of the observed data distribution.
+		\item The encoder $q_{\bphi}(\bz| \bx) = \NN_{e, \bphi}(\bx)$ outputs $\bmu_{\bphi}(\bx)$ and $\bsigma_{\bphi}(\bx)$.
+		\item The decoder $\pt(\bx | \bz) = \NN_{d, \btheta}(\bz)$ outputs parameters of the observed data distribution.
 	\end{itemize}
 	\begin{figure}[h]
 		\centering
@@ -1788,7 +1788,7 @@
 			\bpi = (\pi_1, \dots, \pi_K), \quad \pi_k = P(c = k), \quad \sum_{k=1}^K \pi_k = 1.
 			\]
 			\vspace{-0.6cm}
-			\item Suppose the VAE adopts a discrete latent variable $c$ with prior $p(c) = \text{Uniform}\{1, \dots, K\}$.
+			\item Suppose the VAE adopts a discrete latent variable $c$ with prior $p(c) = \Uniform\{1, \dots, K\}$.
 		\end{itemize}
 	\end{block}
 	\eqpause
@@ -1864,7 +1864,7 @@
 \begin{frame}{Vector Quantized VAE (VQ-VAE)}
 	\myfootnotewithlink{https://arxiv.org/abs/1711.00937}{Oord A., Vinyals O., Kavukcuoglu K. Neural Discrete Representation Learning, 2017} 
 	\begin{itemize}
-		\item The encoder outputs a continuous vector $\bz_e = \text{NN}_{e, \bphi}(\bx) \in \bbR^{L}$.
+		\item The encoder outputs a continuous vector $\bz_e = \NN_{e, \bphi}(\bx) \in \bbR^{L}$.
 		\item Quantization deterministically maps $\bz_e$ to its quantized codebook vector $\bz_q$.
 		\item The decoder is conditioned on codebook entries $\be_c$, i.e., via $\pt(\bx | \be_c)$ (instead of $\pt(\bx| c)$).
 	\end{itemize}
@@ -1949,7 +1949,7 @@
 	Extension to the spatial domain: $\bc \in \{1, \dots, K\}^{W \times H}$
 	\vspace{-0.3cm}
 	\[
-		q_{\bphi}(\bc | \bx) = \prod_{i=1}^W \prod_{j=1}^H q(c_{ij} | \bx, \bphi); \quad p(\bc) = \prod_{i=1}^W \prod_{j=1}^H \text{Uniform}\{1, \dots, K\}.
+		q_{\bphi}(\bc | \bx) = \prod_{i=1}^W \prod_{j=1}^H q(c_{ij} | \bx, \bphi); \quad p(\bc) = \prod_{i=1}^W \prod_{j=1}^H \Uniform\{1, \dots, K\}.
 	\]
 	\vspace{-0.6cm}
 	\begin{block}{Sample Diversity}
@@ -1967,7 +1967,7 @@
 			\item Vector-quantize (per spatial location if applicable):
 			\vspace{-0.3cm}
 			\[
-				k^* = \argmin_k \|\bz_e - \be_k\|_2, \quad \bz_q = \be_{k^*}, \quad \bz_e = \text{NN}_{e,\bphi}(\bx).
+				k^* = \argmin_k \|\bz_e - \be_k\|_2, \quad \bz_q = \be_{k^*}, \quad \bz_e = \NN_{e,\bphi}(\bx).
 			\]
 			\vspace{-0.5cm}
 			\item Compute ELBO objective:
@@ -1989,7 +1989,7 @@
 	\vspace{-0.3cm}
 	\begin{block}{Sampling}
 		\begin{itemize}
-			\item Sample $c \sim p(c) = \text{Uniform}\{1, \dots, K\}$.
+			\item Sample $c \sim p(c) = \Uniform\{1, \dots, K\}$.
 			\item Generate $\bx \sim \pt(\bx | \be_c)$.
 		\end{itemize}
 	\end{block}
@@ -2838,7 +2838,7 @@
 		If $\pi(\bx) = \cN(\bmu_\pi, \bSigma_\pi)$, $p(\bx) = \cN(\bmu_p, \bSigma_p)$, then
 		\vspace{-0.2cm}
 		\[
-			W_2^2(\pi \| p) = \| \bmu_{\pi} - \bmu_{p}\|^2 + \text{tr} \left[ \bSigma_{\pi} + \bSigma_p - 2 \left(\bSigma_{\pi}^{1/2} \bSigma_p \bSigma_{\pi}^{1/2} \right)^{1/2} \right]
+			W_2^2(\pi \| p) = \| \bmu_{\pi} - \bmu_{p}\|^2 + \tr \left[ \bSigma_{\pi} + \bSigma_p - 2 \left(\bSigma_{\pi}^{1/2} \bSigma_p \bSigma_{\pi}^{1/2} \right)^{1/2} \right]
 		\]
 		\vspace{-0.7cm}
 	\end{block}
@@ -2856,7 +2856,7 @@
 	\myfootnotewithlink{https://arxiv.org/abs/2401.09603}{Jayasumana S. et al. Rethinking FID: Towards a Better Evaluation Metric for Image Generation, 2024}
 	\vspace{-0.3cm}
 	\[
-		\FID (\pd, \pt) = \| \bmu_{\text{data}} - \bmu_{\boldsymbol{\theta}}\|^2 + \text{tr} \left[ \bSigma_{\text{data}} + \bSigma_{\boldsymbol{\theta}} - 2 \left(\bSigma_{\text{data}}^{1/2} \bSigma_{\boldsymbol{\theta}} \bSigma_{\text{data}}^{1/2} \right)^{1/2} \right]
+		\FID (\pd, \pt) = \| \bmu_{\text{data}} - \bmu_{\boldsymbol{\theta}}\|^2 + \tr \left[ \bSigma_{\text{data}} + \bSigma_{\boldsymbol{\theta}} - 2 \left(\bSigma_{\text{data}}^{1/2} \bSigma_{\boldsymbol{\theta}} \bSigma_{\text{data}}^{1/2} \right)^{1/2} \right]
 	\]
 	\vspace{-0.5cm}
 	\begin{itemize}
@@ -2876,7 +2876,7 @@
 	\myfootnotewithlink{https://arxiv.org/abs/2401.09603}{Jayasumana S. et al. Rethinking FID: Towards a Better Evaluation Metric for Image Generation, 2024}
 	\vspace{-0.4cm}
 	\[
-		\FID (\pd, \pt) = \| \bmu_{\text{data}} - \bmu_{\boldsymbol{\theta}}\|^2 + \text{tr} \left[ \bSigma_{\text{data}} + \bSigma_{\boldsymbol{\theta}} - 2 \left(\bSigma_{\text{data}}^{1/2} \bSigma_{\boldsymbol{\theta}} \bSigma_{\text{data}}^{1/2} \right)^{1/2} \right]
+		\FID (\pd, \pt) = \| \bmu_{\text{data}} - \bmu_{\boldsymbol{\theta}}\|^2 + \tr \left[ \bSigma_{\text{data}} + \bSigma_{\boldsymbol{\theta}} - 2 \left(\bSigma_{\text{data}}^{1/2} \bSigma_{\boldsymbol{\theta}} \bSigma_{\text{data}}^{1/2} \right)^{1/2} \right]
 	\]
 	\eqpause
 	\vspace{-0.3cm}
@@ -2928,7 +2928,7 @@
 	\[
 		\bbI(\bx, \cS) =
 		\begin{cases}
-			1, & \text{if } \exists\ \bx' \in \cS: \| \bx - \bx'\|_2 \leq \| \bx' - \text{NN}_k(\bx', \cS)\|_2; \\
+			1, & \text{if } \exists\ \bx' \in \cS: \| \bx - \bx'\|_2 \leq \| \bx' - \NN_k(\bx', \cS)\|_2; \\
 			0, & \text{otherwise.}
 		\end{cases}
 	\]
@@ -4932,19 +4932,19 @@
 	\begin{block}{Numerical Solution of ODEs}
 		\vspace{-0.5cm}
 		\[
-			\bpsi_t(\bx_0) = \int^{t_1}_{t_0} \bff_{\btheta}(\bx(t), t) d t  + \bx_0 \nextonslide{\approx {\color{teal}\texttt{ODESolve}_f(\bx_0, \btheta, t_0, t_1)}.}
+			\bpsi_t(\bx_0) = \int^{t_1}_{t_0} \bff_{\btheta}(\bx(t), t) d t  + \bx_0 \nextonslide{\approx {\color{teal}\ODESolve_f(\bx_0, \btheta, t_0, t_1)}.}
 		\]
 		\eqpause
-		Here, we require the numerical routine $\texttt{ODESolve}_f(\bx_0, \btheta, t_0, t_1)$.
+		Here, we require the numerical routine $\ODESolve_f(\bx_0, \btheta, t_0, t_1)$.
 	\end{block}
 \end{frame}
 %=======
 \begin{frame}{Numerical Solution of ODEs}
 	\myfootnotewithlink{https://en.wikipedia.org/wiki/Heun's\_method}{Image credit: https://en.wikipedia.org/wiki/Heun's\_method}   
 	\[
-		\bpsi_t(\bx_0) = \int^{t_1}_{t_0} \bff_{\btheta}(\bx(t), t) d t  + \bx_0 \approx {\color{teal}\texttt{ODESolve}_f(\bx_0, \btheta, t_0, t_1)}.
+		\bpsi_t(\bx_0) = \int^{t_1}_{t_0} \bff_{\btheta}(\bx(t), t) d t  + \bx_0 \approx {\color{teal}\ODESolve_f(\bx_0, \btheta, t_0, t_1)}.
 	\]
-	$\texttt{ODESolve}_f(\bx_0, \btheta, t_0, t_1)$ consists of sequence of iterative update steps.
+	$\ODESolve_f(\bx_0, \btheta, t_0, t_1)$ consists of sequence of iterative update steps.
 	\eqpause
 	\begin{block}{Euler Update Step}
 		\begin{minipage}[t]{0.5\columnwidth}
@@ -4986,7 +4986,7 @@
 		\]
 		\vspace{-0.3cm}
 	\end{block}
-	\begin{block}{Euler \texttt{ODESolve}}
+	\begin{block}{Euler \ODESolve}
 		\vspace{-0.3cm}
 		\[
 		    \bx(t + h) = \bx(t) + h \cdot \bff_{\btheta}(\bx(t), t)
@@ -5173,7 +5173,7 @@
 	\]
 	\vspace{-0.3cm}
 	\eqpause
-	\begin{block}{Discretizing the SDE (Euler Update Step) – \texttt{SDESolve}}
+	\begin{block}{Discretizing the SDE (Euler Update Step) – \SDESolve}
 		\vspace{-0.3cm}
 		\[
 			{\color{violet}\bx(t + dt) = \bx(t) + \bff(\bx(t), t) \cdot dt} + {\color{teal}g(t) \cdot \bepsilon \cdot \sqrt{dt}}
@@ -5708,7 +5708,7 @@
 	\begin{block}{Efficient Solvers}
 		\begin{itemize}
 		\item Converting SDEs to PF-ODEs yields more efficient inference.
-		\item We can apply any \texttt{ODESolve} procedure to reduce the number of inference steps.
+		\item We can apply any \ODESolve procedure to reduce the number of inference steps.
 		\item In practice, this reduces the number of steps from $100$--$1000$ to $20$--$50$.
 		\end{itemize}
 	\end{block}
@@ -5872,7 +5872,7 @@
 \begin{frame}{Score-Based Generative Models Through SDEs}
 	\myfootnotewithlink{https://arxiv.org/abs/2011.13456}{Song Y., et al. Score-Based Generative Modeling through Stochastic Differential Equations, 2020}
 	\begin{block}{Sampling}
-		Solve the reverse SDE using numerical solvers (\texttt{SDESolve}).
+		Solve the reverse SDE using numerical solvers (\SDESolve).
 		\begin{figure}
 			\includegraphics[width=0.8\linewidth]{../lecture11/figs/sbgm}
 		\end{figure}
@@ -5903,7 +5903,7 @@
 	\begin{block}{KFP Theorem (Continuity Equation)}
 		\vspace{-0.5cm}
 		\[
-			\frac{\partial p_t(\bx)}{\partial t} = - \text{div}\left(\bff(\bx, t) p_t(\bx)\right) \Leftrightarrow \frac{d \log p_t(\bx(t))}{d t} = - \text{tr} \left( \frac{\partial \bff(\bx(t), t)}{\partial \bx(t)} \right)
+			\frac{\partial p_t(\bx)}{\partial t} = - \diver\left(\bff(\bx, t) p_t(\bx)\right) \Leftrightarrow \frac{d \log p_t(\bx(t))}{d t} = - \tr \left( \frac{\partial \bff(\bx(t), t)}{\partial \bx(t)} \right)
 		\]
 		\vspace{-0.3cm}
 	\end{block}
@@ -5919,7 +5919,7 @@
 	\begin{block}{KFP Theorem (Continuity Equation)}
 		\vspace{-0.5cm}
 		\[
-			\frac{\partial p_t(\bx)}{\partial t} = - \text{div}\left(\bff(\bx, t) p_t(\bx)\right) \Leftrightarrow \frac{d \log p_t(\bx(t))}{d t} = - \text{tr} \left( \frac{\partial \bff(\bx(t), t)}{\partial \bx(t)} \right)
+			\frac{\partial p_t(\bx)}{\partial t} = - \diver\left(\bff(\bx, t) p_t(\bx)\right) \Leftrightarrow \frac{d \log p_t(\bx(t))}{d t} = - \tr \left( \frac{\partial \bff(\bx(t), t)}{\partial \bx(t)} \right)
 		\]
 		\vspace{-0.3cm}
 	\end{block}
@@ -5975,7 +5975,7 @@
 	\eqpause
 	The conditional probability path $p_t(\bx | \bz)$ satisfies the KFP theorem:
 	\[
-		{\color{violet}\frac{\partial p_t(\bx | \bz)}{\partial t} = - \text{div}\left(\bff(\bx, \bz, t) p_t(\bx | \bz)\right)},
+		{\color{violet}\frac{\partial p_t(\bx | \bz)}{\partial t} = - \diver\left(\bff(\bx, \bz, t) p_t(\bx | \bz)\right)},
 	\]
 	where $\bff(\bx, \bz, t)$ is a \textbf{conditional vector field}:
 	\eqpause
@@ -5989,7 +5989,7 @@
 \begin{frame}{Flow Matching}
     \myfootnotewithlink{https://arxiv.org/abs/2302.00482}{Tong A., et al. Improving and Generalizing Flow-Based Generative Models with Minibatch Optimal Transport, 2023}
 	\[
-		{\color{violet}\frac{\partial p_t(\bx | \bz)}{\partial t} = - \text{div}\left(\bff(\bx, \bz, t) p_t(\bx | \bz)\right)},
+		{\color{violet}\frac{\partial p_t(\bx | \bz)}{\partial t} = - \diver\left(\bff(\bx, \bz, t) p_t(\bx | \bz)\right)},
 	\]
 	\vspace{-0.3cm}
 	\begin{block}{Theorem}
@@ -6006,9 +6006,9 @@
 		\begin{multline*}
 			\frac{\partial p_t(\bx)}{\partial t} = \frac{\partial}{\partial t} \int p_t(\bx | \bz) p(\bz) d \bz 
 			\nextonslide{=  \int \left( {\color{violet} \frac{\partial p_t(\bx | \bz)}{\partial t} } \right) p(\bz) d \bz}
-			\nextonslide{ = \\ = \int \left( {\color{violet} - \text{div}\left(\bff(\bx, \bz, t) p_t(\bx | \bz)\right) } \right) p(\bz) d \bz}
-			\nextonslide{ = \\ = - \text{div} \left({\color{teal}\int \bff(\bx, \bz, t) p_t(\bx | \bz) p(\bz) d \bz }\right)} 
-			\nextonslide{= - \text{div}  \left(\bff(\bx, t) p_t(\bx)\right)}
+			\nextonslide{ = \\ = \int \left( {\color{violet} - \diver\left(\bff(\bx, \bz, t) p_t(\bx | \bz)\right) } \right) p(\bz) d \bz}
+			\nextonslide{ = \\ = - \diver \left({\color{teal}\int \bff(\bx, \bz, t) p_t(\bx | \bz) p(\bz) d \bz }\right)} 
+			\nextonslide{= - \diver  \left(\bff(\bx, t) p_t(\bx)\right)}
 		\end{multline*}
 	\end{block}
 \end{frame}
@@ -6031,7 +6031,7 @@
 	\end{block}
     \eqpause
 	\begin{block}{Theorem}
-		If $\text{supp}(p_t(\bx)) = \bbR^m$, then the optimal value of the FM objective equals the optimal value of the CFM objective.
+		If $\supp(p_t(\bx)) = \bbR^m$, then the optimal value of the FM objective equals the optimal value of the CFM objective.
 	\end{block}
     \eqpause
 	\begin{block}{Proof}
@@ -6151,7 +6151,7 @@
 			\item Sample $\bx_0 \sim \cN(0, \bI)$.
 			\item Solve the ODE to obtain $\bx_1$:
 			\[
-				\bx_1 = \texttt{ODESolve}_f(\bx_0, \btheta, t_0=0, t_1=1).
+				\bx_1 = \ODESolve_f(\bx_0, \btheta, t_0=0, t_1=1).
 			\]
 		\end{enumerate}
 	\end{block}
@@ -6382,7 +6382,7 @@
 			\item Sample $\bx_0 \sim \cN(0, \bI)$.
 			\item Solve the ODE to obtain $\bx_1$:
 			\[
-				\bx_1 = \texttt{ODESolve}_f(\bx_0, \btheta, t_0=0, t_1=1)
+				\bx_1 = \ODESolve_f(\bx_0, \btheta, t_0=0, t_1=1)
 			\]
 		\end{enumerate}
 	\end{block}
@@ -6556,7 +6556,7 @@
 			\item Sample $\bx_0 \sim p_0(\bx)$.
 							\item Solve the ODE to obtain $\bx_1$:
 			\[
-				\bx_1 = \texttt{ODESolve}_f(\bx_0, \btheta, t_0=0, t_1=1)
+				\bx_1 = \ODESolve_f(\bx_0, \btheta, t_0=0, t_1=1)
 			\]
 		\end{enumerate}
 	\end{block}

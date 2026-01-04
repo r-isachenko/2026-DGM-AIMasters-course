@@ -272,7 +272,7 @@
     \eqpause
 	\begin{itemize}
 		\item Here, $q(\bz)$ is any distribution such that $\int q(\bz) d\bz = 1$.
-		\item {\color{gray} We assume that $\text{supp}(q(\bz)) = \text{supp}(\pt(\bz | \bx)) = \bbR^{d}$}.
+		\item {\color{gray} We assume that $\supp(q(\bz)) = \supp(\pt(\bz | \bx)) = \bbR^{d}$}.
 	\end{itemize}
     \eqpause
 	\begin{block}{Variational Evidence Lower Bound (ELBO)}
@@ -535,7 +535,7 @@
 			q_{\bphi}(\bz| \bx) = \cN (\bmu_{\bphi}(\bx), \bsigma^2_{\bphi}(\bx)).
 		\]
 		Here, $\bmu_{\bphi}(\cdot)$ and $\bsigma_{\bphi}(\cdot)$ are parameterized functions (outputs of a neural network). \\
-		Thus, we can write $q_{\bphi}(\bz| \bx) = \text{NN}_{e, \bphi}(\bx)$, the \textbf{encoder}.
+		Thus, we can write $q_{\bphi}(\bz| \bx) = \NN_{e, \bphi}(\bx)$, the \textbf{encoder}.
 	\end{block}
 \end{frame}
 %=======
@@ -555,7 +555,7 @@
 		\eqpause
 		\vspace{-0.5cm} \\
 		The generative distribution $\pt(\bx | \bz)$ can be implemented as a neural network. \\
-		We may write $\pt(\bx | \bz) = \text{NN}_{d, \btheta}(\bz)$, called the \textbf{decoder}.
+		We may write $\pt(\bx | \bz) = \NN_{d, \btheta}(\bz)$, called the \textbf{decoder}.
 	\end{block}
 	\eqpause
 	\begin{block}{KL Term}
@@ -630,8 +630,8 @@
 \begin{frame}{Variational Autoencoder}
 	\myfootnotewithlink{https://arxiv.org/abs/2403.18103}{Chan S., Tutorial on Diffusion Models for Imaging and Vision, 2024}
 	\begin{itemize}
-		\item The encoder $q_{\bphi}(\bz| \bx) = \text{NN}_{e, \bphi}(\bx)$ outputs $\bmu_{\bphi}(\bx)$ and $\bsigma_{\bphi}(\bx)$.
-		\item The decoder $\pt(\bx | \bz) = \text{NN}_{d, \btheta}(\bz)$ outputs parameters of the observed data distribution.
+		\item The encoder $q_{\bphi}(\bz| \bx) = \NN_{e, \bphi}(\bx)$ outputs $\bmu_{\bphi}(\bx)$ and $\bsigma_{\bphi}(\bx)$.
+		\item The decoder $\pt(\bx | \bz) = \NN_{d, \btheta}(\bz)$ outputs parameters of the observed data distribution.
 	\end{itemize}
 	\begin{figure}[h]
 		\centering

@@ -19,7 +19,7 @@
 				\bpi = (\pi_1, \dots, \pi_K), \quad \pi_k = P(c = k), \quad \sum_{k=1}^K \pi_k = 1.
 			\]
 			\vspace{-0.7cm}
-			\item Suppose the VAE employs a discrete latent code $c$, with prior $p(c) = \text{Uniform}\{1, \dots, K\}$.
+			\item Suppose the VAE employs a discrete latent code $c$, with prior $p(c) = \Uniform\{1, \dots, K\}$.
 		\end{itemize}
 	\end{block}
 	\vspace{-0.3cm}
@@ -98,7 +98,7 @@
 	\begin{block}{Optimal Prior}
 		\vspace{-0.7cm}
 		\[
-			\KL(q_{\text{agg}, \bphi}(\bz) \,\|\, p(\bz)) = 0 \ \Leftrightarrow \ p (\bz) = q_{\text{agg}}(\bz) = \frac{1}{n} \sum_{i=1}^n q_{\bphi}(\bz| \bx_i).
+			\KL(q_{\text{agg}, \bphi}(\bz) \,\|\, p(\bz)) = 0 \ \Leftrightarrow \ p (\bz) = \qagg(\bz) = \frac{1}{n} \sum_{i=1}^n q_{\bphi}(\bz| \bx_i).
 		\]
 		\vspace{-0.5cm}\\
 		Thus, the optimal prior distribution $p(\bz)$ is the aggregated variational posterior $q_{\text{agg}, \bphi}(\bz)$.

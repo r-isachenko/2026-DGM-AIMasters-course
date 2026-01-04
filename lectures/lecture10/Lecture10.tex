@@ -123,7 +123,7 @@
 		\vspace{-0.5cm}
 		\begin{align*}
 			\frac{d \bx(t)}{dt} &= \bff_{\btheta}(\bx(t), t);\quad \text{where } \bx(t_0) = \bx_0. \\
-			\bpsi_t(\bx_0) &= \int^{t_1}_{t_0} \bff_{\btheta}(\bx(t), t) d t  + \bx_0 \approx {\color{teal}\texttt{ODESolve}_f(\bx_0, \btheta, t_0, t_1)}.
+			\bpsi_t(\bx_0) &= \int^{t_1}_{t_0} \bff_{\btheta}(\bx(t), t) d t  + \bx_0 \approx {\color{teal}\ODESolve_f(\bx_0, \btheta, t_0, t_1)}.
 		\end{align*}
 		\vspace{-0.5cm}
 	\end{block}
@@ -274,7 +274,7 @@
 	\]
 	\vspace{-0.3cm}
 	\eqpause
-	\begin{block}{Discretizing the SDE (Euler Update Step) – \texttt{SDESolve}}
+	\begin{block}{Discretizing the SDE (Euler Update Step) – \SDESolve}
 		\vspace{-0.3cm}
 		\[
 			{\color{violet}\bx(t + dt) = \bx(t) + \bff(\bx(t), t) \cdot dt} + {\color{teal}g(t) \cdot \bepsilon \cdot \sqrt{dt}}

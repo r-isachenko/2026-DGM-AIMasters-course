@@ -240,7 +240,7 @@
 			\bpi = (\pi_1, \dots, \pi_K), \quad \pi_k = P(c = k), \quad \sum_{k=1}^K \pi_k = 1.
 			\]
 			\vspace{-0.6cm}
-			\item Suppose the VAE adopts a discrete latent variable $c$ with prior $p(c) = \text{Uniform}\{1, \dots, K\}$.
+			\item Suppose the VAE adopts a discrete latent variable $c$ with prior $p(c) = \Uniform\{1, \dots, K\}$.
 		\end{itemize}
 	\end{block}
 	\eqpause
@@ -316,7 +316,7 @@
 \begin{frame}{Vector Quantized VAE (VQ-VAE)}
 	\myfootnotewithlink{https://arxiv.org/abs/1711.00937}{Oord A., Vinyals O., Kavukcuoglu K. Neural Discrete Representation Learning, 2017} 
 	\begin{itemize}
-		\item The encoder outputs a continuous vector $\bz_e = \text{NN}_{e, \bphi}(\bx) \in \bbR^{L}$.
+		\item The encoder outputs a continuous vector $\bz_e = \NN_{e, \bphi}(\bx) \in \bbR^{L}$.
 		\item Quantization deterministically maps $\bz_e$ to its quantized codebook vector $\bz_q$.
 		\item The decoder is conditioned on codebook entries $\be_c$, i.e., via $\pt(\bx | \be_c)$ (instead of $\pt(\bx| c)$).
 	\end{itemize}
@@ -401,7 +401,7 @@
 	Extension to the spatial domain: $\bc \in \{1, \dots, K\}^{W \times H}$
 	\vspace{-0.3cm}
 	\[
-		q_{\bphi}(\bc | \bx) = \prod_{i=1}^W \prod_{j=1}^H q(c_{ij} | \bx, \bphi); \quad p(\bc) = \prod_{i=1}^W \prod_{j=1}^H \text{Uniform}\{1, \dots, K\}.
+		q_{\bphi}(\bc | \bx) = \prod_{i=1}^W \prod_{j=1}^H q(c_{ij} | \bx, \bphi); \quad p(\bc) = \prod_{i=1}^W \prod_{j=1}^H \Uniform\{1, \dots, K\}.
 	\]
 	\vspace{-0.6cm}
 	\begin{block}{Sample Diversity}
@@ -419,7 +419,7 @@
 			\item Vector-quantize (per spatial location if applicable):
 			\vspace{-0.3cm}
 			\[
-				k^* = \argmin_k \|\bz_e - \be_k\|_2, \quad \bz_q = \be_{k^*}, \quad \bz_e = \text{NN}_{e,\bphi}(\bx).
+				k^* = \argmin_k \|\bz_e - \be_k\|_2, \quad \bz_q = \be_{k^*}, \quad \bz_e = \NN_{e,\bphi}(\bx).
 			\]
 			\vspace{-0.5cm}
 			\item Compute ELBO objective:
@@ -441,7 +441,7 @@
 	\vspace{-0.3cm}
 	\begin{block}{Sampling}
 		\begin{itemize}
-			\item Sample $c \sim p(c) = \text{Uniform}\{1, \dots, K\}$.
+			\item Sample $c \sim p(c) = \Uniform\{1, \dots, K\}$.
 			\item Generate $\bx \sim \pt(\bx | \be_c)$.
 		\end{itemize}
 	\end{block}

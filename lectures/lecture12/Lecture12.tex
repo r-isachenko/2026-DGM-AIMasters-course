@@ -71,7 +71,7 @@
 \begin{frame}{Recap of Previous Lecture}
 	\myfootnotewithlink{https://arxiv.org/abs/2011.13456}{Song Y., et al. Score-Based Generative Modeling through Stochastic Differential Equations, 2020}
 	\begin{block}{Sampling}
-		To sample, solve the reverse SDE using numerical solvers (\texttt{SDESolve}).
+		To sample, solve the reverse SDE using numerical solvers (\SDESolve).
 		\vspace{-0.3cm}
 		\begin{figure}
 			\includegraphics[width=0.8\linewidth]{figs/sbgm}
@@ -94,7 +94,7 @@
 	\begin{block}{KFP Theorem (Continuity Equation)}
 		\vspace{-0.5cm}
 		\[
-			\frac{\partial p_t(\bx)}{\partial t} = - \text{div}\left(\bff(\bx, t) p_t(\bx)\right) \Leftrightarrow \frac{d \log p_t(\bx(t))}{d t} = - \text{tr} \left( \frac{\partial \bff(\bx(t), t)}{\partial \bx(t)} \right)
+			\frac{\partial p_t(\bx)}{\partial t} = - \diver\left(\bff(\bx, t) p_t(\bx)\right) \Leftrightarrow \frac{d \log p_t(\bx(t))}{d t} = - \tr \left( \frac{\partial \bff(\bx(t), t)}{\partial \bx(t)} \right)
 		\]
 		\vspace{-0.5cm}
 	\end{block}
@@ -117,7 +117,7 @@
 	\]
 	\vspace{-0.5cm}
 	\[
-		\frac{\partial p_t(\bx | \bz)}{\partial t} = - \text{div}\left(\bff(\bx, \bz, t) p_t(\bx | \bz)\right).
+		\frac{\partial p_t(\bx | \bz)}{\partial t} = - \diver\left(\bff(\bx, \bz, t) p_t(\bx | \bz)\right).
 	\]
 	\vspace{-0.3cm}
 	\begin{itemize}
@@ -155,7 +155,7 @@
 		\vspace{-0.7cm}
 	\end{block}
 	\begin{block}{Theorem}
-		If $\text{supp}(p_t(\bx)) = \bbR^m$, then the optimal value of the FM objective equals the optimum for CFM.
+		If $\supp(p_t(\bx)) = \bbR^m$, then the optimal value of the FM objective equals the optimum for CFM.
 	\end{block}
 	\vspace{-0.3cm}
 	\begin{figure}
@@ -243,7 +243,7 @@
 			\item Sample $\bx_0 \sim \cN(0, \bI)$.
 			\item Solve the ODE to obtain $\bx_1$:
 			\[
-				\bx_1 = \texttt{ODESolve}_f(\bx_0, \btheta, t_0=0, t_1=1).
+				\bx_1 = \ODESolve_f(\bx_0, \btheta, t_0=0, t_1=1).
 			\]
 		\end{enumerate}
 	\end{block}
@@ -474,7 +474,7 @@
 			\item Sample $\bx_0 \sim \cN(0, \bI)$.
 			\item Solve the ODE to obtain $\bx_1$:
 			\[
-				\bx_1 = \texttt{ODESolve}_f(\bx_0, \btheta, t_0=0, t_1=1)
+				\bx_1 = \ODESolve_f(\bx_0, \btheta, t_0=0, t_1=1)
 			\]
 		\end{enumerate}
 	\end{block}
@@ -648,7 +648,7 @@
 			\item Sample $\bx_0 \sim p_0(\bx)$.
 							\item Solve the ODE to obtain $\bx_1$:
 			\[
-				\bx_1 = \texttt{ODESolve}_f(\bx_0, \btheta, t_0=0, t_1=1)
+				\bx_1 = \ODESolve_f(\bx_0, \btheta, t_0=0, t_1=1)
 			\]
 		\end{enumerate}
 	\end{block}

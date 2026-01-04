@@ -18,14 +18,14 @@
 	\begin{block}{Theorem (Continuity Equation)}
 		If $\bff$ is uniformly Lipschitz continuous in $\bx$ and continuous in $t$, then
 		\[
-			\frac{d \log p_t(\bx(t))}{d t} = - \text{tr} \left( \frac{\partial \bff(\bx(t), t)}{\partial \bx(t)} \right)
+			\frac{d \log p_t(\bx(t))}{d t} = - \tr \left( \frac{\partial \bff(\bx(t), t)}{\partial \bx(t)} \right)
 		\]
 		\vspace{-0.5cm}
 	\end{block}
 	\begin{block}{Solution of the Continuity Equation}
 		\vspace{-0.3cm}
 		\[
-			\log p_1(\bx(1)) = \log p_0(\bx(0)) - {\color{teal}\int_{0}^{1} \text{tr}  \left( \frac{\partial \bff(\bx(t), t)}{\partial \bx(t)} \right) dt}.
+			\log p_1(\bx(1)) = \log p_0(\bx(0)) - {\color{teal}\int_{0}^{1} \tr  \left( \frac{\partial \bff(\bx(t), t)}{\partial \bx(t)} \right) dt}.
 		\]
 	\end{block}
 	\begin{itemize}
@@ -48,7 +48,7 @@
 		\]
 	\end{block}
 	\vspace{-0.3cm}
-	\begin{block}{Discretization of SDE (Euler Method) - \texttt{SDESolve}}
+	\begin{block}{Discretization of SDE (Euler Method) - \SDESolve}
 		\vspace{-0.3cm}
 		\[
 			\bx(t + dt) = \bx(t) + \bff(\bx(t), t) \cdot dt + g(t) \cdot \bepsilon \cdot \sqrt{dt}
@@ -67,7 +67,7 @@
  		The evolution of the distribution $p_t(\bx)$ is given by:
  		\vspace{-0.3cm}
  		\[
- 			\frac{\partial p_t(\bx)}{\partial t} = - \text{div}\left(\bff(\bx, t) p_t(\bx)\right) + \frac{1}{2}g^2(t) \Delta_{\bx}p_t(\bx)
+ 			\frac{\partial p_t(\bx)}{\partial t} = - \diver\left(\bff(\bx, t) p_t(\bx)\right) + \frac{1}{2}g^2(t) \Delta_{\bx}p_t(\bx)
  		\]
  		\vspace{-0.5cm}
  	\end{block}
@@ -284,7 +284,7 @@
 	\begin{block}{Efficient Solvers}
 		\begin{itemize}
 		\item Converting SDEs to PF-ODEs yields more efficient inference.
-		\item We can apply any \texttt{ODESolve} procedure to reduce the number of inference steps.
+		\item We can apply any \ODESolve procedure to reduce the number of inference steps.
 		\item In practice, this reduces the number of steps from $100$--$1000$ to $20$--$50$.
 		\end{itemize}
 	\end{block}
@@ -448,7 +448,7 @@
 \begin{frame}{Score-Based Generative Models Through SDEs}
 	\myfootnotewithlink{https://arxiv.org/abs/2011.13456}{Song Y., et al. Score-Based Generative Modeling through Stochastic Differential Equations, 2020}
 	\begin{block}{Sampling}
-		Solve the reverse SDE using numerical solvers (\texttt{SDESolve}).
+		Solve the reverse SDE using numerical solvers (\SDESolve).
 		\begin{figure}
 			\includegraphics[width=0.8\linewidth]{figs/sbgm}
 		\end{figure}
@@ -479,7 +479,7 @@
 	\begin{block}{KFP Theorem (Continuity Equation)}
 		\vspace{-0.5cm}
 		\[
-			\frac{\partial p_t(\bx)}{\partial t} = - \text{div}\left(\bff(\bx, t) p_t(\bx)\right) \Leftrightarrow \frac{d \log p_t(\bx(t))}{d t} = - \text{tr} \left( \frac{\partial \bff(\bx(t), t)}{\partial \bx(t)} \right)
+			\frac{\partial p_t(\bx)}{\partial t} = - \diver\left(\bff(\bx, t) p_t(\bx)\right) \Leftrightarrow \frac{d \log p_t(\bx(t))}{d t} = - \tr \left( \frac{\partial \bff(\bx(t), t)}{\partial \bx(t)} \right)
 		\]
 		\vspace{-0.3cm}
 	\end{block}
@@ -495,7 +495,7 @@
 	\begin{block}{KFP Theorem (Continuity Equation)}
 		\vspace{-0.5cm}
 		\[
-			\frac{\partial p_t(\bx)}{\partial t} = - \text{div}\left(\bff(\bx, t) p_t(\bx)\right) \Leftrightarrow \frac{d \log p_t(\bx(t))}{d t} = - \text{tr} \left( \frac{\partial \bff(\bx(t), t)}{\partial \bx(t)} \right)
+			\frac{\partial p_t(\bx)}{\partial t} = - \diver\left(\bff(\bx, t) p_t(\bx)\right) \Leftrightarrow \frac{d \log p_t(\bx(t))}{d t} = - \tr \left( \frac{\partial \bff(\bx(t), t)}{\partial \bx(t)} \right)
 		\]
 		\vspace{-0.3cm}
 	\end{block}
@@ -551,7 +551,7 @@
 	\eqpause
 	The conditional probability path $p_t(\bx | \bz)$ satisfies the KFP theorem:
 	\[
-		{\color{violet}\frac{\partial p_t(\bx | \bz)}{\partial t} = - \text{div}\left(\bff(\bx, \bz, t) p_t(\bx | \bz)\right)},
+		{\color{violet}\frac{\partial p_t(\bx | \bz)}{\partial t} = - \diver\left(\bff(\bx, \bz, t) p_t(\bx | \bz)\right)},
 	\]
 	where $\bff(\bx, \bz, t)$ is a \textbf{conditional vector field}:
 	\eqpause
@@ -565,7 +565,7 @@
 \begin{frame}{Flow Matching}
     \myfootnotewithlink{https://arxiv.org/abs/2302.00482}{Tong A., et al. Improving and Generalizing Flow-Based Generative Models with Minibatch Optimal Transport, 2023}
 	\[
-		{\color{violet}\frac{\partial p_t(\bx | \bz)}{\partial t} = - \text{div}\left(\bff(\bx, \bz, t) p_t(\bx | \bz)\right)},
+		{\color{violet}\frac{\partial p_t(\bx | \bz)}{\partial t} = - \diver\left(\bff(\bx, \bz, t) p_t(\bx | \bz)\right)},
 	\]
 	\vspace{-0.3cm}
 	\begin{block}{Theorem}
@@ -582,9 +582,9 @@
 		\begin{multline*}
 			\frac{\partial p_t(\bx)}{\partial t} = \frac{\partial}{\partial t} \int p_t(\bx | \bz) p(\bz) d \bz 
 			\nextonslide{=  \int \left( {\color{violet} \frac{\partial p_t(\bx | \bz)}{\partial t} } \right) p(\bz) d \bz}
-			\nextonslide{ = \\ = \int \left( {\color{violet} - \text{div}\left(\bff(\bx, \bz, t) p_t(\bx | \bz)\right) } \right) p(\bz) d \bz}
-			\nextonslide{ = \\ = - \text{div} \left({\color{teal}\int \bff(\bx, \bz, t) p_t(\bx | \bz) p(\bz) d \bz }\right)} 
-			\nextonslide{= - \text{div}  \left(\bff(\bx, t) p_t(\bx)\right)}
+			\nextonslide{ = \\ = \int \left( {\color{violet} - \diver\left(\bff(\bx, \bz, t) p_t(\bx | \bz)\right) } \right) p(\bz) d \bz}
+			\nextonslide{ = \\ = - \diver \left({\color{teal}\int \bff(\bx, \bz, t) p_t(\bx | \bz) p(\bz) d \bz }\right)} 
+			\nextonslide{= - \diver  \left(\bff(\bx, t) p_t(\bx)\right)}
 		\end{multline*}
 	\end{block}
 \end{frame}
@@ -607,7 +607,7 @@
 	\end{block}
     \eqpause
 	\begin{block}{Theorem}
-		If $\text{supp}(p_t(\bx)) = \bbR^m$, then the optimal value of the FM objective equals the optimal value of the CFM objective.
+		If $\supp(p_t(\bx)) = \bbR^m$, then the optimal value of the FM objective equals the optimal value of the CFM objective.
 	\end{block}
     \eqpause
 	\begin{block}{Proof}

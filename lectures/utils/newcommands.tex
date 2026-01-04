@@ -16,16 +16,44 @@
 \newcommand{\by}{\mathbf{y}} 
 \newcommand{\bz}{\mathbf{z}} 
 
-% text
-\newcommand{\tr}{\text{tr}} 
-\newcommand{\diver}{\text{div}} 
+% Math operators (proper spacing and upright font)
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\diver}{div}
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\Bin}{Bin}
+\DeclareMathOperator{\softmax}{softmax}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\Cat}{Cat}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\trace}{trace}
+\DeclareMathOperator{\cov}{cov}
+\DeclareMathOperator{\MMD}{MMD}
+\DeclareMathOperator{\SNR}{SNR}
+
+% Distributions
+\DeclareMathOperator{\Gumbel}{Gumbel}
+\DeclareMathOperator{\Bern}{Bern}
+\DeclareMathOperator{\Uniform}{Uniform}
+
+% Neural network components
+\newcommand{\NN}{\mathrm{NN}}
+\newcommand{\MLP}{\mathrm{MLP}}
+\newcommand{\RNN}{\mathrm{RNN}}
+
+% Solvers (monospace)
+\newcommand{\ODESolve}{\texttt{ODESolve}}
+\newcommand{\SDESolve}{\texttt{SDESolve}}
+
+% Shortcuts
+\newcommand{\qagg}{q_{\text{agg}}}
+\newcommand{\lambdamax}{\lambda_{\text{max}}}
 
 % mathrm 
 \newcommand{\FID}{\mathrm{FID}} 
 \newcommand{\Ent}{\mathrm{H}} 
 \newcommand{\JSD}{\mathrm{JSD}} 
-\newcommand{\KL}{\mathrm{KL}} 
-\newcommand{\Cat}{\mathrm{Cat}}
+\newcommand{\KL}{\mathrm{KL}}
 
 % latin bold upper
 \newcommand{\bA}{\mathbf{A}} 
@@ -85,6 +113,5 @@
 % other
 \newcommand{\pd}{p_{\text{data}}}
 \newcommand{\pt}{p_{\boldsymbol{\theta}}}
-
 \DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator*{\argmax}{arg\,max}
