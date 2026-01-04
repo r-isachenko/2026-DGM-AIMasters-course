@@ -531,51 +531,9 @@
 %=======
 \section{Denoising Diffusion Probabilistic Model (DDPM)}
 %=======
-\begin{frame}{Generative Models Zoo}
-    \begin{tikzpicture}[
-        basic/.style  = {draw, text width=2cm, drop shadow, rectangle},
-        root/.style   = {basic, rounded corners=2pt, thin, text height=1.1em, text width=7em, align=center, fill=blue!40},
-        level 1/.style={sibling distance=55mm},
-        level 2/.style = {basic, rounded corners=6pt, thin, align=center, fill=blue!20, text height=1.1em, text width=9em, sibling distance=38mm},
-        level 3/.style = {basic, rounded corners=6pt, thin,align=center, fill=blue!20, text width=8.5em},
-        level 4/.style = {basic, thin, align=left, fill=pink!30, text width=7em},
-        level 5/.style = {basic, thin, align=left, fill=pink!90, text width=7em},
-        edge from parent/.style={->,draw},
-        >=latex]
-        
-        % root of the the initial tree, level 1
-        \node[root] {\Large Generative Models}
-        % The first level, as children of the initial tree
-        child {node[level 2] (c1) {Likelihood-Based}
-            child {node[level 3] (c11) {Tractable Density}}
-            child {node[level 3] (c12) {Approximate Density}}
-        }
-        child {node[level 2] (c2) {Likelihood-Free}};
-        
-        % The second level, relatively positioned nodes
-        \begin{scope}[every node/.style={level 4}]
-            \node [below of = c11, yshift=-5pt, xshift=10pt] (c111) {Autoregressive Models};
-            \node [below of = c111, yshift=-5pt] (c112) {Normalizing Flows};
-            \node [below of = c12, xshift=10pt] (c121) {VAEs};
-            
-            \node [below of = c2, xshift=10pt] (c21) {GANs};
-        \end{scope}
-        
-        % The second level, relatively positioned nodes
-        \begin{scope}[every node/.style={level 5}]
-            \node [below of = c121] (c122) {\textbf{Diffusion \\ Models}};
-        \end{scope}
-        
-        % lines from each level 1 node to every one of its "children"
-        \foreach \value in {1,2}
-        \draw[->] (c11.194) |- (c11\value.west);
-        
-        \foreach \value in {1,2}
-        \draw[->] (c12.194) |- (c12\value.west);
-        
-        \draw[->] (c2.194) |- (c21.west);
-        
-    \end{tikzpicture}
+\begin{frame}{Generative Models Taxonomy}
+	\vspace{0.3cm}
+	\input{../utils/taxonomy.tex}
 \end{frame}
 %=======
 \begin{frame}{Denoising Diffusion Probabilistic Model (DDPM)}

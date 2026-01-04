@@ -1,0 +1,83 @@
+\centering
+\begin{tikzpicture}[
+    scale=1.0, transform shape,
+    node distance=0.6cm and 0.3cm,
+    box/.style={
+        rectangle, 
+        draw=gray!50, 
+        rounded corners=2pt, 
+        minimum width=1.9cm, 
+        minimum height=0.5cm, 
+        align=center, 
+        font=\scriptsize, 
+        line width=0.4pt
+    },
+    root/.style={box, fill=violet!20},
+    category/.style={box, fill=teal!20},
+    model/.style={box, fill=yellow!30},
+    arrow/.style={-Stealth, draw=gray!80, line width=0.4pt}
+]
+
+    % --- CENTRAL ROOT ---
+    \node[root] (root) {Generative Models};
+
+    % --- UPPER BRANCHES (SWAPPED) ---
+    % Tier 1: Explicit (Left) and Implicit (Right)
+    \node[category, above left=0.6cm and 0.5cm of root] (explicit) {Explicit density};
+    \node[category, above right=0.6cm and 0.5cm of root] (implicit) {Implicit density};
+
+    % Tier 2 (Left side: Likelihoods)
+    \node[category, above left=0.6cm and -0.6cm of explicit] (exact) {Exact likelihood};
+    \node[category, above right=0.6cm and -0.6cm of explicit] (approx) {Approximate likelihood};
+
+    % Tier 2 (Right side: GANs)
+    \node[model, above=0.6cm of implicit] (gans) {GANs};
+
+    % Tier 3 (Final Models Up)
+    \node[model, above left=0.6cm and -0.9cm of exact] (ar) {Autoregressive \\ models};
+    \node[model, above right=0.6cm and -0.9cm of exact] (nf) {Normalizing \\ Flows};
+    \node[model, above=0.6cm of approx] (vae) {Variational \\ Autoencoders};
+
+    % --- LOWER BRANCHES ---
+    % Tier 1: Score-based and Continuous
+    \node[category, below left=0.6cm and 0.5cm of root] (score) {Score-based};
+    \node[category, below right=0.6cm and 0.5cm of root] (cont) {Continuous \\ dynamics};
+
+    % Tier 2 (Score Models)
+    \node[model, below left=0.6cm and -0.8cm of score] (ddpm) {Denoising Diffusion};
+    \node[model, below right=0.6cm and -0.8cm of score] (sm) {Score Matching};
+
+    % Tier 2 (Continuous Models)
+    \node[model, below left=0.6cm and -0.8cm of cont] (node) {Neural ODEs};
+    \node[model, below right=0.6cm and -0.8cm of cont] (sde) {SDE-based \\ Diffusion};
+
+    % Tier 3 (Flow Matching)
+    \node[model, below=0.6cm of node] (fm) {Flow Matching};
+
+    % --- CONNECTIONS ---
+    % Root to Tier 1
+    \draw[arrow] (root.north) -- ++(0,0.3) -| (explicit.south);
+    \draw[arrow] (root.north) -- ++(0,0.3) -| (implicit.south);
+    \draw[arrow] (root.south) -- ++(0,-0.3) -| (score.north);
+    \draw[arrow] (root.south) -- ++(0,-0.3) -| (cont.north);
+
+    % Explicit side connections
+    \draw[arrow] (explicit.north) -- ++(0,0.3) -| (exact.south);
+    \draw[arrow] (explicit.north) -- ++(0,0.3) -| (approx.south);
+    \draw[arrow] (exact.north) -- ++(0,0.3) -| (ar.south);
+    \draw[arrow] (exact.north) -- ++(0,0.3) -| (nf.south);
+    \draw[arrow] (approx.north) -- (vae.south);
+
+    % Implicit side connection
+    \draw[arrow] (implicit.north) -- (gans.south);
+
+    % Score side connections
+    \draw[arrow] (score.south) -- ++(0,-0.3) -| (ddpm.north);
+    \draw[arrow] (score.south) -- ++(0,-0.3) -| (sm.north);
+
+    % Continuous side connections
+    \draw[arrow] (cont.south) -- ++(0,-0.3) -| (node.north);
+    \draw[arrow] (cont.south) -- ++(0,-0.3) -| (sde.north);
+    \draw[arrow] (node.south) -- (fm.north);
+
+\end{tikzpicture}

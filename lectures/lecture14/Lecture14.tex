@@ -238,7 +238,7 @@
     \]
     \eqpause
     \[
-        q(\bX_t |\bX_{t-1}) = \Cat(\bQ_{1:t} \bX_0)
+        q(\bX_t |\bX_0) = \Cat(\bQ_{1:t} \bX_0)
     \]
     \vspace{-0.3cm}
     \eqpause
@@ -277,7 +277,7 @@
         \vspace{-0.7cm}
         \begin{multline*}
 			\KL\left(q(\bX_{t-1}| \bX_t, \bX_0)\,\|\,p_\theta(\bX_{t-1}| \bX_t)\right) \\
-			= \sum_{i=1}^m \KL\left(q(\bx_{t-1}^i|\bx_t^i, \bx_0^i) || \pt(\bx_{t-1}^i|\bx_t)\right).
+			= \sum_{i=1}^m \KL\left(q(\bx_{t-1}^i|\bx_t^i, \bx_0^i) || \pt(\bx_{t-1}^i|\bX_t)\right).
         \end{multline*}
         \vspace{-0.5cm}
     \end{block}
@@ -525,7 +525,7 @@
 			\item Initialize $\bX \leftarrow \mathbf e_m \mathbf 1^\top$ (fully masked).
 			\item For a decreasing schedule $\lambda_1 > \lambda_2 > \cdots > \lambda_L$:
 			\begin{enumerate}
-				\item Predict $p_\theta(\bx^i | \bX)$ for all positions in parallel.
+				\item Predict $p_\theta(\bx^i | \bX)$ for all positions.
 				\item Unmask a subset of positions to reach the next mask rate $\lambda_{\ell+1}$
 				(e.g., sample tokens for newly-unmasked positions).
 			\end{enumerate}
