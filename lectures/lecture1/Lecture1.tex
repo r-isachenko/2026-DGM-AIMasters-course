@@ -78,19 +78,30 @@
 	\end{figure}
 \end{frame}
 %=======
-\begin{frame}{GPT4o Image Editing}
-	\myfootnotewithlink{https://openai.com/index/introducing-4o-image-generation/}{Image credit: https://openai.com/index/introducing-4o-image-generation/}
-	\textbf{Prompt:} Give this cat a detective hat and a monocle
-	\begin{minipage}[t]{0.5\columnwidth}		
-		\begin{figure}
-			\includegraphics[width=0.94\linewidth]{figs/gpt4o_editing1}
-		\end{figure}
-	\end{minipage}%
-	\begin{minipage}[t]{0.45\columnwidth}		
-		\begin{figure}
-			\includegraphics[width=0.93\linewidth]{figs/gpt4o_editing2}
-		\end{figure}
-	\end{minipage}
+\begin{frame}{Nano Banana Pro}
+	\myfootnotewithlink{https://blog.google/technology/ai/nano-banana-pro/}{Image credit: https://blog.google/technology/ai/nano-banana-pro/}
+	\textbf{Prompt:} Create a storyboard for this scene
+	\begin{figure}
+		\includegraphics[width=\linewidth]{figs/nano_banana}
+	\end{figure}
+\end{frame}
+%=======
+\begin{frame}{Generative Models Timeline}
+	\myfootnotewithlink{https://arxiv.org/abs/2510.21890}{Lai C. H. et al. The principles of diffusion models, 2025.}
+	\begin{figure}
+		\includegraphics[width=\linewidth]{figs/timeline}
+	\end{figure}
+	\begin{description}
+		\item[\textbf{EBM}] -- Energy-based Model.
+		\item[\textbf{VAE}] -- Variational Autoencoder.
+		\item[\textbf{NF}] -- Normalizing Flow.
+		\item[\textbf{DPM}] -- Diffusion Probabilistic Model.
+		\item[\textbf{NODE}] -- Neural ODE.
+		\item[\textbf{NCSN}] -- Noise Conditional Score Network.
+		\item[\textbf{DDPM}] -- Denoising Diffusion Probabilistic Model.
+		\item[\textbf{Score SDE}] -- Score-based Stochastic Differential Equation.
+		\item[\textbf{FM}] -- Flow Matching.
+	\end{description}
 \end{frame}
 %=======
 \begin{frame}{Open Problems in Generative Models}
@@ -405,7 +416,6 @@
 				\item $d = 2$
 				\item $x_j \in \{0, 255\}$
 				\item $\bh_j = \MLP_{\btheta}(x_{j - 1}, x_{j - 2})$
-				\item $\bpi_j = \softmax(\bh_j)$
 				\item $\pt(x_j | x_{j - 1}, x_{j - 2}) = \Cat(\bpi_j)$
 			\end{itemize}
 			}
