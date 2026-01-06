@@ -174,9 +174,9 @@
 		\vspace{-0.5cm}
 	\end{block}
     \eqpause
-	The distribution $\pt(\bx)$ can be highly complex and often intractable (just like the true data distribution $\pd(\bx)$).
+	The distribution $\pt(\bx)$ should be highly complex (just like the true data distribution $\pd(\bx)$).
     \eqpause
-	\begin{block}{Extended Probabilistic Model}
+	\begin{block}{Latent Variable}
 		Introduce a latent variable $\bz$ for each observed sample $\bx$:
 		\[
 			\pt(\bx, \bz) = \pt(\bx | \bz) p(\bz); \quad 
@@ -188,9 +188,11 @@
 	\end{block}
     \eqpause
 	\vspace{-0.3cm}
-	\begin{block}{Motivation}
-		Both $\pt(\bx | \bz)$ and $p(\bz)$ are usually much simpler than $\pt(\bx)$.
-	\end{block}
+	\begin{itemize}
+		\item $p(\bz)$ is prior distribution over the latent variable.
+		\item $\pt(\bx | \bz)$ is \textbf{decoder} distribution.
+		\item Both $\pt(\bx | \bz)$ and $p(\bz)$ are usually much simpler than $\pt(\bx)$.
+	\end{itemize}
 \end{frame}
 %=======
 \begin{frame}{Latent Variable Models (LVM)}
@@ -258,57 +260,90 @@
 \section{Variational Evidence Lower Bound (ELBO)}
 %=======
 \begin{frame}{ELBO Derivation I}
-	\begin{block}{Inequality Derivation}
-		\vspace{-0.7cm}
-		\begin{multline*}
-			\log \pt(\bx) 
-			= \log \int \pt(\bx, \bz) d\bz 
-			\nextonslide{= \log \int \frac{q(\bz)}{q(\bz)} \pt(\bx, \bz) d\bz}
-			\nextonslide{= \\ = \log \bbE_{q} \left[\frac{\pt(\bx, \bz)}{q(\bz)} \right]}
-			\nextonslide{ \geq \bbE_{q} \log \frac{\pt(\bx, \bz)}{q(\bz)} = \cL_{q, \btheta}(\bx)}
-		\end{multline*}
+	\begin{block}{Bayes theorem}
 		\vspace{-0.3cm}
+		\[
+			\pt(\bz | \bx) = \frac{\pt(\bx, \bz)}{\pt(\bx)} \quad \Rightarrow \quad \pt(\bx) = \frac{\pt(\bx, \bz)}{\pt(\bz | \bx)} 
+		\]
+		\vspace{-0.5cm}
+	\end{block}
+	\eqpause
+	\begin{block}{Log likelihood}
+		\vspace{-0.5cm}
+		\begin{multline*}
+			\log \pt(\bx) = \int q(\bz) \log \pt(\bx) d\bz 
+			\nextonslide{= \bbE_{q} \left[ \frac{\pt(\bx, \bz)}{\pt(\bz | \bx)}  \right]}
+			\nextonslide{= \\ = \bbE_{q} \left[ \frac{\pt(\bx, \bz) {\color{teal}q(\bz)}}{\pt(\bz | \bx) {\color{teal}q(\bz)}}  \right]}
+			\nextonslide{= \\ = \bbE_{q}  \log \frac{\pt(\bx, \bz)}{q(\bz)} + \bbE_{q} \log \frac{q(\bz)}{\pt(\bz | \bx)}}
+		\end{multline*}
+		\vspace{-0.5cm}
 	\end{block}
     \eqpause
 	\begin{itemize}
 		\item Here, $q(\bz)$ is any distribution such that $\int q(\bz) d\bz = 1$.
 		\item {\color{gray} We assume that $\supp(q(\bz)) = \supp(\pt(\bz | \bx)) = \bbR^{d}$}.
 	\end{itemize}
-    \eqpause
-	\begin{block}{Variational Evidence Lower Bound (ELBO)}
-		\[
-			 \cL_{q, \btheta}(\bx) = \bbE_{q} \log \frac{\pt(\bx, \bz)}{q(\bz)}  \leq \log \pt(\bx) 
-		\]
-    	\eqpause
-		This inequality holds for any choice of $q(\bz)$.
-	\end{block}
 \end{frame}
 %=======
 \begin{frame}{ELBO Derivation II}
-	\vspace{-0.3cm}
-	\[
-		{\color{teal}\pt(\bz|\bx) = \frac{\pt(\bx, \bz)}{\pt(\bx)}}
-	\]
-	\vspace{-0.4cm}
-	\begin{block}{Equality Derivation}
+	\begin{block}{Variational Decomposition}
 		\vspace{-0.7cm}
 		\begin{multline*}
-			\cL_{q, \btheta}(\bx) = \int q(\bz) \log \frac{\color{teal}\pt(\bx, \bz)}{q(\bz)}d\bz 
-			\nextonslide{= \\ = \int q(\bz) \log \frac{\color{teal}\pt(\bz|\bx)\pt(\bx)}{q(\bz)}d\bz}
-			\nextonslide{ = \\ = \int q(\bz) \log \pt(\bx) d\bz + \int q(\bz) \log \frac{\pt(\bz|\bx)}{q(\bz)}d\bz}
-			\nextonslide{ = \\ = \log \pt(\bx) - \KL(q(\bz) \| \pt(\bz|\bx))}
+			\log \pt(\bx) = \bbE_{q}  \log \frac{\pt(\bx, \bz)}{q(\bz)} + \bbE_{q} \log \frac{q(\bz)}{\pt(\bz | \bx)}
+			\nextonslide{= \\ = \cL_{q, \btheta}(\bx) + {\color{violet}\KL(q(\bz) \| \pt(\bz|\bx))}} 
+			\nextonslide{\geq \cL_{q, \btheta}(\bx)}
 		\end{multline*}
+		\vspace{-0.5cm}
 	\end{block}
-    \eqpause
-	\vspace{-0.7cm}
-	\begin{block}{Variational Decomposition}
-		\vspace{-0.2cm}
+	\eqpause
+	\begin{block}{Variational Evidence Lower Bound (ELBO)}	
+		\vspace{-0.3cm}
 		\[
-			\log \pt(\bx) = \cL_{q, \btheta}(\bx) + {\color{violet}\KL(q(\bz) \| \pt(\bz|\bx))} \geq \cL_{q, \btheta}(\bx).
+			\cL_{q, \btheta}(\bx) = \bbE_{q} \log \frac{\pt(\bx, \bz)}{q(\bz)}  \leq \log \pt(\bx) 
 		\]
 	\end{block}
+	\eqpause
+	\begin{itemize}
+		\item This inequality holds for any choice of $q(\bz)$.
+		\eqpause
+		\item Instead of maximizing the likelihood, maximize the ELBO:
+		\[
+			\max_{\btheta} \pt(\bx) \quad \rightarrow \quad \max_{q, \btheta} \cL_{q, \btheta}(\bx)
+		\]
+		\eqpause
+		\vspace{-0.3cm}
+		\item Distribution $q(\bz)$ is treated as \textbf{variational} parameter.
+	\end{itemize}
+\end{frame}
+%=======
+\begin{frame}{Variational Evidence Lower Bound (ELBO)}
+    \myfootnote{Bishop\,C. Pattern Recognition and Machine Learning, 2006}
+	\[
+		\log \pt(\bx) = \cL_{q, \btheta}(\bx) + \KL(q(\bz) \| \pt(\bz|\bx))
+	\]
+	What is the optimal distribution $q^*(\bz)$ given fixed $\btheta^*$?
     \eqpause
-	Here, ${\color{violet}\KL(q(\bz) \| \pt(\bz|\bx)) \geq 0}$.
+	\vspace{-0.3cm}
+	\begin{multline*}
+		q^*(\bz) = \argmax_q \cL_{q, \btheta^*}(\bx) 
+		\nextonslide{= \\ = \argmin_q \KL(q(\bz) \| p_{\btheta^*}(\bz | \bx))}
+		\nextonslide{= p_{\btheta^*}(\bz| \bx)}.
+	\end{multline*}
+	\vspace{-0.3cm} \\ 
+	\eqpause
+	Here we got the intuition about variational distribution $q(\bz)$ – it estimates the posterior~$p_{\btheta^*}(\bz| \bx)$.
+	\vspace{-0.3cm}
+    \eqpause
+	\begin{minipage}[t]{0.45\columnwidth}
+		\begin{figure}
+			\includegraphics[width=0.9\linewidth]{figs/em_bishop1}
+		\end{figure}
+	\end{minipage}%
+	\begin{minipage}[t]{0.55\columnwidth}
+		\begin{figure}
+			\includegraphics[width=0.85\linewidth]{figs/em_bishop2}
+		\end{figure}
+	\end{minipage}
 \end{frame}
 %=======
 \begin{frame}{Variational Evidence Lower Bound (ELBO)}
@@ -330,45 +365,10 @@
 	\end{block}
     \eqpause
 	\begin{itemize}
-		\item Instead of maximizing the likelihood, maximize the ELBO:
-		\[
-		\max_{\btheta} \pt(\bx) \quad \rightarrow \quad \max_{q, \btheta} \cL_{q, \btheta}(\bx)
-		\]
-        \eqpause
-		\vspace{-0.3cm}
-		\item Maximizing the ELBO with respect to the \textbf{variational} distribution $q$ is equivalent to minimizing the KL divergence:
-		\[
-		\argmax_q \cL_{q, \btheta}(\bx) \equiv \argmin_q \KL(q(\bz) \| \pt(\bz|\bx)).
-		\]
+		\item What do we get if we drop $\KL (q(\bz) \| p(\bz))$ term from ELBO?
+		\eqpause
+		\item What do we have in the term $\bbE_{q} \log \pt(\bx | \bz)$ in the case of Normal distribution?
 	\end{itemize}
-\end{frame}
-%=======
-\begin{frame}{Variational Posterior}
-    \myfootnote{Bishop\,C. Pattern Recognition and Machine Learning, 2006}
-	\[
-		\cL_{q, \btheta}(\bx)  =  \bbE_{q} \log \pt(\bx | \bz) - \KL (q(\bz) \| p(\bz)) \rightarrow \max_{q, \btheta}.
-	\]
-	What is the optimal distribution $q^*(\bz)$ given fixed $\btheta^*$?
-    \eqpause
-	\vspace{-0.3cm}
-	\begin{multline*}
-		q^*(\bz) = \argmax_q \cL_{q, \btheta^*}(\bx) = \\
-		= \argmin_q \KL(q(\bz) \| p_{\btheta^*}(\bz | \bx)) = p_{\btheta^*}(\bz| \bx).
-	\end{multline*}
-	\vspace{-0.3cm} \\
-	Here we got the intuition about $q(\bz)$ – it estimates the posterior~$p_{\btheta^*}(\bz| \bx)$.
-	\vspace{-0.3cm}
-    \eqpause
-	\begin{minipage}[t]{0.45\columnwidth}
-		\begin{figure}
-			\includegraphics[width=0.9\linewidth]{figs/em_bishop1}
-		\end{figure}
-	\end{minipage}%
-	\begin{minipage}[t]{0.55\columnwidth}
-		\begin{figure}
-			\includegraphics[width=0.85\linewidth]{figs/em_bishop2}
-		\end{figure}
-	\end{minipage}
 \end{frame}
 %=======
 \section{Amortized Inference}

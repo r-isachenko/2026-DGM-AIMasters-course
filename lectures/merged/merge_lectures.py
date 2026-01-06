@@ -70,7 +70,7 @@ def merge_all_lectures(num_lectures=14):
     # Get the directory structure
     script_dir = os.path.dirname(os.path.abspath(__file__))
     lectures_dir = os.path.dirname(script_dir)
-    output_file = os.path.join(script_dir, 'AllLectures_merged.tex')
+    output_file = os.path.join(script_dir, 'merged.tex')
     
     print(f"Lectures directory: {lectures_dir}")
     print(f"Output file: {output_file}")
