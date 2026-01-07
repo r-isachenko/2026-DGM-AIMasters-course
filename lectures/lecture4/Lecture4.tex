@@ -541,6 +541,34 @@
 	\end{figure}
 \end{frame}
 %=======
+\begin{frame}{Why are VAE Generations Blurry?}
+	\myfootnotewithlink{https://arxiv.org/abs/2510.21890}{Lai C. H. et al. The principles of diffusion models, 2025.}
+	
+	Consider a Gaussian decoder $\pt(\bx | \bz) = \cN(\bmu_{\btheta}(\bz), \sigma^2 \bI)$.
+	\eqpause
+	\begin{block}{ELBO Optimization}
+		With \textbf{fixed} encoder $q_{\bphi}(\bz | \bx)$, optimizing ELBO reduces to
+		\vspace{-0.3cm}
+		\[
+			\argmin_{\btheta} \bbE_{\pd(\bx) q_{\bphi}(\bz | \bx)} \| \bx - \bmu_{\btheta}(\bz) \|^2
+		\]
+		The optimal decoder mean is the \textbf{conditional expectation}:
+		\vspace{-0.3cm}
+		\[
+			\bmu^*(\bz) = \bbE_{q_{\bphi}(\bx | \bz)}[\bx] = \frac{\bbE_{\pd(\bx)}[q_{\bphi}(\bz | \bx) \cdot \bx]}{\bbE_{\pd(\bx)}[q_{\bphi}(\bz | \bx)]}
+		\]
+		\vspace{-0.7cm}
+	\end{block}
+	\eqpause
+	\begin{block}{Blurriness from Averaging}
+		\begin{itemize}
+			\item $\pd(\bx)$ and $q_{\bphi}(\bz | \bx)$ give us the aggregated posterior $q_{\text{agg}, \bphi}(\bz)$.
+			\item If $\bx \neq \bx'$ map to overlapping latent regions, $\bmu^*(\bz)$ averages over unrelated inputs.
+			\item This leads to \textbf{blurry, non-distinct outputs}.
+		\end{itemize}
+	\end{block}
+\end{frame}
+%=======
 \section{Learnable VAE Prior}
 %=======
 \begin{frame}{Optimal VAE Prior}

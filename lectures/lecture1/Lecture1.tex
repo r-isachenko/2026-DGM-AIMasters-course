@@ -159,20 +159,6 @@
 		\vspace{-0.5cm}
 	\end{block}
     \eqpause
-	\begin{block}{Proof (1D)}
-		Assume $f$ is monotonically increasing.
-		\[
-			F_Y(y) = P(Y \leq y) = P(x \leq f^{-1}(y)) = F_X(f^{-1}(y))
-		\]
-        \eqpause
-		\vspace{-0.3cm}
-		$$
-			p(y) = \frac{dF_Y(y)}{dy} = \frac{dF_X(f^{-1}(y))}{dy} = \frac{dF_X(x)}{dx} \frac{df^{-1}(y)}{dy} =  p(x) \frac{df^{-1}(y)}{dy}
-		$$
-	\end{block}
-\end{frame}
-%=======
-\begin{frame}{Course Tricks III}
 	\begin{block}{Law of the Unconscious Statistician (LOTUS)}
 		Let $\bx \in \bbR^m$ be a continuous random variable with density $p(\bx)$, and let $\bff: \bbR^m \to \bbR^m$ be measurable. If $\by = \bff(\bx)$, then
 		$$
@@ -180,7 +166,18 @@
 		$$
 		\vspace{-0.4cm}
 	\end{block}
-    \eqpause
+\end{frame}
+%=======
+\begin{frame}{Course Tricks III}
+	\begin{block}{Optimal MSE Prediction}
+		Let $(\bx, \by)$ be jointly distributed with density $p(\bx, \by)$. The optimal predictor under mean squared error is the conditional expectation:
+		$$
+			\bff^*(\bx) = \argmin_{\bff} \bbE_{p(\bx, \by)} \| \by - \bff(\bx) \|^2
+			\nextonslide{= \bbE_{p(\by | \bx)} [\by]}.
+		$$
+		\vspace{-0.4cm}
+	\end{block}
+	\eqpause
 	\begin{block}{Dirac Delta Function}
 		Any deterministic variable $\bx_0$ can be interpreted as a random variable with density $p(\bx) = \delta(\bx - \bx_0)$. 
 		\vspace{-0.3cm}
