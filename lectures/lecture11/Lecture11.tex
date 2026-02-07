@@ -334,7 +334,7 @@
 	\[
 		\nabla_{\bx(t)} \log q(\bx(t) | \bx(0)) = - \frac{1}{\bsigma} \odot (\bx(t) - \bmu)
 	\]
-	\textbf{Note:} Normality holds for $\bff(\bx, t)$ affine in $\bx$.
+	\textbf{Note:} Normality holds for $\bff(\bx, t)$ affine in $\bx$ ($\bff(\bx, t) = f(t) \bx$).
     \eqpause
 	\[
 		d \bx = \sqrt{\frac{ d [\sigma^2(t)]}{dt}} \cdot d \bw \ \ \mbox{(Variance Exploding SDE)}
@@ -353,21 +353,21 @@
 	\]
 	\vspace{-0.5cm}
 	\begin{block}{Theorem}
-		The moments of the SDE $d\bx = \bff(\bx, t) dt + g(t) d \bw$ satisfy:
+		The moments of the SDE $d\bx = f(t) \bx dt + g(t) d \bw$ satisfy:
 		\[
-			\frac{d \bmu(t, \bx(0))}{dt} = \bbE \left[ \bff(\bx(t), t) | \bx(0)\right]
+			\frac{d \bmu(t, \bx(0))}{dt} = f(t) \bmu(t, \bx(0))
 		\]
 		\[
-			\frac{d \bSigma(t, \bx(0))}{dt} = \bbE \left[ \bff \cdot (\bx(t) - \bmu)^\top + (\bx(t) - \bmu) \cdot \bff^\top | \bx(0)\right] + g^2(t) \cdot \bI
+			\frac{d \bSigma(t, \bx(0))}{dt} = 2 f(t) \bSigma(t, \bx(0)) + g^2(t) \cdot \bI
 		\]
 	\end{block}
     \eqpause
 	\begin{block}{Proof}
 		\vspace{-0.7cm}
 		\begin{align*}
-			\bbE\left[{\color{violet}d\bx} | \bx(0) \right] &= \bbE\left[{\color{violet}\bff(\bx, t) dt} | \bx(0) \right] + \bbE\left[{\color{violet}g(t) d \bw} | \bx(0) \right]
-			\nextonslide{\\ &= \bbE\left[\bff(\bx, t) | \bx(0) \right] dt + g(t) \bbE\left[d \bw | \bx(0) \right]}
-			\nextonslide{\\ &= \bbE\left[\bff(\bx, t) | \bx(0) \right] dt}
+			\bbE\left[{\color{violet}d\bx} | \bx(0) \right] &= \bbE\left[{\color{violet}f(t) \bx dt} | \bx(0) \right] + \bbE\left[{\color{violet}g(t) d \bw} | \bx(0) \right]
+			\nextonslide{\\ &= f(t) \bbE\left[\bx | \bx(0) \right] dt + g(t) \bbE\left[d \bw | \bx(0) \right]}
+			\nextonslide{\\ &= f(t) \bmu(t, \bx(0)) dt}
 		\end{align*}
 	\end{block}
 \end{frame}
@@ -377,7 +377,7 @@
 	\begin{block}{Theorem}
 		\vspace{-0.3cm}
 		\[
-			\frac{d \bmu(t, \bx(0))}{dt} = \bbE \left[ \bff(\bx(t), t) | \bx(0)\right]
+			\frac{d \bmu(t, \bx(0))}{dt} = f(t) \bmu(t, \bx(0))
 		\]
 		\vspace{-0.5cm}
 	\end{block}
@@ -385,11 +385,11 @@
 	\begin{block}{Proof (Continued)}
 		\vspace{-0.3cm}
 		\[
-			\bbE\left[d\bx | \bx(0) \right] = \bbE\left[\bff(\bx, t) | \bx(0) \right] dt
+			\bbE\left[d\bx | \bx(0) \right] = f(t) \bmu(t, \bx(0)) dt
 		\]
         \eqpause
 		\[
-			\frac{d \bbE\left[\bx(t) | \bx(0) \right]}{dt} = \frac{d \bmu(t, \bx(0))}{dt} = \bbE\left[\bff(\bx, t) | \bx(0) \right] 
+			\frac{d \bbE\left[\bx(t) | \bx(0) \right]}{dt} = \frac{d \bmu(t, \bx(0))}{dt} = f(t) \bmu(t, \bx(0)) 
 		\]
 	\end{block}
     \eqpause
@@ -397,12 +397,12 @@
 	\begin{block}{Examples}
 		\vspace{-0.5cm}
 		\[
-			\textbf{NCSN:}\quad	\bff(\bx, t) = 0 \quad \Rightarrow \quad \bmu = \bx(0)
+			\textbf{NCSN:}\quad	f(t) = 0 \quad \Rightarrow \quad \bmu = \bx(0)
 		\]
         \eqpause
 		\vspace{-0.5cm}
 		\[
-			\textbf{DDPM:}\quad \bff(\bx, t) = - \frac{1}{2} \beta(t) \bx(t)\;\;   \Rightarrow\quad \frac{d \bmu}{dt} = - \frac{1}{2} \beta(t) \bmu
+			\textbf{DDPM:}\quad f(t) = - \frac{1}{2} \beta(t)\;\;   \Rightarrow\quad \frac{d \bmu}{dt} = - \frac{1}{2} \beta(t) \bmu
 		\]
         \eqpause
 		\vspace{-0.3cm}

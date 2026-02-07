@@ -34,9 +34,9 @@ The course is supported by seminars and hands-on assignments that help build int
 |  |  | <b>Seminar 1:</b> Introduction. Maximum likelihood estimation. Histograms. Bayes theorem. PixelCNN. VAR. | [slides](seminars/seminar1/) <a href="https://colab.research.google.com/github/r-isachenko/2024-DGM-MIPT-YSDA-course/blob/main/seminars/seminar1/PixelCNN.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> |
 | 2 | February, 5 | <b>Lecture 2:</b> Normalizing Flow (NF). Linear NF. Gaussian autoregressive NF. Coupling layer (RealNVP). Latent Variable Models (LVM). | [slides](lectures/lecture2/Lecture2.pdf) |
 |  |  | <b>Seminar 2:</b> Planar and Radial Flows. Forward vs Reverse KL. | [slides](seminars/seminar2/) |
-<!---
 | 3 | September, 30 | <b>Lecture 3:</b> Latent variable models (LVM). Variational lower bound (ELBO). Аmortized inference. ELBO gradients, reparametrization trick. Variational Autoencoder (VAE). | [slides](lectures/lecture3/Lecture3.pdf) |
 |  |  | <b>Seminar 3:</b> Forward vs Reverse KL. RealNVP. | [slides](seminars/seminar3/) |
+<!---
 | 4 | October, 7 | <b>Lecture 4:</b> Discrete VAE latent representations. Vector quantization, straight-through gradient estimation (VQ-VAE). ELBO surgery and optimal VAE prior. Learnable VAE prior. | [slides](lectures/lecture4/Lecture4.pdf) |
 |  |  | <b>Seminar 4:</b> Gaussian Mixture Model (GMM). GMM and MLE. ELBO and EM-algorithm. GMM via EM-algorithm. Variational EM algorithm for GMM. | [slides](seminars/seminar4/) |
 | 5 | October, 14 | <b>Lecture 5:</b>  Likelihood-free learning. GAN optimality theorem. Wasserstein distance. Wasserstein GAN (WGAN). | [slides](lectures/lecture5/Lecture5.pdf) |
