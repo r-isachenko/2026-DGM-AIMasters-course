@@ -71,7 +71,7 @@
 		\end{align*}
 		\vspace{-0.5cm}
 	\end{block}
-	\textbf{Note:} Increasing $\gamma$ sharpens $p(\by | \bx_t)$, making it more contrast
+	\textbf{Note:} Increasing $\gamma$ sharpens $p(\by | \bx_t)$, increasing contrast
 	\[
 		\hat{p}(\by | \bx_t) \propto p(\by | \bx_t)^{\gamma}.
 	\]
@@ -330,7 +330,7 @@
 		\vspace{-0.2cm}
 	\end{block}
 	\begin{itemize}
-		\item The KFP theorem is necessary and sufficient condition (it is uniquely defines $p_t(\bx)$).
+		\item The KFP theorem is a necessary and sufficient condition (it uniquely defines $p_t(\bx)$).
 		\item This generalizes the continuity equation for continuous-time NF:
 		\[
 			\frac{d \log p_t(\bx(t))}{d t} = - \tr \left( \frac{\partial \bff(\bx, t)}{\partial \bx} \right).
@@ -640,7 +640,7 @@
 %=======
 \begin{frame}{Summary}
 	\begin{itemize}
-		\item The continuity equation allows us to compute $\log p(\bx, t)$ at any time $t$.
+		\item The continuity equation describes the evolution of $\log p(\bx, t)$ over time.
 		\vfill
 		\item An SDE defines a stochastic process with drift and diffusion terms; ODEs are a special case of SDEs.
 		\vfill

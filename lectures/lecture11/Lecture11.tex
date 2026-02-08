@@ -368,7 +368,7 @@
 		q(\bx(t) | \bx(0)) = \cN\Bigl(\bmu(t, \bx(0)), \bsigma^2(t, \bx(0)) \cdot \bI \Bigr) 
 	\]
 	\[
-		\nabla_{\bx(t)} \log q(\bx(t) | \bx(0)) = - \frac{1}{\bsigma} \odot (\bx(t) - \bmu)
+		\nabla_{\bx(t)} \log q(\bx(t) | \bx(0)) = - \frac{1}{\bsigma^2} \odot (\bx(t) - \bmu)
 	\]
 	\textbf{Note:} Normality holds for $\bff(\bx, t)$ affine in $\bx$ ($\bff(\bx, t) = f(t) \bx$).
     \eqpause
@@ -385,7 +385,7 @@
 \begin{frame}{Score-Based Generative Models Through SDEs}
 	\myfootnotewithlink{https://users.aalto.fi/~asolin/sde-book/sde-book.pdf}{Särkkä S., Solin A. Applied stochastic differential equations, 2019}
 	\[
-		q(\bx(t) | \bx(0)) = \cN\Bigl(\bmu(t, \bx(0)), \bSigma(t, \bx(0))\Bigr)
+		q(\bx(t) | \bx(0)) = \cN\Bigl(\bmu(t, \bx(0)), \bsigma^2(t, \bx(0)) \cdot \bI\Bigr)
 	\]
 	\vspace{-0.5cm}
 	\begin{block}{Theorem}
@@ -394,7 +394,7 @@
 			\frac{d \bmu(t, \bx(0))}{dt} = f(t) \bmu(t, \bx(0))
 		\]
 		\[
-			\frac{d \bSigma(t, \bx(0))}{dt} = 2 f(t) \bSigma(t, \bx(0)) + g^2(t) \cdot \bI
+			\frac{d \bsigma^2(t, \bx(0))}{dt} = 2 f(t) \bsigma^2(t, \bx(0)) + g^2(t) \cdot \bI
 		\]
 	\end{block}
     \eqpause
