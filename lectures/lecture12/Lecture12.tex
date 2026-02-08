@@ -28,8 +28,8 @@
 		There's a reverse SDE for $d\bx = \bff(\bx, t) dt + g(t) d\bw$ in the following form:
 		\vspace{-0.3cm}
 		\[
-			d\bx = \left(\bff(\bx, t) {\color{violet}- g^2(t) \frac{\partial}{\partial \bx}\log p_t(\bx)}\right) dt + g(t) d \bw, \quad dt < 0
-		\] 
+			d\bx = \left(\bff(\bx, t) {\color{violet}- g^2(t) \frac{\partial}{\partial \bx}\log p_t(\bx)}\right) dt + g(t) d \bar{\bw}, \quad dt < 0
+		\]
 	\end{block}
 	\vspace{-0.5cm}
 	\begin{block}{Sketch of the Proof}
@@ -47,7 +47,7 @@
 	\begin{align*}
 		d\bx &= \bff(\bx, t) dt + g(t) d \bw \qquad\quad\;\:\, \text{(SDE)} \\
 		d\bx &= \left(\bff(\bx, t) -\frac{1}{2} g^2(t) \frac{\partial}{\partial \bx} \log p_t(\bx) \right) dt \;\,\,\, \text{(probability flow ODE)} \\
-		d\bx &= \left(\bff(\bx, t) - g^2(t) \frac{\partial }{\partial \bx}\log p_t(\bx)\right) dt + g(t) d \bw \quad \text{(reverse SDE)}
+		d\bx &= \left(\bff(\bx, t) - g^2(t) \frac{\partial }{\partial \bx}\log p_t(\bx)\right) dt + g(t) d \bar{\bw} \quad \text{(reverse SDE)}
 	\end{align*}
 	\vspace{-0.5cm}
 	\begin{figure}

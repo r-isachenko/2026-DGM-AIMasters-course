@@ -166,10 +166,10 @@
 		There exists a reverse SDE for $d\bx = \bff(\bx, t) dt + g(t) d \bw$, given by:
 		\vspace{-0.3cm}
 		\[
-			d\bx = \left(\bff(\bx, t) {\color{violet}- g^2(t) \frac{\partial}{\partial \bx}\log p_t(\bx)}\right) dt + g(t) d \bw
+			d\bx = \left(\bff(\bx, t) {\color{violet}- g^2(t) \frac{\partial}{\partial \bx}\log p_t(\bx)}\right) dt + g(t) d \bar{\bw}
 		\]
 		\vspace{-0.5cm}\\
-		where $dt<0$.
+		where $dt<0$ and $\bar{\bw}$ is a reverse-time Wiener process.
 	\end{block}
 \end{frame}
 %=======
@@ -179,10 +179,10 @@
 		There exists a reverse SDE for $d\bx = \bff(\bx, t) dt + g(t) d \bw$, given by:
 		\vspace{-0.3cm}
 		\[
-			d\bx = \left(\bff(\bx, t) {\color{violet}- g^2(t) \frac{\partial}{\partial \bx}\log p_t(\bx)}\right) dt + g(t) d \bw
+			d\bx = \left(\bff(\bx, t) {\color{violet}- g^2(t) \frac{\partial}{\partial \bx}\log p_t(\bx)}\right) dt + g(t) d \bar{\bw}
 		\]
 		\vspace{-0.5cm}\\
-		where $dt<0$.
+		where $dt<0$ and $\bar{\bw}(t)$ is a reverse-time Wiener process.
 	\end{block}
 	\eqpause
 	\textbf{Note:} Again, the score function appears: $\bs(\bx, t) = \frac{\partial}{\partial \bx} \log p_t(\bx)$.
@@ -195,10 +195,10 @@
 	\end{block}
 \end{frame}
 %=======
-\begin{frame}{Reverse SDE}
+\begin{frame}{Proof of Reverse SDE}
 	\myfootnotewithlink{https://arxiv.org/abs/2011.13456}{Song Y., et al. Score-Based Generative Modeling through Stochastic Differential Equations, 2020}	
-	\begin{block}{Proof}
-		\begin{itemize}
+	\vspace{-0.3cm}
+	\begin{itemize}
 			\item Convert the initial SDE to a probability flow ODE:
 			\vspace{-0.1cm}
 			{\footnotesize
@@ -227,8 +227,8 @@
 				d\bx &= \left(-\bff(\bx, 1 - \tau) + g^2(1 - \tau) \frac{\partial}{\partial \bx} \log p_{1 - \tau}(\bx) \right) d \tau + g(1-\tau)d\bw
 			\end{align*}
 			}
+			Here $\bw(\tau)$ is a Wiener process in forward $\tau$-time.
 		\end{itemize}
-	\end{block}
 \end{frame}
 %=======
 \begin{frame}{Reverse SDE}
@@ -237,10 +237,10 @@
 		There exists a reverse SDE for $d\bx = \bff(\bx, t) dt + g(t) d \bw$, given by:
 		\vspace{-0.3cm}
 		\[
-			d\bx = \left(\bff(\bx, t) {\color{violet}- g^2(t) \frac{\partial}{\partial \bx}\log p_t(\bx)}\right) dt + g(t) d \bw
+			d\bx = \left(\bff(\bx, t) {\color{violet}- g^2(t) \frac{\partial}{\partial \bx}\log p_t(\bx)}\right) dt + g(t) d \bar{\bw}
 		\]
 		\vspace{-0.5cm}\\
-		where $dt<0$.
+		where $dt<0$ and $\bar{\bw}(t)$ is a reverse-time Wiener process.
 	\end{block}
 	\begin{block}{Proof (Continued)}
 		\vspace{-0.7cm}
@@ -249,9 +249,9 @@
 		\]
 		\eqpause
 		\[
-			d\bx = \left(\bff(\bx, t) - g^2(t) \frac{\partial}{\partial \bx}\log p_t(\bx)\right)dt + g(t) d\bw
+			d\bx = \left(\bff(\bx, t) - g^2(t) \frac{\partial}{\partial \bx}\log p_t(\bx)\right)dt + g(t) d\bar{\bw}
 		\]
-		Here $d\tau > 0$ and $dt < 0$.
+		Here $d\tau > 0$, $dt < 0$, and $\bar{\bw}$ is reverse-time Wiener process.
 	\end{block}
 \end{frame}
 %=======
@@ -261,7 +261,7 @@
 	\begin{align*}
 		d\bx &= \bff(\bx, t) dt + g(t) d \bw \;\; - \text{SDE} \\
 		d\bx &= \left(\bff(\bx, t) -\frac{1}{2} g^2(t) \frac{\partial}{\partial \bx} \log p_t(\bx) \right) dt \;\; - \text{Probability Flow ODE} \\
-		d\bx &= \left(\bff(\bx, t) - g^2(t) \frac{\partial}{\partial \bx}\log p_t(\bx)\right) dt + g(t) d \bw \;\; - \text{Reverse SDE}
+		d\bx &= \left(\bff(\bx, t) - g^2(t) \frac{\partial}{\partial \bx}\log p_t(\bx)\right) dt + g(t) d \bar{\bw} \;\; - \text{Reverse SDE}
 	\end{align*}
 	\eqpause
 	\vspace{-0.7cm}
@@ -299,7 +299,7 @@
 	\vspace{-0.5cm}
 	\begin{align*}
 		d\bx &= \left(-\frac{1}{2} \frac{ d [\sigma^2(t)]}{dt} \frac{\partial}{\partial \bx} \log p_t(\bx) \right) dt \qquad\quad\, \text{(probability flow ODE)} \\
-		d\bx &= \left(- \frac{ d [\sigma^2(t)]}{dt} \frac{\partial}{\partial \bx}\log p_t(\bx)\right) dt + \sqrt{\frac{ d [\sigma^2(t)]}{dt}}  d \bw \ \text{(reverse SDE)}
+		d\bx &= \left(- \frac{ d [\sigma^2(t)]}{dt} \frac{\partial}{\partial \bx}\log p_t(\bx)\right) dt + \sqrt{\frac{ d [\sigma^2(t)]}{dt}}  d \bar{\bw} \ \ \text{(reverse SDE)}
 	\end{align*}
 \end{frame}
 %=======
@@ -318,9 +318,8 @@
     \eqpause
 	\begin{align*}
 		d\bx &= \left(- \frac{1}{2} \beta(t) \bx(t) - \frac{1}{2} \beta(t) \frac{\partial}{\partial \bx} \log p_t(\bx) \right) dt \quad\quad \text{(probability flow ODE)} \\
-		d\bx &= \left(- \frac{1}{2} \beta(t) \bx(t) - \beta(t) \frac{\partial}{\partial \bx} \log p_t(\bx)\right) dt + \sqrt{\beta(t)} d \bw\ \ \text{(reverse SDE)}
+		d\bx &= \left(- \frac{1}{2} \beta(t) \bx(t) - \beta(t) \frac{\partial}{\partial \bx} \log p_t(\bx)\right) dt + \sqrt{\beta(t)} d \bar{\bw}\ \ \text{(reverse SDE)}
 	\end{align*}
-    \eqpause
 \end{frame}
 %=======
 \section{Score-Based Generative Models Through SDEs}
