@@ -166,7 +166,7 @@
 \section{Latent Variable Models (LVM) (continued)}
 %=======
 \begin{frame}{Latent Variable Models (LVM)}
-	\begin{block}{Maximum Likelihood Extimation (MLE) Problem}
+	\begin{block}{Maximum Likelihood Estimation (MLE) Problem}
 		\vspace{-0.7cm}
 		\[
 			\btheta^* = \argmax_{\btheta} \pt(\bX) = \argmax_{\btheta} \prod_{i=1}^n \pt(\bx_i) = \argmax_{\btheta} \sum_{i=1}^n \log \pt(\bx_i).
@@ -248,7 +248,7 @@
 	\begin{block}{Naive Monte Carlo Estimation}
 		\vspace{-0.7cm}
 		\[
-			\log \pt(\bx) = \log \bbE_{p(\bz)} \pt(\bx | \bz) \geq \bbE_{p(\bz)} \log \pt(\bx | \bz) \approx \frac{1}{K} \sum_{k=1}^{K} \log \pt(\bx | \bz_k),
+			\log \pt(\bx) = \log \bbE_{p(\bz)} \pt(\bx | \bz) \leq \bbE_{p(\bz)} \log \pt(\bx | \bz) \approx \frac{1}{K} \sum_{k=1}^{K} \log \pt(\bx | \bz_k),
 		\]
 		\vspace{-0.7cm} \\
 		where $\bz_k \sim p(\bz)$. \\
@@ -272,8 +272,8 @@
 		\vspace{-0.5cm}
 		\begin{multline*}
 			\log \pt(\bx) = \int q(\bz) \log \pt(\bx) d\bz 
-			\nextonslide{= \bbE_{q} \left[ \frac{\pt(\bx, \bz)}{\pt(\bz | \bx)}  \right]}
-			\nextonslide{= \\ = \bbE_{q} \left[ \frac{\pt(\bx, \bz) {\color{teal}q(\bz)}}{\pt(\bz | \bx) {\color{teal}q(\bz)}}  \right]}
+			\nextonslide{= \bbE_{q} \log \left[ \frac{\pt(\bx, \bz)}{\pt(\bz | \bx)}  \right]}
+			\nextonslide{= \\ = \bbE_{q} \log \left[ \frac{\pt(\bx, \bz) {\color{teal}q(\bz)}}{\pt(\bz | \bx) {\color{teal}q(\bz)}}  \right]}
 			\nextonslide{= \\ = \bbE_{q}  \log \frac{\pt(\bx, \bz)}{q(\bz)} + \bbE_{q} \log \frac{q(\bz)}{\pt(\bz | \bx)}}
 		\end{multline*}
 		\vspace{-0.5cm}
@@ -407,7 +407,7 @@
 	\end{block}
 \end{frame}
 %=======
-\begin{frame}{ELBO optimization}
+\begin{frame}{ELBO Optimization}
 	\myfootnote{Bishop C., Deep Learning: Foundations and Concepts, 2024}
 	\begin{block}{Gradient Update}
 		\[
@@ -429,14 +429,14 @@
 		
 \end{frame}
 %=======
-\begin{frame}{ELBO optimization}
+\begin{frame}{ELBO Optimization}
 	\begin{block}{ELBO}
 		\vspace{-0.3cm}
 		\[
 			\log \pt(\bx) = \cL_{\bphi, \btheta}(\bx) + \KL(q_{\bphi}(\bz| \bx) \| \pt(\bz|\bx)) \geq \cL_{\bphi, \btheta}(\bx).
 		\]
 		\[
-		 	\cL_{q, \btheta}(\bx) = \bbE_{q} \log \pt(\bx | \bz) - \KL(q_{\bphi}(\bz| \bx) \| p(\bz))
+		 	\cL_{\bphi, \btheta}(\bx) = \bbE_{q} \log \pt(\bx | \bz) - \KL(q_{\bphi}(\bz| \bx) \| p(\bz))
 		\]
 		\vspace{-0.5cm}
 	\end{block}
@@ -469,7 +469,7 @@
 	\myfootnotewithlink{https://jmtomczak.github.io/blog/4/4\_VAE.html}{image credit: https://jmtomczak.github.io/blog/4/4\_VAE.html}
 	\vspace{-0.3cm}
 	\[
-	 	\cL_{q, \btheta}(\bx) = \bbE_{q} \log \pt(\bx | \bz) - \KL (q_{\bphi}(\bz| \bx) \| p(\bz))
+	 	\cL_{\bphi, \btheta}(\bx) = \bbE_{q} \log \pt(\bx | \bz) - \KL (q_{\bphi}(\bz| \bx) \| p(\bz))
 	\]
 	\vspace{-0.5cm}
 	\eqpause
@@ -571,7 +571,7 @@
 \section{Variational Autoencoder (VAE)}
 %=======
 \begin{frame}{Generative Models Taxonomy}
-	\renderTaxonomy{}
+	\renderTaxonomy{vae}
 \end{frame}
 %=======
 \begin{frame}{Variational Autoencoder (VAE)}
@@ -608,7 +608,7 @@
 	\myfootnote{\href{http://ijdykeman.github.io/ml/2016/12/21/cvae.html}{image credit: http://ijdykeman.github.io/ml/2016/12/21/cvae.html} \\ \href{https://arxiv.org/abs/1906.02691}{Kingma D. P., Welling M., An Introduction to Variational Autoencoders, 2019}}
 	\vspace{-0.3cm}
 	\[
-	 	\cL_{q, \btheta}(\bx) = \bbE_{q} \log \pt(\bx | \bz) - \KL (q_{\bphi}(\bz| \bx) \| p(\bz))
+	 	\cL_{\bphi, \btheta}(\bx) = \bbE_{q} \log \pt(\bx | \bz) - \KL (q_{\bphi}(\bz| \bx) \| p(\bz))
 	\]
 	\vspace{-0.7cm}
 	\begin{minipage}[t]{0.6\columnwidth}

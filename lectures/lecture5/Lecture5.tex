@@ -205,7 +205,7 @@
 	\myfootnotewithlink{https://arxiv.org/abs/1406.2661}{Goodfellow I. J. et al. Generative Adversarial Networks, 2014}
 	\begin{itemize}
 		\item The more expressive the discriminator, the closer we get to the optimal $\pt(\bx)$.
-		\item Standard classifiers are trained by minimizing cross-entropy loss $-\bbE_{\hat{p}(\bx, y)} \log p(y | \bx)$ with $\hat{p}(\bx, y) = \frac{1}{2} [y=1]\pd(\bx) + \frac{1}{2} [y=0]\pt(\bx)$.
+		\item Standard classifiers are trained by minimizing cross-entropy loss $-\bbE_{\hat{p}(\bx, y)} \log p(y | \bx)$ with $\hat{p}(\bx, y) = \frac{1}{2} \bbI_{y=1}\pd(\bx) + \frac{1}{2} \bbI_{y=0}\pt(\bx)$.
 	\end{itemize}
 	\eqpause
 	\begin{block}{Cross-Entropy for Discriminator}
@@ -253,7 +253,7 @@
 \section{Generative Adversarial Networks (GAN)}
 %=======
 \begin{frame}{Generative Models Taxonomy}
-	\renderTaxonomy{}
+	\renderTaxonomy{gan}
 \end{frame}
 %=======
 \begin{frame}{GAN Optimality}
@@ -463,7 +463,7 @@
 		\item ${\color{olive}\gamma (\bx_1, \bx_2)}$ is the transport plan: the amount of “dirt” assigned from $\bx_1$ to $\bx_2$.
 		\vspace{-0.2cm}
 		\[
-		\int \gamma(\bx_1, \bx_2) d \bx = p(\bx_2); \quad \int \gamma(\bx_1, \bx_2) d \bx_2 = \pi(\bx_1).
+		\int \gamma(\bx_1, \bx_2) d \bx_1 = p(\bx_2); \quad \int \gamma(\bx_1, \bx_2) d \bx_2 = \pi(\bx_1).
 		\]
 		\vspace{-0.6cm}
 		\item ${\color{teal}\Gamma(\pi, p)}$ denotes the set of all joint distributions $\gamma (\bx_1, \bx_2)$ with marginals $\pi$ and $p$.
@@ -539,7 +539,7 @@
 			\JSD(\pi \| p_t) &\rightarrow 0 \\
 			W(\pi \| p_t) &\rightarrow 0
 		\end{align}
-		In summary, as $t \rightarrow \infty$, (1) $\Rightarrow$ (2), and (2) $\Rightarrow$ (3).
+		As $t \rightarrow \infty$, (1) $\Rightarrow$ (2), and (2) $\Rightarrow$ (3). That is, convergence in Wasserstein distance is a weaker condition than convergence in JSD, which in turn is weaker than convergence in KL.
 	\end{block}
 \end{frame}
 %=======

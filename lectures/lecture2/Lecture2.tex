@@ -13,7 +13,7 @@
 \begin{frame}{Recap of Previous Lecture}
 	We're given \textbf{finite} number of i.i.d.\ samples $\{\bx_i\}_{i=1}^n \subset \bbR^m$ drawn from an \textbf{unknown} distribution $\pd(\bx)$.
 	\begin{block}{Objective}
-		Our aim is to learn a distribution $\pd(\bx)$ that allows us to: 
+		Our aim is to estimate a distribution $\pd(\bx)$ that allows us to: 
 		\begin{itemize}
 		    \item Generate new samples from $\pd(\bx)$ (sample $\bx \sim \pd(\bx)$) --- \textbf{generation}.		    
 		    \item Evaluate $\pd(\bx)$ on novel data (answering ``How likely is an object $\bx$?'') --- \textbf{density estimation}; 
@@ -35,7 +35,7 @@
 	\begin{block}{Forward KL Divergence}
 		\vspace{-0.2cm}
 		\[
-		\KL(\pd \| \pt) = \int \pi (\bx) \log \frac{\pd(\bx)}{\pt(\bx)}\, d \bx \rightarrow \min_{\btheta}
+		\KL(\pd \| \pt) = \int \pd (\bx) \log \frac{\pd(\bx)}{\pt(\bx)}\, d \bx \rightarrow \min_{\btheta}
 		\]
 	\end{block}
 	\begin{block}{Reverse KL Divergence}
@@ -566,7 +566,7 @@
 \end{frame}
 %=======
 \begin{frame}{Latent Variable Models (LVM)}
-	\begin{block}{Maximum Likelihood Extimation (MLE) Problem}
+	\begin{block}{Maximum Likelihood Estimation (MLE) Problem}
 		\vspace{-0.7cm}
 		\[
 			\btheta^* = \argmax_{\btheta} \pt(\bX) = \argmax_{\btheta} \prod_{i=1}^n \pt(\bx_i) = \argmax_{\btheta} \sum_{i=1}^n \log \pt(\bx_i).

@@ -71,7 +71,7 @@
 		\end{align*}
 		\vspace{-0.5cm}
 	\end{block}
-	\textbf{Note:} Increasing $\gamma$ sharpens $p(\by | \bx_t)$, making it more contrast
+	\textbf{Note:} Increasing $\gamma$ sharpens $p(\by | \bx_t)$, increasing contrast
 	\[
 		\hat{p}(\by | \bx_t) \propto p(\by | \bx_t)^{\gamma}.
 	\]
@@ -274,7 +274,7 @@
 	\]
 	\vspace{-0.3cm}
 	\eqpause
-	\begin{block}{Discretizing the SDE (Euler Update Step) – \SDESolve}
+	\begin{block}{Discretizing the SDE (Euler-Maruyama Update) – \SDESolve}
 		\vspace{-0.3cm}
 		\[
 			{\color{violet}\bx(t + dt) = \bx(t) + \bff(\bx(t), t) \cdot dt} + {\color{teal}g(t) \cdot \bepsilon \cdot \sqrt{dt}}
@@ -330,7 +330,7 @@
 		\vspace{-0.2cm}
 	\end{block}
 	\begin{itemize}
-		\item The KFP theorem is necessary and sufficient condition (it is uniquely defines $p_t(\bx)$).
+		\item The KFP theorem is a necessary and sufficient condition (it uniquely defines $p_t(\bx)$).
 		\item This generalizes the continuity equation for continuous-time NF:
 		\[
 			\frac{d \log p_t(\bx(t))}{d t} = - \tr \left( \frac{\partial \bff(\bx, t)}{\partial \bx} \right).
@@ -392,6 +392,122 @@
 		\vspace{-0.3cm}
 	\end{block}
 	We (partially) explained, why Langevin dynamics is working.
+\end{frame}
+%=======
+\section{Diffusion and Score Matching SDEs}
+%=======
+\begin{frame}{Score Matching SDE}
+	\myfootnotewithlink{https://arxiv.org/abs/2011.13456}{Song Y., et al. Score-Based Generative Modeling through Stochastic Differential Equations, 2020}
+	\vspace{-0.3cm}
+	\begin{block}{Denoising Score Matching}
+		\vspace{-0.7cm}
+		\begin{align*}
+			\bx_t &= \bx + \sigma_t \cdot \bepsilon_t, & q(\bx_t | \bx) &= \cN(\bx, \sigma_t^2 \cdot \bI) \\
+			\bx_{t-1} &= \bx + \sigma_{t-1} \cdot \bepsilon_{t-1}, & q(\bx_{t-1} | \bx) &= \cN(\bx, \sigma_{t-1}^2 \cdot \bI)
+		\end{align*}
+	\end{block}
+	\eqpause
+	\vspace{-1.0cm}
+	\[
+		\bx_t = \bx_{t - 1} + \sqrt{\sigma^2_t - \sigma^2_{t-1}} \cdot \bepsilon, \quad q(\bx_{t} | \bx_{t-1}) = \cN(\bx_{t-1}, (\sigma_t^2 - \sigma_{t-1}^2) \cdot \bI)
+	\]
+	\eqpause
+	Let's transform this Markov chain into the continuous stochastic process~$\bx(t)$ by letting $T \rightarrow \infty$:
+	\vspace{-0.3cm}
+	\begin{align*}
+		\bx(t) &= \bx(t - dt) + \sqrt{\sigma^2(t) - \sigma^2(t - dt)} \cdot {\color{violet}\bepsilon}
+		\nextonslide{\\ &= \bx(t - dt) + \sqrt{\frac{\sigma^2(t) - \sigma^2(t - dt)}{dt} {\color{violet}dt}} \cdot {\color{violet}\bepsilon}}
+		 \nextonslide{\\ &= \bx(t - dt) + \sqrt{\frac{ d [\sigma^2(t)]}{dt}} \cdot {\color{violet}d \bw}}
+	\end{align*}
+	\vspace{-0.5cm}
+\end{frame}
+%=======
+\begin{frame}{Score Matching SDE}
+	\myfootnotewithlink{https://arxiv.org/abs/2011.13456}{Song Y., et al. Score-Based Generative Modeling through Stochastic Differential Equations, 2020}
+	\vspace{-0.3cm}
+	\[
+		\bx(t) = \bx(t - dt) + \sqrt{\frac{ d [\sigma^2(t)]}{dt}} \cdot d \bw
+	\]
+	\[
+		d\bx = \bx(t) - \bx(t - dt)
+	\]
+    \eqpause
+	\vspace{-0.5cm}
+	\begin{block}{Variance Exploding SDE}
+		\vspace{-0.3cm}
+		\[
+			d \bx = \sqrt{\frac{ d [\sigma^2(t)]}{dt}} \cdot d \bw
+		\]
+		$\sigma(t)$ is a monotonically increasing function.
+	\end{block}
+    \eqpause
+	\vspace{-0.3cm}
+	\[
+		d\bx = \bff(\bx, t) dt + g(t) d \bw
+	\]
+	\[
+		\bff(\bx, t) = 0, \quad g(t) = \sqrt{\frac{ d [\sigma^2(t)]}{dt}} 
+	\]
+\end{frame}
+%=======
+\begin{frame}{Diffusion SDE}
+    \myfootnotewithlink{https://arxiv.org/abs/2011.13456}{Song Y., et al. Score-Based Generative Modeling through Stochastic Differential Equations, 2020}
+	\begin{block}{Denoising Diffusion}
+		\vspace{-0.5cm}
+		\[
+			\bx_t = \sqrt{1 - \beta_t} \cdot \bx_{t - 1} + \sqrt{\beta_t} \cdot \bepsilon, \quad q(\bx_t | \bx_{t-1}) = \cN(\sqrt{1 - \beta_t} \cdot \bx_{t-1}, \beta_t \cdot \bI)
+		\]
+		\vspace{-0.5cm}
+	\end{block}
+    \eqpause
+	Let's turn this Markov chain into a continuous stochastic process by letting $T \rightarrow \infty$ and setting $\beta_t = \beta(\frac{t}{T}) \cdot \frac{1}{T}$ (where $dt = \frac{1}{T}$):
+	\begin{multline*}
+		{\color{teal}\bx(t)} = \sqrt{1 - \beta(t) dt} \cdot \bx(t - dt) + \sqrt{\beta(t)dt} \cdot \bepsilon 
+		\nextonslide{\approx \\ \approx \left(1 - \frac{1}{2} \beta(t) dt\right) \cdot \bx(t - dt) + \sqrt{\beta(t){\color{violet}dt}} \cdot {\color{violet}\bepsilon}}
+		\nextonslide{= \\ = {\color{teal}\bx(t - dt)} - \frac{1}{2} \beta(t) \bx(t - dt) dt  + \sqrt{\beta(t)} \cdot {\color{violet}d \bw}}
+	\end{multline*}
+\end{frame}
+%=======
+\begin{frame}{Diffusion SDE}
+	\myfootnotewithlink{https://arxiv.org/abs/2011.13456}{Song Y., et al. Score-Based Generative Modeling through Stochastic Differential Equations, 2020}
+	\[
+		\bx(t) = \bx(t - dt) - \frac{1}{2} \beta(t) \bx(t - dt) dt  + \sqrt{\beta(t)} \cdot {\color{violet}d \bw}
+	\]
+	\eqpause
+	\begin{block}{Variance Preserving SDE}
+		\vspace{-0.3cm}
+		\[
+			d \bx = - \frac{1}{2} \beta(t) \bx(t) dt + \sqrt{\beta(t)} \cdot d \bw
+		\]
+		\[
+			\bff(\bx, t) = - \frac{1}{2} \beta(t) \bx(t) , \quad g(t) = \sqrt{\beta(t)} 
+		\]
+	\end{block}
+	Variance is preserved as long as $\bx(0)$ has unit variance.
+\end{frame}
+%=======
+\begin{frame}{Diffusion SDE}
+	\myfootnotewithlink{https://arxiv.org/abs/2206.00927}{Lu C. et al. Dpm-solver: A fast ode solver for diffusion probabilistic model sampling in around 10 steps, 2022}
+	\vspace{-0.3cm}
+	\[
+		d\bx = {\color{teal}\bff(\bx, t)} dt + {\color{violet}g(t)} d \bw
+	\]
+    \eqpause
+	\vspace{-0.3cm}
+	\begin{block}{Variance Exploding SDE (NCSN)}
+		\vspace{-0.3cm}
+		\[
+			d \bx = {\color{violet}\sqrt{\frac{ d [\sigma^2(t)]}{dt}}} \cdot d \bw
+		\]
+		\vspace{-0.3cm}
+	\end{block}
+	\begin{block}{Variance Preserving SDE (DDPM)}
+		\vspace{-0.3cm}
+		\[
+			d \bx = {\color{teal}- \frac{1}{2} \beta(t) \bx(t)} dt + {\color{violet}\sqrt{\beta(t)}} \cdot d \bw
+		\]
+	\end{block}
+	We treat the discrete-time methods (NCSN, DDPM) as a special case of the continuous-time methods (VE-SDE, VP-SDE).
 \end{frame}
 %=======
 \section{Probability Flow ODE}
@@ -506,147 +622,25 @@
 	\end{figure}
 \end{frame}
 %=======
-\section{Reverse SDE}
-%=======
-\begin{frame}{Reverse SDE}
-	\myfootnotewithlink{https://arxiv.org/abs/2011.13456}{Song Y., et al. Score-Based Generative Modeling through Stochastic Differential Equations, 2020}
-	\vspace{-0.3cm}
-	\[
-		d\bx = \bff(\bx, t) dt,\qquad \bx(t + dt) = \bx(t) + \bff(\bx, t) dt
-	\]
-	Here $dt$ can be $>0$ or $<0$.
-	\eqpause
-	\begin{block}{Reverse ODE}
-		Let $\tau = 1 - t$ ($d\tau = -dt$).
-		\vspace{-0.3cm}
-		\[
-			d\bx = - \bff(\bx, 1 - \tau) d\tau
-		\]
-	\end{block}
-	\eqpause
-	\vspace{-0.5cm}
+\begin{frame}{Why do we need to convert SDEs to PF-ODEs?}
 	\begin{itemize}
-		\item How do we reverse the SDE $d\bx = \bff(\bx, t) dt + g(t) d \bw$? 
-		\item The Wiener process introduces randomness that must be reversed.
+		\item We could use \SDESolve to discretize the SDE.
+		\item However, this is not efficient (trajectories are not smooth).
 	\end{itemize}
 	\eqpause
-	\vspace{-0.3cm}
-	\begin{block}{Theorem}
-		There exists a reverse SDE for $d\bx = \bff(\bx, t) dt + g(t) d \bw$, given by:
-		\vspace{-0.3cm}
-		\[
-			d\bx = \left(\bff(\bx, t) {\color{violet}- g^2(t) \frac{\partial}{\partial \bx}\log p_t(\bx)}\right) dt + g(t) d \bw
-		\]
-		\vspace{-0.5cm}\\
-		where $dt<0$.
-	\end{block}
-\end{frame}
-%=======
-\begin{frame}{Reverse SDE}
-	\myfootnotewithlink{https://arxiv.org/abs/2011.13456}{Song Y., et al. Score-Based Generative Modeling through Stochastic Differential Equations, 2020}
-	\begin{block}{Theorem}
-		There exists a reverse SDE for $d\bx = \bff(\bx, t) dt + g(t) d \bw$, given by:
-		\vspace{-0.3cm}
-		\[
-			d\bx = \left(\bff(\bx, t) {\color{violet}- g^2(t) \frac{\partial}{\partial \bx}\log p_t(\bx)}\right) dt + g(t) d \bw
-		\]
-		\vspace{-0.5cm}\\
-		where $dt<0$.
-	\end{block}
-	\eqpause
-	\textbf{Note:} Again, the score function appears: $\bs(\bx, t) = \frac{\partial}{\partial \bx} \log p_t(\bx)$.
-	\begin{block}{Proof Sketch}
+	\begin{block}{Efficient Solvers}
 		\begin{itemize}
-			\item Convert the initial SDE to a probability flow ODE.
-			\item Reverse the probability flow ODE.
-			\item Convert the reversed probability flow ODE back to an SDE.
+			\item Converting SDEs to PF-ODEs yields more efficient inference.
+			\item We can apply any \ODESolve procedure to reduce the number of inference steps.
+			\item For example, we can use Heun's / Runge-Kutta methods to solve the PF-ODE instead of Euler's method.
+			\item In practice, this reduces the number of steps from $100$--$1000$ to $20$--$50$.
 		\end{itemize}
 	\end{block}
-\end{frame}
-%=======
-\begin{frame}{Reverse SDE}
-	\myfootnotewithlink{https://arxiv.org/abs/2011.13456}{Song Y., et al. Score-Based Generative Modeling through Stochastic Differential Equations, 2020}	
-	\begin{block}{Proof}
-		\begin{itemize}
-			\item Convert the initial SDE to a probability flow ODE:
-			\vspace{-0.1cm}
-			{\footnotesize
-			\begin{align*}
-				d\bx &= \bff(\bx, t) dt + g(t) d \bw \\
-				d\bx &= \left(\bff(\bx, t) -\frac{1}{2} g^2(t) \frac{\partial}{\partial \bx} \log p_t(\bx) \right) dt
-			\end{align*}
-			}
-			\vspace{-0.5cm}
-			\eqpause
-			\item Reverse the probability flow ODE:
-			\vspace{-0.1cm}
-			{\footnotesize
-			\begin{align*}
-				d\bx &= \left(\bff(\bx, t) -\frac{1}{2} g^2(t) \frac{\partial}{\partial \bx} \log p_t(\bx) \right) dt \\
-				d\bx &= \left(-\bff(\bx, 1 - \tau) + \frac{1}{2} g^2(1 - \tau) \frac{\partial}{\partial \bx} \log p_{1 - \tau}(\bx) \right) d\tau
-			\end{align*}
-			}
-			\vspace{-0.5cm}
-			\eqpause
-			\item Convert the reversed probability flow ODE back to an SDE:
-			\vspace{-0.1cm}
-			{\footnotesize
-			\begin{align*}
-				d\bx &= \left(-\bff(\bx, 1 - \tau) + \frac{1}{2} g^2(1 - \tau) \frac{\partial}{\partial \bx} \log p_{1 - \tau}(\bx) \right) d \tau \\
-				d\bx &= \left(-\bff(\bx, 1 - \tau) + g^2(1 - \tau) \frac{\partial}{\partial \bx} \log p_{1 - \tau}(\bx) \right) d \tau + g(1-\tau)d\bw
-			\end{align*}
-			}
-		\end{itemize}
-	\end{block}
-\end{frame}
-%=======
-\begin{frame}{Reverse SDE}
-	\myfootnotewithlink{https://arxiv.org/abs/2011.13456}{Song Y., et al. Score-Based Generative Modeling through Stochastic Differential Equations, 2020}
-	\begin{block}{Theorem}
-		There exists a reverse SDE for $d\bx = \bff(\bx, t) dt + g(t) d \bw$, given by:
-		\vspace{-0.3cm}
-		\[
-			d\bx = \left(\bff(\bx, t) {\color{violet}- g^2(t) \frac{\partial}{\partial \bx}\log p_t(\bx)}\right) dt + g(t) d \bw
-		\]
-		\vspace{-0.5cm}\\
-		where $dt<0$.
-	\end{block}
-	\begin{block}{Proof (Continued)}
-		\vspace{-0.7cm}
-		\[
-			d\bx = \left(-\bff(\bx, 1 - \tau) + g^2(1 - \tau) \frac{\partial}{\partial \bx} \log p_{1 - \tau}(\bx) \right)d\tau + g(1 - \tau) d \bw
-		\]
-		\eqpause
-		\[
-			d\bx = \left(\bff(\bx, t) - g^2(t) \frac{\partial}{\partial \bx}\log p_t(\bx)\right)dt + g(t) d\bw
-		\]
-		Here $d\tau > 0$ and $dt < 0$.
-	\end{block}
-\end{frame}
-%=======
-\begin{frame}{Reverse SDE}
-	\myfootnotewithlink{https://arxiv.org/abs/2011.13456}{Song Y., et al. Score-Based Generative Modeling through Stochastic Differential Equations, 2020}
-	\vspace{-0.3cm}
-	\begin{align*}
-		d\bx &= \bff(\bx, t) dt + g(t) d \bw \;\; - \text{SDE} \\
-		d\bx &= \left(\bff(\bx, t) -\frac{1}{2} g^2(t) \frac{\partial}{\partial \bx} \log p_t(\bx) \right) dt \;\; - \text{Probability Flow ODE} \\
-		d\bx &= \left(\bff(\bx, t) - g^2(t) \frac{\partial}{\partial \bx}\log p_t(\bx)\right) dt + g(t) d \bw \;\; - \text{Reverse SDE}
-	\end{align*}
-	\eqpause
-	\vspace{-0.7cm}
-	\begin{itemize}
-		\item This framework allows us to transform one distribution into another via an SDE with a prescribed probability path $p_t(\bx)$.
-		\item We can invert this process using the score function.
-	\end{itemize}
-	\vspace{-0.3cm}
-	\begin{figure}
-		\includegraphics[width=0.9\linewidth]{figs/sde}
-	\end{figure}
 \end{frame}
 %=======
 \begin{frame}{Summary}
 	\begin{itemize}
-		\item The continuity equation allows us to compute $\log p(\bx, t)$ at any time $t$.
+		\item The continuity equation describes the evolution of $\log p(\bx, t)$ over time.
 		\vfill
 		\item An SDE defines a stochastic process with drift and diffusion terms; ODEs are a special case of SDEs.
 		\vfill
@@ -655,8 +649,6 @@
 		\item The Langevin SDE preserves a constant probability path.
 		\vfill
 		\item Every SDE admits a corresponding probability flow ODE following the same probability path.
-		\vfill
-		\item SDEs can be reversed using the score function.
 	\end{itemize}
 \end{frame}
 \end{document}

@@ -138,7 +138,7 @@
 		\vspace{-0.7cm}
 		\begin{multline*}
             \cL_{\bphi, \btheta}(\bx) =  {\color{olive}\bbE_{q(\bx_1 | \bx_0)} \log \pt(\bx_0 | \bx_1)} - {\color{violet}\KL\bigl(q(\bx_T | \bx_0) \| p(\bx_T)\bigr)} - \\
-            - {\color{teal}\sum_{t=2}^\top \underbrace{ \bbE_{q(\bx_t | \bx_0)} \KL \bigl(q(\bx_{t-1} | \bx_t, \bx_0) \| \pt(\bx_{t-1} | \bx_t)\bigr)}_{\cL_t}}
+            - {\color{teal}\sum_{t=2}^T \underbrace{ \bbE_{q(\bx_t | \bx_0)} \KL \bigl(q(\bx_{t-1} | \bx_t, \bx_0) \| \pt(\bx_{t-1} | \bx_t)\bigr)}_{\cL_t}}
         \end{multline*}
 		\vspace{-0.7cm}
 	\end{block}
@@ -710,7 +710,7 @@
 %=======
 \begin{frame}{Summary}
 	\begin{itemize}
-		\item For sequences, the forward process of discrete diffusionfactorize over positions, but
+		\item For sequences, the forward process of discrete diffusion factorize over positions, but
 		reverse process (the model $\pt$) conditions on the whole context.
 		\vfill
 		\item In the absorbing case, tokens are either unchanged or masked; so only masked tokens contribute to the ELBO loss.
