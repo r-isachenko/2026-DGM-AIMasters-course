@@ -118,228 +118,96 @@
 	\end{multline*}
 \end{frame}
 %=======
-\begin{frame}{Outline}
-	\tableofcontents
-\end{frame}
-%=======
-\section{Evaluation of Likelihood-Free Models}
-%=======
-\begin{frame}{Evaluation of Likelihood-Free Models}
-\myfootnotewithlink{https://deepgenerativemodels.github.io}{image credit: https://deepgenerativemodels.github.io}
-	\begin{block}{Likelihood-Based Models}
-		\begin{itemize}
-			\item \textbf{Train:} fit the model.
-			\item \textbf{Validation:} tune hyperparameters.
-			\item \textbf{Test:} assess generalization by reporting likelihood.
-		\end{itemize}
-	\end{block}
-	\eqpause
-	Not all models have tractable likelihoods \\ (VAE: compare ELBO values; GAN: \textbf{???}).
-	\eqpause
-	\begin{block}{Desirable Properties for Samples}
-		\begin{itemize}
-			\item Sharpness
-			\begin{figure}
-				\centering
-				\includegraphics[width=0.9\linewidth]{figs/sharpness}
-			\end{figure}
-			\eqpause
-			\item Diversity
-			\begin{figure}
-				\centering
-				\includegraphics[width=0.9\linewidth]{figs/diversity}
-			\end{figure}
-		\end{itemize}
-	\end{block}
-\end{frame}
-%=======
-\subsection{Frechet Inception Distance (FID)}
-%=======
-\begin{frame}{Wasserstein Metric}
-	\myfootnotewithlink{https://arxiv.org/abs/1706.08500}{Heusel M. et al. GANs Trained by a Two Time-Scale Update Rule Converge to a Local Nash Equilibrium, 2017}
-	\vspace{-0.2cm}
-	\[
-		W_s(\pi \| p) = \inf_{\gamma \in \Gamma(\pi, p)} \left(\bbE_{(\bx_1, \bx_2) \sim \gamma} \| \bx_1 - \bx_2 \|^s\right)^{1/s}
-	\]
-	\eqpause
+\begin{frame}{Recap of Previous Lecture}
+    \myfootnotewithlink{https://arxiv.org/abs/1706.08500}{Heusel M. et al. GANs Trained by a Two Time-Scale Update Rule Converge to a Local Nash Equilibrium, 2017}
 	\vspace{-0.3cm}
-	\begin{block}{Wasserstein GAN (Optimal Transport)}
-		\vspace{-0.5cm}
-		{\small
-		\[
-			W(\pi \| p) = \inf_{\gamma \in \Gamma(\pi, p)} \bbE_{(\bx_1, \bx_2) \sim \gamma} \| \bx_1 - \bx_2 \| =  \inf_{\gamma\in {\Gamma(\pi, p)}} \int { \| \bx_1 - \bx_2 \|} {\gamma (\bx_1, \bx_2)} d \bx_1 d \bx_2
-		\]
-		}
-		\vspace{-0.5cm}
-	\end{block}
-	\eqpause
-	\begin{block}{Theorem}
-		If $\pi(\bx) = \cN(\bmu_\pi, \bSigma_\pi)$, $p(\bx) = \cN(\bmu_p, \bSigma_p)$, then
-		\vspace{-0.2cm}
-		\[
-			W_2^2(\pi \| p) = \| \bmu_{\pi} - \bmu_{p}\|^2 + \tr \left[ \bSigma_{\pi} + \bSigma_p - 2 \left(\bSigma_{\pi}^{1/2} \bSigma_p \bSigma_{\pi}^{1/2} \right)^{1/2} \right]
-		\]
-		\vspace{-0.7cm}
-	\end{block}
-	\eqpause
-	\begin{block}{Frechet Inception Distance}
+	\begin{block}{Frechet Inception Distance (FID)}
+		For normal distributions $\pd(\bx_1) = \cN(\bmu_{\text{data}}, \bSigma_{\text{data}})$, $p(\bx_2) = \cN(\bmu_{\boldsymbol{\theta}}, \bSigma_{\boldsymbol{\theta}})$:
 		\vspace{-0.3cm}
-		\[
-			\FID (\pd, \pt) =  W_2^2(\pd \| \pt)
-		\]
-		\vspace{-0.6cm}
+		\begin{multline*}
+			\FID (\pd, \pt) =  W_2^2(\pd, \pt) = \inf_{\gamma \in \Gamma(\pd, \pt)} \bbE_{(\bx_1, \bx_2) \sim \gamma} \| \bx_1 - \bx_2 \|^2 \\
+			= \| \bmu_{\text{data}} - \bmu_{\boldsymbol{\theta}}\|^2 + \tr \left[ \bSigma_{\text{data}} + \bSigma_{\boldsymbol{\theta}} - 2 \left(\bSigma_{\text{data}}^{1/2} \bSigma_{\boldsymbol{\theta}} \bSigma_{\text{data}}^{1/2} \right)^{1/2} \right]
+		\end{multline*}
+		\vspace{-0.4cm}
 	\end{block}
-\end{frame}
-%=======
-\begin{frame}{Frechet Inception Distance (FID)}
-	\myfootnotewithlink{https://arxiv.org/abs/2401.09603}{Jayasumana S. et al. Rethinking FID: Towards a Better Evaluation Metric for Image Generation, 2024}
-	\vspace{-0.3cm}
-	\[
-		\FID (\pd, \pt) = \| \bmu_{\text{data}} - \bmu_{\boldsymbol{\theta}}\|^2 + \tr \left[ \bSigma_{\text{data}} + \bSigma_{\boldsymbol{\theta}} - 2 \left(\bSigma_{\text{data}}^{1/2} \bSigma_{\boldsymbol{\theta}} \bSigma_{\text{data}}^{1/2} \right)^{1/2} \right]
-	\]
-	\vspace{-0.5cm}
 	\begin{itemize}
-		\item FID is computed in the latent space $\bz$.
-		\item We use a pretrained image embedder to get latent representations $\bz = \bff(\bx)$.
-		\item $\bmu_{\text{data}}$, $\bSigma_{\text{data}}$ and $\bmu_{\boldsymbol{\theta}}$, $\bSigma_{\boldsymbol{\theta}}$ are statistics of latent representations for samples from $\pd(\bx)$ and $\pt(\bx)$.
-	\end{itemize}
-	\eqpause
-	\begin{block}{$FID(p(\bx), \cN(0, \bI))$}
-		\begin{figure}
-			\includegraphics[width=0.95\linewidth]{figs/fid_normal}
-		\end{figure}
-	\end{block}
-\end{frame}
-%=======
-\begin{frame}{Frechet Inception Distance (FID)}
-	\myfootnotewithlink{https://arxiv.org/abs/2401.09603}{Jayasumana S. et al. Rethinking FID: Towards a Better Evaluation Metric for Image Generation, 2024}
-	\vspace{-0.4cm}
-	\[
-		\FID (\pd, \pt) = \| \bmu_{\text{data}} - \bmu_{\boldsymbol{\theta}}\|^2 + \tr \left[ \bSigma_{\text{data}} + \bSigma_{\boldsymbol{\theta}} - 2 \left(\bSigma_{\text{data}}^{1/2} \bSigma_{\boldsymbol{\theta}} \bSigma_{\text{data}}^{1/2} \right)^{1/2} \right]
-	\]
-	\eqpause
-	\vspace{-0.3cm}
-	\begin{block}{Drawbacks}
-		\begin{itemize}
-			\item Depends on the pretrained classification network.
-			\item Uses the normality assumption.
-			\item May not correlate with human evaluation.
-		\end{itemize}
-	\end{block}
-	\begin{figure}
-		\includegraphics[width=0.7\linewidth]{figs/fid_vs_human_eval}
-	\end{figure}
-\end{frame}
-%=======
-\subsection{Precision-Recall}
-%=======
-\begin{frame}{Precision-Recall}
-	\myfootnotewithlink{https://arxiv.org/abs/1904.06991}{Kynkäänniemi T. et al. Improved precision and recall metric for assessing generative models, 2019}
-	\vspace{-0.5cm}
-	\begin{block}{Desirable Properties for Samples}
-		\begin{itemize}
-			\item \textbf{Sharpness}: generated samples should possess high visual quality.
-			\item \textbf{Diversity}: their variation should match that in the training data.
-		\end{itemize}
-	\end{block}
-	\eqpause
-	\vspace{-0.5cm}
-	\begin{figure}
-		\includegraphics[width=0.9\linewidth]{figs/pr_curve}
-	\end{figure}
-	\vspace{-0.3cm}
-	\begin{itemize}
-		\item \textbf{Precision} denotes the fraction of generated images that look realistic.
-		\item \textbf{Recall} measures how well the generator covers the training data manifold.
+		\item Requires a large sample size for evaluation
+		\item FID computation is relatively slow
+		\item Results are highly dependent on the chosen pretrained classifier
+		\item Relies on the normality assumption
 	\end{itemize}
 \end{frame}
 %=======
-\begin{frame}{Precision-Recall}
-	\myfootnotewithlink{https://arxiv.org/abs/1904.06991}{Kynkäänniemi T. et al. Improved precision and recall metric for assessing generative models, 2019}
+\begin{frame}{Recap of Previous Lecture}
+    \myfootnotewithlink{https://arxiv.org/abs/1904.06991}{Kynkäänniemi T. et al. Improved precision and recall metric for assessing generative models, 2019}
 	\vspace{-0.2cm}
 	\begin{itemize}
-		\item $\cS_{\text{data}} = \{\bx_i\}_{i=1}^{n} \sim \pd(\bx)$ -- real samples;
-		\item $\cS_{\btheta} = \{\bx_i\}_{i=1}^{n} \sim \pt(\bx)$ -- generated samples.
+		\item $\cS_{\text{data}} = \{\bx_i\}_{i=1}^{n} \sim \pd(\bx)$: real samples
+		\item $\cS_{\btheta} = \{\bx_i\}_{i=1}^{n} \sim \pt(\bx)$: generated samples
 	\end{itemize}
-	\eqpause
-	Define a binary function:
+	Define a binary indicator function:
 	\vspace{-0.2cm}
 	\[
-		\bbI(\bx, \cS) =
+		\bbI(\bx, \cS) = 
 		\begin{cases}
-			1, & \text{if } \exists\ \bx' \in \cS: \| \bx - \bx'\|_2 \leq \| \bx' - \NN_k(\bx', \cS)\|_2; \\
-			0, & \text{otherwise.}
+			1, & \text{if}~ \exists~ \bx' \in \cS: \| \bx  - \bx'\|_2 \leq \| \bx' - \NN_k(\bx', \cS)\|_2; \\
+			0, & \text{otherwise}
 		\end{cases}
 	\]
-	\eqpause
 	\vspace{-0.3cm}
 	\[
 		\text{Pr} (\cS_{\text{data}}, \cS_{\btheta}) = \frac{1}{n} \sum_{\bx \in \cS_{\btheta}} \bbI(\bx, \cS_{\text{data}}); \quad \text{Rec} (\cS_{\text{data}}, \cS_{\btheta}) = \frac{1}{n} \sum_{\bx \in \cS_{\text{data}}} \bbI(\bx, \cS_{\btheta}).
 	\]
-	\eqpause
-	\vspace{-0.6cm}
+	\vspace{-0.7cm}
 	\begin{figure}
 		\includegraphics[width=0.75\linewidth]{figs/pr_k_nearest}
 	\end{figure}
-	\eqpause
-	Embed the samples using a pretrained network (as in FID).
+	\vspace{-0.3cm}
+	The samples are embedded using a pretrained network, as in FID evaluation.
 \end{frame}
 %=======
-\begin{frame}{Precision-Recall}
-	\myfootnotewithlink{https://arxiv.org/abs/1904.06991}{Kynkäänniemi T. et al. Improved precision and recall metric for assessing generative models, 2019}
-	\vspace{-0.3cm}
-	\begin{figure}
-		\includegraphics[width=\linewidth]{figs/pr_vs_fid}
-	\end{figure}
-	\eqpause
-	\vspace{-0.3cm}
-	\begin{figure}
-		\includegraphics[width=0.75\linewidth]{figs/pr_truncation}
-	\end{figure}
-\end{frame}
-%=======
-\subsection{CLIP Score}
-%=======
-\begin{frame}{CLIP Score}
-	\myfootnotewithlink{https://arxiv.org/abs/2103.00020}{Radford A. et al. Learning transferable visual models from natural language supervision, 2021} 
-	\vspace{-0.5cm}
+\begin{frame}{Recap of Previous Lecture}
+    \myfootnotewithlink{https://arxiv.org/abs/2103.00020}{Radford A. et al. Learning transferable visual models from natural language supervision, 2021} 
+	\vspace{-0.2cm}
 	\begin{minipage}{0.5\linewidth}
 		\begin{block}{Unconditional Model}
 			\begin{figure}
 				\includegraphics[width=0.95\linewidth]{figs/uncond_model}
 			\end{figure}
 		\end{block}
-		\vspace{0.2cm}
 	\end{minipage}%
 	\begin{minipage}{0.5\linewidth}
+		\vspace{0.2cm}
 		\begin{block}{Conditional Model}
 			\begin{figure}
 				\includegraphics[width=0.95\linewidth]{figs/cond_model}
 			\end{figure}
 		\end{block}
 	\end{minipage}
-
-	\eqpause
-	We need a way to measure not only the quality of the generated image, but also how well it's aligned with the prompt.
-	\eqpause
-	\begin{figure}
-		\includegraphics[width=0.6\linewidth]{figs/clip}
-	\end{figure}
+	We require metrics that evaluate not only the quality of generated images, but also their relevance to the prompt.
+	\begin{block}{CLIP Score}
+		\begin{figure}
+			\includegraphics[width=0.5\linewidth]{figs/clip}
+		\end{figure}
+	\end{block}
 \end{frame}
 %=======
-\subsection{Human Evaluation}
-%=======
-\begin{frame}{Human Evaluation}
-	\myfootnotewithlink{https://ya.ru/ai/art}{YandexART 2.5, 2025} 
+\begin{frame}{Recap of Previous Lecture}
+    \myfootnotewithlink{https://ya.ru/ai/art}{YandexART 2.5, 2025} 
 	\begin{itemize}
-		\item No automated metric is perfect.
-		\item The best way to evaluate generative models is by human assessment.
-		\item It's important to assess various properties.
+		\item No perfect automatic evaluation metric exists
+		\item The most reliable assessment is via human evaluation
+		\item It's important to evaluate a variety of model aspects
 	\end{itemize}
-	\eqpause
-	\begin{figure}
-		\includegraphics[width=1.0\linewidth]{figs/yaart_2.5}
-	\end{figure}
+	\begin{block}{Human Evaluation}
+		\begin{figure}
+			\includegraphics[width=1.0\linewidth]{figs/yaart_2.5}
+		\end{figure}
+	\end{block}
+\end{frame}
+%=======
+\begin{frame}{Outline}
+	\tableofcontents
 \end{frame}
 %=======
 \section{Langevin Dynamics}
@@ -593,14 +461,6 @@
 %=======
 \begin{frame}{Summary}
 	\begin{itemize}
-		\item Frechet Inception Distance is the most popular metric for evaluating implicit generative models.
-		\vfill
-		\item Precision-recall allows for choosing a model that balances sample quality and diversity.
-		\vfill
-		\item The CLIP score is widely used to measure text-to-image alignment.
-		\vfill
-		\item The gold standard for evaluating generated image quality is human assessment.
-		\vfill
 		\item Langevin dynamics enable sampling from generative models using gradients of the log-likelihood.
 		\vfill
 		\item Score matching proposes minimizing Fisher divergence to estimate the score function.
