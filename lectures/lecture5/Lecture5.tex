@@ -773,19 +773,13 @@
 %=======
 \begin{frame}{Summary}
 	\begin{itemize}
-		\item Adversarial learning casts distribution matching as a minimax game.
-		\vfill
 		\item GANs, in theory, optimize the Jensen-Shannon divergence.
 		\vfill
-		\item KL and JS divergences fail as objectives when the model and data distributions are disjoint.
+		\item Wasserstein distance works in the case of disjoint data and model distributions (despite of KL and JS divergences).
 		\vfill
-		\item The Earth Mover's (Wasserstein) distance provides a more meaningful loss for distribution matching.
+		\item Wasserstein GAN uses Kantorovich-Rubinstein duality to make Monte Carlo estimation of the Wasserstein distance. It enforces the Lipschitz condition on the critic through weight clipping.
 		\vfill
-		\item Kantorovich-Rubinstein duality allows us to compute the EM distance using only samples.
-		\vfill
-		\item Wasserstein GAN enforces the Lipschitz condition on the critic through weight clipping---although better alternatives exist.
-		\vfill
-		\item Frechet Inception Distance is the most popular metric for evaluating implicit generative models.
+		\item FID is the most popular metric for evaluating implicit generative models.
 		\vfill
 		\item Precision-recall allows for choosing a model that balances sample quality and diversity.
 		\vfill
