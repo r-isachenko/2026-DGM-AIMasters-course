@@ -2271,6 +2271,69 @@ where $i$ is treated as random variable:
 	\myfootnotewithlink{https://arxiv.org/abs/1705.07120}{Tomczak J. M., Welling M. VAE with a VampPrior, 2017}
 \end{frame}
 %=======
+\begin{frame}{Optimal VAE Prior}
+	\myfootnotewithlink{https://jmtomczak.github.io/blog/7/7\_priors.html}{image credit: https://jmtomczak.github.io/blog/7/7\_priors.html}
+	\begin{itemize}
+		\item Standard Gaussian $p(\bz) = \cN(0, \bI)$ often leads to over-regularization.
+		\item $p(\bz) = q_{\text{agg}, \bphi}(\bz) = \frac{1}{n}\sum_{i=1}^n q_{\bphi}(\bz| \bx_i)$ risks overfitting and incurs high computational cost.
+	\end{itemize}
+    \eqpause
+	\vspace{-0.5cm}
+	\begin{minipage}[t]{0.5\columnwidth}
+		\begin{block}{Non-Learnable Prior $p(\bz)$}
+			\begin{figure}[h]
+				\centering
+				\includegraphics[width=0.6\linewidth]{figs/non_learnable_prior}
+			\end{figure}
+		\end{block}
+	\end{minipage}%
+	\begin{minipage}[t]{0.5\columnwidth}
+		\begin{block}{Learnable Prior $p_{\blambda}(\bz)$}
+			\begin{figure}[h]
+				\centering
+				\includegraphics[width=0.6\linewidth]{figs/learnable_prior}
+			\end{figure}
+		\end{block}
+	\end{minipage}
+    \eqpause
+	\vspace{-0.3cm}
+	\[
+	\frac{1}{n}\sum_{i=1}^n \cL_{\bphi, \btheta}(\bx_i) = \text{RL} - \text{MI} -  \KL(q_{\text{agg}, \bphi}(\bz) \| {\color{teal}p_{\blambda}(\bz)})
+	\]
+	This is the forward KL divergence with respect to $p_{\blambda}(\bz)$.
+\end{frame}
+%=======
+\begin{frame}{NF-Based VAE Prior}
+	\myfootnotewithlink{https://arxiv.org/abs/1611.02731}{Chen X. et al. Variational Lossy Autoencoder, 2016}
+	\begin{block}{NF Model in Latent Space}
+		\vspace{-0.5cm}
+		\[
+			\log p_{\blambda}(\bz) = \log p(\bz^*) + \log  \left | \det \left(\frac{d \bz^*}{d\bz}\right)\right| = \log p(\bff_{\blambda}(\bz)) + \log \left | \det (\bJ_\bff)\right| 
+		\]
+		\vspace{-0.3cm}
+		\[
+			\bz = \bg_{\blambda}(\bz^*) = \bff^{-1}_{\blambda}(\bz^*)
+		\]
+	\end{block}
+    \eqpause
+	\vspace{-0.3cm}
+	\begin{itemize}
+		\item RealNVP with coupling layers,
+		\item Autoregressive normalizing flows (efficient $\bff_{\blambda}(\bz)$, but $\bg_{\blambda}(\bz^*)$ can be slow).
+	\end{itemize}
+    \eqpause
+	\begin{block}{ELBO with NF-Based VAE Prior}
+		\vspace{-0.5cm}
+		{\small
+			\begin{multline*}
+				\cL_{\bphi, \btheta}(\bx) = \bbE_{q_{\bphi}(\bz| \bx)} \log \pt(\bx| \bz) - \KL(q_{\bphi}(\bz| \bx) \| p(\bz))
+				\nextonslide{= \\ = \bbE_{q_{\bphi}(\bz| \bx)} \left[ \log \pt(\bx | \bz) + {\color{violet}\log p_{\blambda}(\bz)} - \log q_{\bphi}(\bz| \bx) \right]}
+				\nextonslide{= \\ = \bbE_{q_{\bphi}(\bz| \bx)} \Bigl[ \log \pt(\bx | \bz) + \underbrace{ \Bigl({\color{violet} \log p(\bff_{\blambda}(\bz)) + \log \left| \det (\bJ_\bff) \right|} \Bigr) }_{\text{NF-based prior}} - \log q_{\bphi}(\bz| \bx) \Bigr]} 
+			\end{multline*}
+		}
+	\end{block}
+\end{frame}
+%=======
 \subsection{VAE limitations: posterior distribution}
 %=======
 \begin{frame}{Normalizing Flows in VAE posterior}
