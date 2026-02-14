@@ -9,32 +9,6 @@
 	\resetonslide
 \end{frame}
 %=======
-
-\begin{frame}{Recap of Previous Lecture}
-	\begin{block}{Likelihood-Free Learning}
-		\begin{itemize}
-			\item Likelihood isn't a perfect metric for generative models.
-			\item Likelihood may be intractable.
-		\end{itemize}
-	\end{block}
-	Imagine we have two sets of samples:
-	\begin{itemize}
-		\item $\{\bx_i\}_{i=1}^{n_1} \sim \pd(\bx)$ -- real samples;
-		\item $\{\bx_i\}_{i=1}^{n_2} \sim \pt(\bx)$ -- generated (fake) samples.
-	\end{itemize}
-	\[
-		p(y = 1 | \bx) = P(\bx \sim \pd(\bx)); \quad p(y = 0 | \bx) = P(\bx \sim \pt(\bx))
-	\]
-	\vspace{-0.5cm}
-	\begin{block}{Assumption}
-		The generative distribution $\pt(\bx)$ matches the true distribution $\pd(\bx)$ if we can't distinguish between them using a discriminative model $p(y|\bx)$.
-	\end{block}
-	\begin{itemize}
-		\item \textbf{Generator:} a generative model $\bx = \bG(\bz)$ that produces more realistic samples.
-		\item \textbf{Discriminator:} a classifier $D(\bx) \in [0, 1]$ distinguishing real from generated samples.
-	\end{itemize}
-\end{frame}
-%=======
 \begin{frame}{Recap of Previous Lecture}
 	\myfootnotewithlink{https://arxiv.org/abs/1406.2661}{Goodfellow I. J. et al. Generative Adversarial Networks, 2014}
 	\begin{block}{GAN Optimality Theorem}
