@@ -106,32 +106,15 @@
 \end{frame}
 %=======
 \begin{frame}{Recap of Previous Lecture}
-	\myfootnotewithlink{https://arxiv.org/abs/1611.02731}{Chen X. et al. Variational Lossy Autoencoder, 2016}
+	\myfootnotewithlink{https://arxiv.org/abs/1505.05770}{Rezende D. J., Mohamed S. Variational Inference with Normalizing Flows, 2015}
 	\begin{itemize}
-		\item Standard Gaussian $p(\bz) = \cN(0, \bI)$ $\Rightarrow$ over-regularization.
-		\item $p(\bz) = q_{\text{agg}, \bphi}(\bz) = \frac{1}{n}\sum_{i=1}^n q_{\bphi}(\bz| \bx_i)$ $\Rightarrow$ overfitting and extremely high computational cost.
+		\item \textbf{Prior mismatch:} The unimodal encoder $q_{\bphi}(\bz|\bx)$ yields $q_{\text{agg}, \bphi}(\bz)$ that often does not match the Gaussian prior $p(\bz)$.
+		\item \textbf{Blurriness from averaging:} With Gaussian decoder, ELBO minimization gives $\bmu^*(\bz) = \bbE_{q_{\bphi}(\bx|\bz)}[\bx]$. If distinct inputs $\bx \neq \bx'$ map to \emph{overlapping} latent regions, the decoder averages over unrelated data.
 	\end{itemize}
-	\begin{block}{Revisiting ELBO}
-		\vspace{-0.4cm}
-		\[
-		\frac{1}{n}\sum_{i=1}^n \cL_{\bphi, \btheta}(\bx_i) = \text{RL} - \text{MI} -  \KL(q_{\text{agg}, \bphi}(\bz) \,\|\, {\color{violet}p_{\blambda}(\bz)})
-		\]
-		This is the forward KL divergence with respect to $p_{\blambda}(\bz)$.
-	\end{block}
-	\begin{block}{ELBO with Learnable VAE Prior}
-		\vspace{-0.6cm}
-		{\small
-			\begin{multline*}
-				\cL_{\bphi, \btheta}(\bx) = \bbE_{q_{\bphi}(\bz| \bx)} \left[ \log \pt(\bx | \bz) + {\color{violet}\log p_{\blambda}(\bz)} - \log q_{\bphi}(\bz| \bx) \right] \\
-				= \bbE_{q_{\bphi}(\bz| \bx)} \Bigl[ \log \pt(\bx | \bz) + \underbrace{ \Bigl({\color{violet} \log p(f_{\blambda}(\bz)) + \log \left| \det (\bJ_\bff) \right|} \Bigr) }_{\text{flow-based prior}} - \log q_{\bphi}(\bz| \bx) \Bigr] 
-			\end{multline*}
-		}
-		\vspace{-0.5cm}
-		\[
-			\bz = \bff^{-1}_{\blambda}(\bz^*) = \bg_{\blambda}(\bz^*), \quad \bz^* \sim p(\bz^*) = \cN(0, \bI)
-		\]
-	\end{block}
-	\vspace{-0.5cm}
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.7\linewidth]{figs/agg_posterior}
+	\end{figure}
 \end{frame}
 %=======
 \begin{frame}{Outline}

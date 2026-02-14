@@ -2277,7 +2277,7 @@ where $i$ is treated as random variable:
 		\item Standard Gaussian $p(\bz) = \cN(0, \bI)$ often leads to over-regularization.
 		\item $p(\bz) = q_{\text{agg}, \bphi}(\bz) = \frac{1}{n}\sum_{i=1}^n q_{\bphi}(\bz| \bx_i)$ risks overfitting and incurs high computational cost.
 	\end{itemize}
-    \eqpause
+    
 	\vspace{-0.5cm}
 	\begin{minipage}[t]{0.5\columnwidth}
 		\begin{block}{Non-Learnable Prior $p(\bz)$}
@@ -2295,7 +2295,7 @@ where $i$ is treated as random variable:
 			\end{figure}
 		\end{block}
 	\end{minipage}
-    \eqpause
+    
 	\vspace{-0.3cm}
 	\[
 	\frac{1}{n}\sum_{i=1}^n \cL_{\bphi, \btheta}(\bx_i) = \text{RL} - \text{MI} -  \KL(q_{\text{agg}, \bphi}(\bz) \| {\color{teal}p_{\blambda}(\bz)})
@@ -2315,13 +2315,13 @@ where $i$ is treated as random variable:
 			\bz = \bg_{\blambda}(\bz^*) = \bff^{-1}_{\blambda}(\bz^*)
 		\]
 	\end{block}
-    \eqpause
+    
 	\vspace{-0.3cm}
 	\begin{itemize}
 		\item RealNVP with coupling layers,
 		\item Autoregressive normalizing flows (efficient $\bff_{\blambda}(\bz)$, but $\bg_{\blambda}(\bz^*)$ can be slow).
 	\end{itemize}
-    \eqpause
+    
 	\begin{block}{ELBO with NF-Based VAE Prior}
 		\vspace{-0.5cm}
 		{\small
