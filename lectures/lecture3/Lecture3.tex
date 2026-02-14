@@ -144,28 +144,6 @@
 \end{frame}
 %=======
 \begin{frame}{Recap of Previous Lecture}
-	\begin{block}{Posterior Distribution (Bayes' Theorem)}
-		\[
-			p(\btheta | \bx) = \frac{p(\bx | \btheta) p(\btheta)}{p(\bx)} = \frac{p(\bx | \btheta) p(\btheta)}{\int p(\bx | \btheta) p(\btheta) d \btheta} 
-		\]
-		\begin{itemize}
-			\item $\bx$ -- observed variables;
-			\item $\btheta$ -- unobserved variables (latent parameters);
-			\item $\pt(\bx) = p(\bx | \btheta)$ -- likelihood;
-			\item $p(\bx) = \int p(\bx | \btheta) p(\btheta) d \btheta$ -- evidence;
-			\item $p(\btheta)$ -- prior distribution;
-			\item $p(\btheta | \bx)$ -- posterior distribution.
-		\end{itemize}
-	\end{block}
-\end{frame}
-%=======
-\begin{frame}{Outline}
-    \tableofcontents
-\end{frame}
-%=======
-\section{Latent Variable Models (LVM) (continued)}
-%=======
-\begin{frame}{Latent Variable Models (LVM)}
 	\begin{block}{Maximum Likelihood Estimation (MLE) Problem}
 		\vspace{-0.7cm}
 		\[
@@ -173,9 +151,7 @@
 		\]
 		\vspace{-0.5cm}
 	\end{block}
-    \eqpause
 	The distribution $\pt(\bx)$ should be highly complex (just like the true data distribution $\pd(\bx)$).
-    \eqpause
 	\begin{block}{Latent Variable}
 		Introduce a latent variable $\bz$ for each observed sample $\bx$:
 		\[
@@ -186,7 +162,6 @@
 			\nextonslide{\pt(\bx) = \int \pt(\bx, \bz) d\bz = \int \pt(\bx | \bz) p(\bz) d\bz.}
 		\]
 	\end{block}
-    \eqpause
 	\vspace{-0.3cm}
 	\begin{itemize}
 		\item $p(\bz)$ is prior distribution over the latent variable.
@@ -195,43 +170,11 @@
 	\end{itemize}
 \end{frame}
 %=======
-\begin{frame}{Latent Variable Models (LVM)}
-    \myfootnote{Bishop\,C. Pattern Recognition and Machine Learning, 2006}
-	\[
-		\log \pt(\bx) = \log \int \pt(\bx | \bz) p(\bz) d\bz \rightarrow \max_{\btheta}
-	\]
-    \eqpause
-	\vspace{-0.6cm}
-	\begin{block}{Examples}
-		\begin{minipage}[t]{0.45\columnwidth}
-			\textit{Mixture of Gaussians} \\
-			\vspace{-0.5cm}
-			\begin{figure}
-				\centering
-				\includegraphics[width=0.75\linewidth]{figs/mixture_of_gaussians}
-			\end{figure}
-			\vspace{-0.5cm}
-			\begin{itemize}
-				\item $\pt(\bx | z) = \cN(\bmu_z, \bSigma_z)$
-				\item $p(z) = \Cat(\bpi)$
-			\end{itemize}
-		\end{minipage}%
-        \eqpause
-		\begin{minipage}[t]{0.53\columnwidth}
-			\textit{PCA Model} \\
-			\vspace{-0.5cm}
-			\begin{figure}
-				\centering
-				\includegraphics[width=.7\linewidth]{figs/pca}
-			\end{figure}
-			\vspace{-0.3cm}
-			\begin{itemize}
-				\item $\pt(\bx | \bz) = \cN(\bW \bz + \bmu, \sigma^2 \bI)$
-				\item $p(\bz) = \cN(0, \bI)$
-			\end{itemize}
-		\end{minipage}
-	\end{block}
+\begin{frame}{Outline}
+    \tableofcontents
 \end{frame}
+%=======
+\section{Variational Evidence Lower Bound (ELBO)}
 %=======
 \begin{frame}{MLE for LVM}
     \myfootnotewithlink{https://jmtomczak.github.io/blog/4/4\_VAE.html}{image credit: https://jmtomczak.github.io/blog/4/4\_VAE.html}
@@ -248,7 +191,7 @@
 	\begin{block}{Naive Monte Carlo Estimation}
 		\vspace{-0.7cm}
 		\[
-			\log \pt(\bx) = \log \bbE_{p(\bz)} \pt(\bx | \bz) \leq \bbE_{p(\bz)} \log \pt(\bx | \bz) \approx \frac{1}{K} \sum_{k=1}^{K} \log \pt(\bx | \bz_k),
+			\log \pt(\bx) = \log \bbE_{p(\bz)} \pt(\bx | \bz) \geq \bbE_{p(\bz)} \log \pt(\bx | \bz) \approx \frac{1}{K} \sum_{k=1}^{K} \log \pt(\bx | \bz_k),
 		\]
 		\vspace{-0.7cm} \\
 		where $\bz_k \sim p(\bz)$. \\
@@ -256,8 +199,6 @@
 		\textbf{Challenge:} As the dimensionality of $\bz$ increases, the number of samples needed to adequately cover the latent space grows exponentially.
 	\end{block}
 \end{frame}
-%=======
-\section{Variational Evidence Lower Bound (ELBO)}
 %=======
 \begin{frame}{ELBO Derivation I}
 	\begin{block}{Bayes theorem}
@@ -649,8 +590,14 @@
 		\begin{tabular}{l|c|c}
 			& \textbf{VAE} & \textbf{NF} \\ \hline
 			\textbf{Objective} & ELBO $\cL$ & Forward KL/MLE \\ \hline
-			\textbf{Encoder} & \shortstack{stochastic \\ $\bz \sim q_{\bphi}(\bz| \bx)$} &  \shortstack{\\ deterministic \\ $\bz = \bff_{\btheta}(\bx)$ \\ $q_{\btheta}(\bz| \bx) = \delta(\bz - \bff_{\btheta}(\bx))$}  \\ \hline
-			\textbf{Decoder} & \shortstack{stochastic \\ $\bx \sim \pt(\bx| \bz)$} & \shortstack{\\ deterministic \\ $\bx = \bg_{\btheta}(\bz)$ \\ $ \pt(\bx | \bz) = \delta(\bx - \bg_{\btheta}(\bz))$} \\ \hline
+			\textbf{Encoder} & 
+			\shortstack{stochastic \\ $\bz \sim q_{\bphi}(\bz| \bx)$} &  
+			\shortstack{\\ deterministic \\ $\bz = \bff_{\btheta}(\bx)$ \\ 
+			$q_{\btheta}(\bz| \bx) = \delta(\bz - \bff_{\btheta}(\bx))$}  \\ \hline
+			\textbf{Decoder} & 
+			\shortstack{stochastic \\ $\bx \sim \pt(\bx| \bz)$} & 
+			\shortstack{\\ deterministic \\ $\bx = \bff^{-1}_{\btheta}(\bz)$ \\ 
+			$ \pt(\bx | \bz) = \delta(\bx - \bff^{-1}_{\btheta}(\bz))$} \\ \hline
 			\textbf{Parameters}  & $\bphi, \btheta$ & $\btheta \equiv \bphi$\\ 
 		\end{tabular}
 	\end{table}
@@ -658,12 +605,8 @@
 	\eqpause
 	\begin{block}{Theorem}
 		MLE for a normalizing flow is equivalent to maximizing the ELBO for a VAE where:
-		\vspace{-0.3cm}
 		\[
-			\pt(\bx | \bz) = \delta (\bx - \bff^{-1}_{\btheta}(\bz)) = \delta (\bx - \bg_{\btheta}(\bz));
-		\]
-		\vspace{-0.5cm}
-		\[
+			\pt(\bx | \bz) = \delta (\bx - \bff^{-1}_{\btheta}(\bz)); \quad 
 			q_{\btheta}(\bz| \bx) = \delta (\bz - \bff_{\btheta}(\bx)).
 		\]
 	\end{block}
@@ -671,8 +614,6 @@
 %=======
 \begin{frame}{Summary}
 	\begin{itemize}
-		\item LVMs introduce latent representations for observed data, enabling more interpretable models.
-		\vfill
 		\item LVMs maximize the variational evidence lower bound (ELBO) to obtain maximum likelihood estimates for the parameters.
 		\vfill
 		\item Parametric posterior distribution $q_{\bphi}(\bz| \bx)$ makes the method scalable.
