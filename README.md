@@ -1,5 +1,7 @@
 # Deep Generative Models course, AIMasters, 2026
 
+> **Course website:** [https://r-isachenko.github.io/2026-DGM-AIMasters-course/](https://r-isachenko.github.io/2026-DGM-AIMasters-course/)
+
 ## Description
 This course provides a deep dive into the theoretical foundations and practical applications of Deep Generative Models (DGM). While the primary focus is on Computer Vision, the principles covered are universal across modern AI.
 
