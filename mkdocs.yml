@@ -1,0 +1,59 @@
+site_name: "Deep Generative Models — AIMasters 2026"
+site_url: https://r-isachenko.github.io/2026-DGM-AIMasters-course/
+repo_url: https://github.com/r-isachenko/2026-DGM-AIMasters-course
+repo_name: r-isachenko/2026-DGM-AIMasters-course
+
+theme:
+  name: material
+  language: en
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: deep purple
+      accent: amber
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep purple
+      accent: amber
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.tabs.link
+  icon:
+    repo: fontawesome/brands/github
+
+nav:
+  - Home: index.md
+  - Schedule: schedule.md
+  - Lectures: lectures.md
+  - Seminars: seminars.md
+  - Homeworks: homeworks.md
+  - Grading: grading.md
+  - Prerequisites: prerequisites.md
+  - Past editions: past-editions.md
+
+plugins:
+  - search
+
+extra_css:
+  - assets/extra.css
+
+markdown_extensions:
+  - tables
+  - attr_list
+  - md_in_html
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg

@@ -1,0 +1,31 @@
+.grid-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.grid-cards > ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: contents;
+}
+
+.grid-cards > ul > li,
+.grid-cards > p {
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: .4rem;
+  padding: 1rem 1.2rem;
+  transition: box-shadow .2s;
+}
+
+.grid-cards > ul > li:hover,
+.grid-cards > p:hover {
+  box-shadow: 0 2px 8px rgba(0,0,0,.12);
+}
+
+.hw-active {
+  color: var(--md-accent-fg-color);
+  font-weight: 600;
+}
