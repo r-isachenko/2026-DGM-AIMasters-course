@@ -36,12 +36,12 @@ The course is supported by seminars and hands-on assignments that help build int
 |  |  | <b>Seminar 2:</b> Planar and Radial Flows. Forward vs Reverse KL. | [slides](seminars/seminar2/) |
 | 3 | February, 19 | <b>Lecture 3:</b> Latent variable models (LVM). Variational lower bound (ELBO). Аmortized inference. ELBO gradients, reparametrization trick. Variational Autoencoder (VAE). | [slides](lectures/lecture3/Lecture3.pdf) |
 |  |  | <b>Seminar 3:</b> Gaussian Mixture Model (GMM). GMM and MLE. ELBO and EM-algorithm. GMM via EM-algorithm. Variational EM algorithm for GMM. | [slides](seminars/seminar3/) |
-<!---
-| 4 | October, 7 | <b>Lecture 4:</b> Discrete VAE latent representations. Vector quantization, straight-through gradient estimation (VQ-VAE). ELBO surgery and optimal VAE prior. Learnable VAE prior. | [slides](lectures/lecture4/Lecture4.pdf) |
+| 4 | October, 7 | <b>Lecture 4:</b> ELBO surgery and optimal VAE prior. Discrete VAE latent representations. Vector quantization, straight-through gradient estimation (VQ-VAE). Likelihood-free learning. | [slides](lectures/lecture4/Lecture4.pdf) |
 |  |  | <b>Seminar 4:</b> Gaussian Mixture Model (GMM). GMM and MLE. ELBO and EM-algorithm. GMM via EM-algorithm. Variational EM algorithm for GMM. | [slides](seminars/seminar4/) |
-| 5 | October, 14 | <b>Lecture 5:</b>  Likelihood-free learning. GAN optimality theorem. Wasserstein distance. Wasserstein GAN (WGAN). | [slides](lectures/lecture5/Lecture5.pdf) |
+| 5 | October, 14 | <b>Lecture 5:</b> Generative Adversarial Networks (GAN). Wasserstein distance. Wasserstein GAN (WGAN). Evaluation of generative models (FID, Precision-Recall, CLIP score, human eval). | [slides](lectures/lecture5/Lecture5.pdf) |
 |  |  | <b>Seminar 5:</b> VAE: Implementation hints. Vanilla 2D VAE coding. VAE on Binarized MNIST visualization. Posterior collapse. Beta VAE on MNIST.| [slides](seminars/seminar5/seminar5.ipynb) |
-| 6 | October, 21 | <b>Lecture 6:</b> Evaluation of generative models (FID, Precision-Recall, CLIP score, human eval). Langevin dynamic. Score matching. Denoising score matching. | [slides](lectures/lecture6/Lecture6.pdf) |
+<!---
+| 6 | October, 21 | <b>Lecture 6:</b>. Langevin dynamic. Score matching. Denoising score matching. | [slides](lectures/lecture6/Lecture6.pdf) |
 |  |  | <b>Seminar 6:</b>  Vanilla GAN in 1D coding. Mode collapse and vanishing gradients. Non-saturating GAN. Wasserstein GAN (WGAN) and WGAN-GP | [slides](seminars/seminar6/seminar6_wgan.ipynb) |
 | 7 | October, 28 | <b>Lecture 7:</b> Denoising score matching. Noise Conditioned Score Network (NCSN). Forward gaussian diffusion process. Denoising score matching for diffusion. Reverse Gaussian diffusion process. | [slides](lectures/lecture7/Lecture7.pdf) |
 |  |  | <b>Seminar 7:</b> Progressive Growing GAN. StyleGAN | [slides](seminars/seminar7/) |
