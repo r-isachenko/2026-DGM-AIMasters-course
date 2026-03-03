@@ -34,16 +34,16 @@ The course is supported by seminars and hands-on assignments that help build int
 |  |  | <b>Seminar 1:</b> Introduction. Maximum likelihood estimation. Histograms. Bayes theorem. PixelCNN. VAR. | [slides](seminars/seminar1/) <a href="https://colab.research.google.com/github/r-isachenko/2024-DGM-MIPT-YSDA-course/blob/main/seminars/seminar1/PixelCNN.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> |
 | 2 | February, 5 | <b>Lecture 2:</b> Normalizing Flow (NF). Linear NF. Gaussian autoregressive NF. Coupling layer (RealNVP). Latent Variable Models (LVM). Forward vs Reverse KL. RealNVP. | [slides](lectures/lecture2/Lecture2.pdf) |
 |  |  | <b>Seminar 2:</b> Planar and Radial Flows. Forward vs Reverse KL. | [slides](seminars/seminar2/) |
-| 3 | February, 19 | <b>Lecture 3:</b> Latent variable models (LVM). Variational lower bound (ELBO). Аmortized inference. ELBO gradients, reparametrization trick. Variational Autoencoder (VAE). | [slides](lectures/lecture3/Lecture3.pdf) |
+| 3 | February, 12 | <b>Lecture 3:</b> Latent variable models (LVM). Variational lower bound (ELBO). Аmortized inference. ELBO gradients, reparametrization trick. Variational Autoencoder (VAE). | [slides](lectures/lecture3/Lecture3.pdf) |
 |  |  | <b>Seminar 3:</b> Gaussian Mixture Model (GMM). GMM and MLE. ELBO and EM-algorithm. GMM via EM-algorithm. Variational EM algorithm for GMM. | [slides](seminars/seminar3/) |
-| 4 | October, 7 | <b>Lecture 4:</b> ELBO surgery and optimal VAE prior. Discrete VAE latent representations. Vector quantization, straight-through gradient estimation (VQ-VAE). Likelihood-free learning. | [slides](lectures/lecture4/Lecture4.pdf) |
+| 4 | February, 19 | <b>Lecture 4:</b> ELBO surgery and optimal VAE prior. Discrete VAE latent representations. Vector quantization, straight-through gradient estimation (VQ-VAE). Likelihood-free learning. | [slides](lectures/lecture4/Lecture4.pdf) |
 |  |  | <b>Seminar 4:</b> Gaussian Mixture Model (GMM). GMM and MLE. ELBO and EM-algorithm. GMM via EM-algorithm. Variational EM algorithm for GMM. | [slides](seminars/seminar4/) |
-| 5 | October, 14 | <b>Lecture 5:</b> Generative Adversarial Networks (GAN). Wasserstein distance. Wasserstein GAN (WGAN). Evaluation of generative models (FID, Precision-Recall, CLIP score, human eval). | [slides](lectures/lecture5/Lecture5.pdf) |
+| 5 | March, 5 | <b>Lecture 5:</b> Generative Adversarial Networks (GAN). Wasserstein distance. Wasserstein GAN (WGAN). Evaluation of generative models (FID, Precision-Recall, CLIP score, human eval). | [slides](lectures/lecture5/Lecture5.pdf) |
 |  |  | <b>Seminar 5:</b> VAE: Implementation hints. Vanilla 2D VAE coding. VAE on Binarized MNIST visualization. Posterior collapse. Beta VAE on MNIST.| [slides](seminars/seminar5/seminar5.ipynb) |
-<!---
-| 6 | October, 21 | <b>Lecture 6:</b>. Langevin dynamic. Score matching. Denoising score matching. | [slides](lectures/lecture6/Lecture6.pdf) |
+| 6 | March, 12 | <b>Lecture 6:</b>. Langevin dynamic. Score matching. Denoising score matching. Denoising score matching. Noise Conditioned Score Network (NCSN). | [slides](lectures/lecture6/Lecture6.pdf) |
 |  |  | <b>Seminar 6:</b>  Vanilla GAN in 1D coding. Mode collapse and vanishing gradients. Non-saturating GAN. Wasserstein GAN (WGAN) and WGAN-GP | [slides](seminars/seminar6/seminar6_wgan.ipynb) |
-| 7 | October, 28 | <b>Lecture 7:</b> Denoising score matching. Noise Conditioned Score Network (NCSN). Forward gaussian diffusion process. Denoising score matching for diffusion. Reverse Gaussian diffusion process. | [slides](lectures/lecture7/Lecture7.pdf) |
+<!---
+| 7 | October, 28 | <b>Lecture 7:</b> Forward gaussian diffusion process. Denoising score matching for diffusion. Reverse Gaussian diffusion process. | [slides](lectures/lecture7/Lecture7.pdf) |
 |  |  | <b>Seminar 7:</b> Progressive Growing GAN. StyleGAN | [slides](seminars/seminar7/) |
 | 8 | November, 3 | <b>Lecture 8:</b> Gaussian diffusion model as VAE. ELBO for Denoising diffusion probabilistic model (DDPM). Reparametrization and overview of DDPM. | [slides](lectures/lecture8/Lecture8.pdf) |
 |  |  | <b>Seminar 8:</b> Noise Conditioned Score Network (NCSN). Heuristic diffusion model. | [slides](seminars/seminar8/) |
