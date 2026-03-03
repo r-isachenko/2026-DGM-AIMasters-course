@@ -85,140 +85,7 @@
     Here, $\nabla_{\bx_{\sigma}} \log q(\bx_{\sigma} | \bx) = - \frac{\bx_{\sigma} - \bx}{\sigma^2} = - \frac{\bepsilon}{\sigma}$. $\bs_{\btheta, \sigma}(\bx_{\sigma})$ attempts to \textbf{denoise} a corrupted sample.
 \end{frame}
 %=======
-\begin{frame}{Outline}
-	\tableofcontents
-\end{frame}
-%=======
-\section{Score Matching}
-%=======
-\subsection{Denoising Score Matching (continued)}
-%=======
-\begin{frame}{Denoising Score Matching}
-    \myfootnotewithlink{http://www.iro.umontreal.ca/~vincentp/Publications/smdae_techreport.pdf}{Vincent P. A Connection Between Score Matching and Denoising Autoencoders, 2010}
-	\begin{block}{Theorem}
-	\vspace{-0.5cm}
-	\begin{multline*}
-		\bbE_{q(\bx_{\sigma})}\underbrace{\left\| \bs_{\btheta, \sigma}(\bx_{\sigma}) - \nabla_{\bx_{\sigma}} \log q(\bx_{\sigma}) \right\|_2^2}_{h(\bx_{\sigma})} = \\
-		= \bbE_{\pd(\bx)} \bbE_{q(\bx_{\sigma} | \bx)}\left\| \bs_{\btheta, \sigma}(\bx_{\sigma}) - \nabla_{\bx_{\sigma}} \log q(\bx_{\sigma} | \bx) \right\|_2^2 + \text{const}(\btheta)
-	\end{multline*}
-	\vspace{-0.5cm}
-	\end{block}
-    \eqpause
-	\begin{block}{Proof}
-		\vspace{-0.7cm}
-		\begin{multline*}
-			\bbE_{q(\bx_{\sigma})} h(\bx_{\sigma}) = \int {\color{violet}q(\bx_{\sigma})} h(\bx_{\sigma}) d\bx_{\sigma} 
-			\nextonslide{= \\ = \int \left({\color{violet}\int q(\bx_{\sigma} | \bx) \pd(\bx) d\bx}\right) h(\bx_{\sigma}) d\bx_{\sigma} =  \bbE_{\pd(\bx)} \bbE_{q(\bx_{\sigma} | \bx)}  h(\bx_{\sigma})}
-		\end{multline*}
-        \eqpause
-		\vspace{-0.7cm}
-		{\small
-		\begin{multline*}
-			\bbE_{q(\bx_{\sigma})}\left\| \bs_{\btheta, \sigma}(\bx_{\sigma}) - \nabla_{\bx_{\sigma}} \log q(\bx_{\sigma}) \right\|_2^2 = \\ 
-			\nextonslide{= \bbE_{q(\bx_{\sigma})} \Bigl[\| \bs_{\btheta, \sigma}(\bx_{\sigma}) \|^2 + \underbrace{\| \nabla_{\bx_{\sigma}} \log q(\bx_{\sigma}) \|_2^2}_{\text{const}(\btheta)} - 2 {\color{teal}\bs_{\btheta, \sigma}^\top(\bx_{\sigma}) \nabla_{\bx_{\sigma}} \log q(\bx_{\sigma})} \Bigr]}
-		\end{multline*}
-		}
-	\end{block}
-\end{frame}
-%=======
-\begin{frame}{Denoising Score Matching}
-    \myfootnotewithlink{http://www.iro.umontreal.ca/~vincentp/Publications/smdae_techreport.pdf}{Vincent P. A Connection Between Score Matching and Denoising Autoencoders, 2010}
-	\begin{block}{Theorem}
-		\vspace{-0.5cm}
-		\begin{multline*}
-			\bbE_{q(\bx_{\sigma})}\left\| \bs_{\btheta, \sigma}(\bx_{\sigma}) - \nabla_{\bx_{\sigma}} \log q(\bx_{\sigma}) \right\|_2^2 = \\
-			= \bbE_{\pd(\bx)} \bbE_{q(\bx_{\sigma} | \bx)}\left\| \bs_{\btheta, \sigma}(\bx_{\sigma}) - \nabla_{\bx_{\sigma}} \log q(\bx_{\sigma} | \bx) \right\|_2^2 + \text{const}(\btheta)
-		\end{multline*}
-		\vspace{-0.5cm}
-	\end{block}
-	\begin{block}{Proof (Continued)}
-		\vspace{-0.7cm}
-		{\small
-		\begin{multline*}
-			\bbE_{q(\bx_{\sigma})} \left[{\color{teal}\bs_{\btheta, \sigma}^\top(\bx_{\sigma}) \nabla_{\bx_{\sigma}} \log q(\bx_{\sigma})} \right] 
-			\nextonslide{= \int q(\bx_{\sigma}) \left[\bs_{\btheta, \sigma}^\top(\bx_{\sigma}) \frac{\nabla_{\bx_{\sigma}} {\color{violet}q(\bx_{\sigma})}}{q(\bx_{\sigma})} \right] d\bx_{\sigma}}
-			\nextonslide{= \\ = \int \left[\bs_{\btheta, \sigma}^\top(\bx_{\sigma}) \nabla_{\bx_{\sigma}}\left({\color{violet}\int q(\bx_{\sigma} | \bx) \pd(\bx) d\bx}\right) \right] d\bx_{\sigma}}
-			\nextonslide{ = \\ =  \int \int \pd(\bx) \left[\bs_{\btheta, \sigma}^\top(\bx_{\sigma}) {\color{olive}\nabla_{\bx_{\sigma}}q(\bx_{\sigma} | \bx)} \right] d\bx_{\sigma} d\bx}
-			\nextonslide{ = \\ = \int \int \pd(\bx) {\color{olive} q(\bx_{\sigma} | \bx)} \left[\bs_{\btheta, \sigma}^\top(\bx_{\sigma}) {\color{olive}\nabla_{\bx_{\sigma}} \log q(\bx_{\sigma} | \bx)} \right] d\bx_{\sigma} d\bx}
-			\nextonslide{ = \\ = \bbE_{\pd(\bx)} \bbE_{q(\bx_{\sigma} | \bx)} \left[{\color{teal}\bs_{\btheta, \sigma}^\top(\bx_{\sigma}) \nabla_{\bx_{\sigma}} \log q(\bx_{\sigma} | \bx)} \right]}
-		\end{multline*}
-		}
-	\end{block}
-\end{frame}
-%=======
-\begin{frame}{Denoising Score Matching}
-    \myfootnotewithlink{http://www.iro.umontreal.ca/~vincentp/Publications/smdae_techreport.pdf}{Vincent P. A Connection Between Score Matching and Denoising Autoencoders, 2010}
-	\vspace{-0.3cm}
-	\begin{block}{Theorem}
-		\vspace{-0.7cm}
-		\begin{multline*}
-			\bbE_{q(\bx_{\sigma})}\underbrace{\left\| \bs_{\btheta, \sigma}(\bx_{\sigma}) - \nabla_{\bx_{\sigma}} \log q(\bx_{\sigma}) \right\|_2^2}_{h(\bx_{\sigma})} = \\
-			= \bbE_{\pd(\bx)} \bbE_{q(\bx_{\sigma} | \bx)}\left\| \bs_{\btheta, \sigma}(\bx_{\sigma}) - \nabla_{\bx_{\sigma}} \log q(\bx_{\sigma} | \bx) \right\|_2^2 + \text{const}(\btheta)
-		\end{multline*}
-		\vspace{-0.9cm}
-	\end{block}
-	\begin{block}{Proof (Continued)}
-		\vspace{-0.3cm}
-		\[
-			\bbE_{q(\bx_{\sigma})} h(\bx_{\sigma})=  \bbE_{\pd(\bx)} \bbE_{q(\bx_{\sigma} | \bx)}  h(\bx_{\sigma})
-		\]
-        \eqpause
-		{\small
-		\[
-			\bbE_{q(\bx_{\sigma})} \left[\bs_{\btheta, \sigma}^\top(\bx_{\sigma}) \nabla_{\bx_{\sigma}} \log q(\bx_{\sigma}) \right] = \bbE_{\pd(\bx)} \bbE_{q(\bx_{\sigma} | \bx)} \left[\bs_{\btheta, \sigma}^\top(\bx_{\sigma}) \nabla_{\bx_{\sigma}} \log q(\bx_{\sigma} | \bx) \right]
-		\]
-        \eqpause
-		\vspace{-0.5cm}
-		\begin{multline*}
-			\bbE_{q(\bx_{\sigma})}\left\| \bs_{\btheta, \sigma}(\bx_{\sigma}) - \nabla_{\bx_{\sigma}} \log q(\bx_{\sigma}) \right\|_2^2 = \\ 
-			= {\color{olive}\bbE_{\pd(\bx)} \bbE_{q(\bx_{\sigma} | \bx)}}\left[\| \bs_{\btheta, \sigma}(\bx_{\sigma}) \|^2 - 2 \bs_{\btheta, \sigma}^\top(\bx_{\sigma}) {\color{teal}\nabla_{\bx_{\sigma}} \log q(\bx_{\sigma} | \bx)} \right] + \text{const}(\btheta)
-			\nextonslide{= \\ = {\color{olive}\bbE_{\pd(\bx)} \bbE_{q(\bx_{\sigma} | \bx)}} \left\|\bs_{\btheta, \sigma}(\bx_{\sigma}) - {\color{teal}\nabla_{\bx_{\sigma}} \log q(\bx_{\sigma} | \bx)} \right\|_2^2 + \text{const}(\btheta)}
-		\end{multline*}
-		}
-		\vspace{-0.8cm}
-	\end{block}
-\end{frame}
-%=======
-\begin{frame}{Denoising Score Matching}
-    \myfootnotewithlink{https://yang-song.github.io/blog/2021/score/}{Song Y. Generative Modeling by Estimating Gradients of the Data Distribution, blog post, 2021}
-	Original objective:
-	\vspace{-0.2cm}
-	\[
-		\bbE_{\pd(\bx)}\left\| \bs_{\btheta}(\bx) - \nabla_\bx \log \pd(\bx) \right\|_2^2 \rightarrow \min_{\btheta}
-	\]
-    \eqpause
-	\vspace{-0.5cm} \\
-	Noisy objective:
-	\vspace{-0.2cm}
-	\[
-		\bbE_{q(\bx_{\sigma})}\left\| \bs_{\btheta, \sigma}(\bx_\sigma) - \nabla_\bx \log q(\bx_{\sigma}) \right\|_2^2 \rightarrow \min_{\btheta}
-	\]
-    \eqpause
-	\vspace{-0.5cm} \\
-	This is equivalent to a denoising task:
-	\vspace{-0.2cm}
-	\[
-		\bbE_{\pd(\bx)} \bbE_{q(\bx_{\sigma} | \bx)}\left\| \bs_{\btheta, \sigma}(\bx_{\sigma}) - \nabla_{\bx_{\sigma}} \log q(\bx_{\sigma} | \bx) \right\|_2^2 \rightarrow \min_{\btheta}
-	\]
-    \eqpause
-	\vspace{-0.3cm}
-	\[
-		\bbE_{\pd(\bx)} \bbE_{\cN(0, \bI)}\left\| \bs_{\btheta, \sigma}(\bx + \sigma \bepsilon) + \frac{\bepsilon}{\sigma} \right\|_2^2 \rightarrow \min_{\btheta}
-	\]
-    \eqpause
-	\vspace{-0.5cm}
-	\begin{block}{Langevin Dynamics}
-		\vspace{-0.3cm}
-		\[
-			\bx_{l + 1} = \bx_l + \frac{\eta}{2} \cdot \bs_{\btheta, \sigma}(\bx_l) + \sqrt{\eta} \cdot \bepsilon_l, \quad \bepsilon_l \sim \cN(0, \bI)
-		\]
-		\vspace{-0.7cm}
-	\end{block}
-\end{frame}
-%=======
-\subsection{Noise-Conditioned Score Network}
-%=======
-\begin{frame}{Denoising Score Matching}
+\begin{frame}{Recap of Previous Lecture}
     \myfootnotewithlink{https://yang-song.github.io/blog/2021/score/}{Song Y. Generative Modeling by Estimating Gradients of the Data Distribution, blog post, 2021}
 	\vspace{-0.5cm}
 	\[
@@ -245,67 +112,56 @@
 	\end{minipage}
 \end{frame}
 %=======
-\begin{frame}{Noise-Conditioned Score Network (NCSN)}
+\begin{frame}{Recap of Previous Lecture}
     \myfootnotewithlink{https://arxiv.org/abs/1907.05600}{Song Y. et al. Generative Modeling by Estimating Gradients of the Data Distribution, 2019}
-	\begin{itemize}
-		\item Specify a sequence of noise levels: $\sigma_1 < \sigma_2 < \dots < \sigma_T$
-		\item Perturb each data point with different noise levels: $\bx_t = \bx + \sigma_t \bepsilon$, so $\bx_t \sim q(\bx_t)$
-		\item Choose $\sigma_1, \sigma_T$ such that:
-		\[
-			q(\bx_1) \approx \pd(\bx), \;\; q(\bx_T) \approx \cN(0, \sigma_T^2 \bI)
-		\]
-	\end{itemize}
-    \eqpause
-	\vspace{-0.3cm}
-	\begin{figure}
-		\includegraphics[width=0.6\linewidth]{figs/multi_scale}
-	\end{figure}
-	\begin{figure}
-		\includegraphics[width=\linewidth]{figs/duoduo}
-	\end{figure}
+    \begin{block}{Noise-Conditioned Score Network}
+        \begin{itemize}
+            \item Define a sequence of noise levels: $\sigma_1 < \sigma_2 < \dots < \sigma_T$.
+            \item Train a denoised score function $\bs_{\btheta, \sigma_t}(\bx_t)$ for each noise level:
+            \vspace{-0.3cm}
+            \[
+                \sum_{t=1}^T {\color{violet}\sigma_t^2} \cdot \bbE_{\pd(\bx)} \bbE_{q(\bx_t | \bx)}\bigl\| \bs_{\btheta, \sigma_t}(\bx_t) - \nabla_{\bx_t} \log q(\bx_t | \bx) \bigr\|^2_2 \rightarrow \min_{\btheta}
+            \]
+            \vspace{-0.5cm}
+            \item Sample using \textbf{annealed} Langevin dynamics (for $t=1, \dots, T$).
+        \end{itemize}
+    \end{block}
+    \vspace{-0.3cm}
+    \begin{figure}
+        \includegraphics[width=0.55\linewidth]{figs/multi_scale}
+    \end{figure}
+    \vspace{-0.3cm}
+    \begin{figure}
+        \includegraphics[width=\linewidth]{figs/duoduo}
+    \end{figure}
 \end{frame}
 %=======
-\begin{frame}{Noise-Conditioned Score Network (NCSN)}
-    \myfootnotewithlink{https://arxiv.org/abs/1907.05600}{Song Y. et al. Generative Modeling by Estimating Gradients of the Data Distribution, 2019}
-	Train the denoising score function $\bs_{\btheta, \sigma_t}(\bx_t)$ for each noise level $\sigma_t$ using a unified weighted objective:
-	\vspace{-0.2cm}
-	\[
-		\sum_{t=1}^T {\color{violet}\sigma_t^2} \bbE_{\pd(\bx)} \bbE_{q(\bx_t | \bx)}\left\| \bs_{\btheta, \sigma_t}(\bx_t) - \nabla_{\bx_t} \log q(\bx_t | \bx) \right\|_2^2 \rightarrow \min_{\btheta}
-	\]
-    \eqpause
-	Here, $\nabla_{\bx_t} \log q(\bx_t | \bx) = - \frac{\bx_t - \bx}{\sigma_t^2} = - \frac{\bepsilon}{\sigma_t}$
-    \eqpause
-	\begin{block}{Training}
-		\begin{enumerate}
-			\item Sample $\bx_0 \sim \pd(\bx)$
-			\item Sample $t \sim U\{1, T\}$ and $\bepsilon \sim \cN(0, \bI)$
-			\item Construct noisy image $\bx_t = \bx_0 + \sigma_t \bepsilon$
-			\item Evaluate loss $ \cL = \sigma_t^2 \left\| \bs_{\btheta, \sigma_t}(\bx_t) + \frac{\bepsilon}{\sigma_t} \right\|^2 $
-		\end{enumerate}
-		\vspace{-0.3cm}
-	\end{block}
-    \eqpause
-	How do we sample from such a model?
-\end{frame}
-%=======
-\begin{frame}{Noise-Conditioned Score Network (NCSN)}
+\begin{frame}{Recap of Previous Lecture}
     \myfootnotewithlink{https://arxiv.org/abs/2006.09011}{Song Y. et al. Improved Techniques for Training Score-Based Generative Models, 2020}
-	\begin{block}{Sampling (Annealed Langevin Dynamics)}
-		\begin{itemize}
-			\item Sample initial point $\bx_0 \sim \cN(0, \sigma_T^2 \bI) \approx q(\bx_T)$
-			\item At each noise level, apply $L$ steps of Langevin dynamics:
-			\vspace{-0.2cm}
-			\[
-				\bx_l = \bx_{l-1} + \frac{\eta_t}{2} \bs_{\btheta, \sigma_t}(\bx_{l-1}) + \sqrt{\eta_t} \bepsilon_l,
-			\] 
-			\vspace{-0.5cm}
-			\item Update $\bx_0 := \bx_L$ and reduce to the next lower $\sigma_t$
-		\end{itemize}
-	\end{block}
-    \eqpause
-	\begin{figure}
-		\includegraphics[width=0.9\linewidth]{figs/ald}
-	\end{figure}
+    \begin{block}{NCSN Training}
+        \begin{enumerate}
+            \item Obtain a sample $\bx_0 \sim \pd(\bx)$.
+            \item Sample noise level $t \sim U\{1, T\}$ and noise $\bepsilon \sim \cN(0, \bI)$.
+            \item Construct noisy image $\bx_t = \bx_0 + \sigma_t \cdot \bepsilon$.
+            \item Compute the loss $ \cL = \sigma_t^2 \cdot \| \bs_{\btheta, \sigma_t}(\bx_t) + \frac{\bepsilon}{\sigma_t} \|^2 $.
+        \end{enumerate}
+    \end{block}
+    \begin{block}{NCSN Sampling (Annealed Langevin Dynamics)}
+        \begin{itemize}
+            \item Sample $\bx_0 \sim \cN(0, \sigma_T^2 \cdot \bI) \approx q(\bx_T)$.
+            \item Apply $L$ steps of Langevin dynamics:
+            \vspace{-0.2cm}
+            \[
+                \bx_l = \bx_{l-1} + \frac{\eta_t}{2} \cdot \bs_{\btheta, \sigma_t}(\bx_{l - 1}) + \sqrt{\eta_t} \cdot \bepsilon_l.
+            \] 
+            \vspace{-0.5cm}
+            \item Update $\bx_0 := \bx_L$ and proceed to the next $\sigma_t$.
+        \end{itemize}
+    \end{block}
+\end{frame}
+%=======
+\begin{frame}{Outline}
+	\tableofcontents
 \end{frame}
 %=======
 \section{Forward Gaussian Diffusion Process}
@@ -548,10 +404,6 @@
 %=======
 \begin{frame}{Summary}
 	\begin{itemize}
-		\item Denoising score matching minimizes the Fisher divergence on corrupted samples, making the divergence estimable via sampling
-		\vfill 
-		\item The noise-conditioned score network leverages a range of noise levels and annealed Langevin dynamics to learn the score function and enable sampling	
-		\vfill
 		\item The Gaussian diffusion process is a Markov chain that incrementally corrupts data with carefully structured Gaussian noise
 		\vfill
 		\item Denoising score matching, together with Langevin dynamics, can be applied to the Gaussian diffusion process
