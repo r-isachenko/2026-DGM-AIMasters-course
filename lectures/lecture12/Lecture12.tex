@@ -220,7 +220,7 @@
 	\end{block}
 \end{frame}
 %=======
-\begin{frame}{Conditional Flow Matching}
+\begin{frame}{Conditional Flow Matching: Continuity Equations}
 	\myfootnotewithlink{https://arxiv.org/abs/2510.21890}{Lai C. H. et al. The principles of diffusion models, 2025.}
 	\begin{block}{Continuity Equations}
 		\vspace{-0.5cm}
@@ -242,7 +242,7 @@
 	\end{itemize}
 \end{frame}
 %=======
-\begin{frame}{Conditional Flow Matching}
+\begin{frame}{Conditional Flow Matching: Paths and Vector Fields}
 	\begin{block}{Probability Paths}
 		\vspace{-0.3cm}
 		\[
@@ -270,7 +270,7 @@
 	\end{itemize}
 \end{frame}
 %=======
-\begin{frame}{Conditional Flow Matching}
+\begin{frame}{From Marginal to Conditional Paths}
     \myfootnotewithlink{https://dl.heeere.com/conditional-flow-matching/blog/conditional-flow-matching}{image credit: A Visual Dive into Conditional Flow Matching}
 	\begin{figure}
 		\centering
@@ -289,7 +289,7 @@
 	\end{itemize}
 \end{frame}
 %=======
-\begin{frame}{Conditional Flow Matching}
+\begin{frame}{Conditional Flow Matching: Training and Sampling}
 	\myfootnotewithlink{https://arxiv.org/abs/2210.02747}{Lipman Y., et al. Flow Matching for Generative Modeling, 2022}
 	\[
 		\bbE_{t \sim U[0, 1]} \bbE_{\bz \sim p(\bz)} \bbE_{\bx \sim p_t(\bx | \bz)}\left\| \bff(\bx, \bz, t) - \bff_{\btheta}(\bx, t) \right\|^2 \rightarrow \min_{\btheta}
@@ -318,7 +318,7 @@
 	\end{block}
 \end{frame}
 %=======
-\begin{frame}{Conditional Flow Matching}
+\begin{frame}{Gaussian Conditional Probability Paths}
 	\myfootnotewithlink{https://arxiv.org/abs/2302.00482}{Tong A., et al. Improving and Generalizing Flow-Based Generative Models with Minibatch Optimal Transport, 2023}
 	\vspace{-0.3cm}
 	\[
@@ -351,7 +351,7 @@
 	\end{itemize}
 \end{frame}
 %=======
-\begin{frame}{Flow Matching}
+\begin{frame}{Deriving the Conditional Vector Field}
 	\myfootnotewithlink{https://arxiv.org/abs/2302.00482}{Tong A., et al. Improving and Generalizing Flow-Based Generative Models with Minibatch Optimal Transport, 2023}
 	\begin{block}{Gaussian Conditional Probability Path}
 		\vspace{-0.3cm}
@@ -458,7 +458,7 @@
 	\]
 \end{frame}
 %=======
-\begin{frame}{Conical Gaussian Paths}
+\begin{frame}{Conical Gaussian Paths: Conditional Vector Field}
 	\myfootnotewithlink{https://mlg.eng.cam.ac.uk/blog/2024/01/20/flow-matching.html}{image credit: https://mlg.eng.cam.ac.uk/blog/2024/01/20/flow-matching.html}
 	\[
 		p_t(\bx | \bx_1) = \cN\left(t \bx_1, (1-t)^2 \bI\right); \quad {\color{teal}\bx_t = t \bx_1 + (1 - t) \bx_0}
@@ -492,7 +492,7 @@
 	\end{minipage}
 \end{frame}
 %=======
-\begin{frame}{Conical Gaussian Paths}
+\begin{frame}{Conical Gaussian Paths: CFM Objective}
 	\myfootnotewithlink{https://arxiv.org/abs/2210.02747}{Lipman Y., et al. Flow Matching for Generative Modeling, 2022}
 	\vspace{-0.5cm}
 	\begin{multline*}
@@ -522,7 +522,7 @@
 	\end{minipage}
 \end{frame}
 %=======
-\begin{frame}{Conditional Flow Matching}
+\begin{frame}{CFM with Conical Paths: Training and Sampling}
 	\myfootnotewithlink{https://arxiv.org/abs/2210.02747}{Lipman Y., et al. Flow Matching for Generative Modeling, 2022}
 	\vspace{-0.3cm}
 	\[
@@ -549,7 +549,7 @@
 	\end{block}
 \end{frame}
 %=======
-\begin{frame}{Conical Gaussian Paths}
+\begin{frame}{Conditional vs. Marginal Paths}
 	\myfootnotewithlink{https://arxiv.org/abs/2506.02070}{Holderrieth P. and Erives E., et al. An Introduction to Flow Matching and Diffusion Models, 2025}
 	\begin{figure}
 		\centering
@@ -660,7 +660,7 @@
 	\end{figure}
 \end{frame}
 %=======
-\begin{frame}{Linear Interpolation}
+\begin{frame}{Linear Interpolation: Vector Field and Objective}
 	\myfootnotewithlink{https://arxiv.org/abs/2210.02747}{Lipman Y., et al. Flow Matching for Generative Modeling, 2022}
 	\vspace{-0.3cm}
 	\[
@@ -695,7 +695,7 @@
 	\end{itemize} 
 \end{frame}
 %=======
-\begin{frame}{Conditional Flow Matching}
+\begin{frame}{CFM with Linear Interpolation: Training and Sampling}
 	\myfootnotewithlink{https://arxiv.org/abs/2210.02747}{Lipman Y., et al. Flow Matching for Generative Modeling, 2022}
 	\begin{itemize}
 		\item This conditioning allows us to transport any distribution $p_0(\bx)$ to any distribution $p_1(\bx)$.
