@@ -383,7 +383,7 @@
 	\end{block}
 \end{frame}
 %=======
-\section{Conical Gaussian Paths}
+\section{One-Sided Conditioning}
 %=======
 \begin{frame}{Endpoint Conditioning}
 	\myfootnotewithlink{https://arxiv.org/abs/2210.02747}{Lipman Y., et al. Flow Matching for Generative Modeling, 2022}
@@ -422,7 +422,7 @@
 	\vspace{-0.3cm}
 \end{frame}
 %=======
-\begin{frame}{Conical Gaussian Paths}
+\begin{frame}{One-Sided Conditioning}
 	\myfootnotewithlink{https://dl.heeere.com/conditional-flow-matching/blog/conditional-flow-matching}{image credit: A Visual Dive into Conditional Flow Matching}
 	\[
 		p_0(\bx | \bx_1) = \cN(0, \bI); \quad p_1(\bx | \bx_1) = \delta(\bx - \bx_1)
@@ -458,7 +458,7 @@
 	\]
 \end{frame}
 %=======
-\begin{frame}{Conical Gaussian Paths: Conditional Vector Field}
+\begin{frame}{One-Sided Conditioning: Conditional Vector Field}
 	\myfootnotewithlink{https://mlg.eng.cam.ac.uk/blog/2024/01/20/flow-matching.html}{image credit: https://mlg.eng.cam.ac.uk/blog/2024/01/20/flow-matching.html}
 	\[
 		p_t(\bx | \bx_1) = \cN\left(t \bx_1, (1-t)^2 \bI\right); \quad {\color{teal}\bx_t = t \bx_1 + (1 - t) \bx_0}
@@ -492,7 +492,7 @@
 	\end{minipage}
 \end{frame}
 %=======
-\begin{frame}{Conical Gaussian Paths: CFM Objective}
+\begin{frame}{One-Sided Conditioning: CFM Objective}
 	\myfootnotewithlink{https://arxiv.org/abs/2210.02747}{Lipman Y., et al. Flow Matching for Generative Modeling, 2022}
 	\vspace{-0.5cm}
 	\begin{multline*}
@@ -522,7 +522,7 @@
 	\end{minipage}
 \end{frame}
 %=======
-\begin{frame}{CFM with Conical Paths: Training and Sampling}
+\begin{frame}{CFM with One-Sided Conditioning: Training and Sampling}
 	\myfootnotewithlink{https://arxiv.org/abs/2210.02747}{Lipman Y., et al. Flow Matching for Generative Modeling, 2022}
 	\vspace{-0.3cm}
 	\[
@@ -557,12 +557,12 @@
 	\end{figure}
 	\eqpause
 	\begin{itemize}
-		\item Conical gaussian paths give us the way to construct generative model.
+		\item One-sided conditioning gives us the way to construct generative model.
 		\item Now we extend it to image-to-image formulation (mapping between two distinct $p_{\text{data}_1}(\bx)$ and $p_{\text{data}_2}(\bx)$).
 	\end{itemize}
 \end{frame}
 %=======
-\section{Linear Interpolation}
+\section{Two-Sided Conditioning}
 %=======
 \begin{frame}{Pair Conditioning}
 	\myfootnotewithlink{https://arxiv.org/abs/2210.02747}{Lipman Y., et al. Flow Matching for Generative Modeling, 2022}
@@ -598,7 +598,7 @@
 	\vspace{-0.3cm}
 \end{frame}
 %=======
-\begin{frame}{Linear Interpolation}
+\begin{frame}{Two-Sided Conditioning}
 	\myfootnotewithlink{https://dl.heeere.com/conditional-flow-matching/blog/conditional-flow-matching}{image credit: A Visual Dive into Conditional Flow Matching}
 	\[
 		p_0(\bx | \bx_0, \bx_1) = \delta(\bx - \bx_0); \quad p_1(\bx | \bx_0, \bx_1) = \delta(\bx - \bx_1)
@@ -637,7 +637,7 @@
 	\end{figure}
 \end{frame}
 %=======
-\begin{frame}{Flow Matching: Conical Paths vs. Linear Interpolation}
+\begin{frame}{Flow Matching: One-Sided vs. Two-Sided Conditioning}
 	\myfootnotewithlink{https://arxiv.org/abs/2302.00482}{Tong A., et al. Improving and Generalizing Flow-Based Generative Models with Minibatch Optimal Transport, 2023}
 	\begin{minipage}[t]{0.5\columnwidth}
 		\begin{align*}
@@ -660,7 +660,7 @@
 	\end{figure}
 \end{frame}
 %=======
-\begin{frame}{Linear Interpolation: Vector Field and Objective}
+\begin{frame}{Two-Sided Conditioning: Vector Field and Objective}
 	\myfootnotewithlink{https://arxiv.org/abs/2210.02747}{Lipman Y., et al. Flow Matching for Generative Modeling, 2022}
 	\vspace{-0.3cm}
 	\[
@@ -690,12 +690,12 @@
 	\eqpause
 	\vspace{-0.3cm}
 	\begin{itemize}
-		\item This yields the same procedure as for conical paths!
+		\item This yields the same procedure as for one-sided conditioning!
 		\item Now, we do not require that $p_0(\bx)$ is necessarily $\cN(0, \bI)$.
 	\end{itemize} 
 \end{frame}
 %=======
-\begin{frame}{CFM with Linear Interpolation: Training and Sampling}
+\begin{frame}{CFM with Two-Sided Conditioning: Training and Sampling}
 	\myfootnotewithlink{https://arxiv.org/abs/2210.02747}{Lipman Y., et al. Flow Matching for Generative Modeling, 2022}
 	\begin{itemize}
 		\item This conditioning allows us to transport any distribution $p_0(\bx)$ to any distribution $p_1(\bx)$.
@@ -735,9 +735,9 @@
 	\begin{itemize}
 		\item Conditional flow matching makes the FM objective tractable.
 		\vfill
-		\item Conical Gaussian paths use endpoint conditioning $\bz = \bx_1$ and serve as an effective FM technique.
+		\item One-sided conditioning uses endpoint conditioning $\bz = \bx_1$ and serves as an effective FM technique.
 		\vfill
-		\item Linear Interpolation paths use pair conditioning $\bz = (\bx_0, \bx_1)$ and yields the same procedure, but is more general (suitable for paired tasks).
+		\item Two-sided conditioning uses pair conditioning $\bz = (\bx_0, \bx_1)$ and yields the same procedure, but is more general (suitable for paired tasks).
 	\end{itemize}
 \end{frame}
 \end{document}
