@@ -365,7 +365,7 @@
 	\end{block}
     \eqpause
 	\[
-		q(\bx(t) | \bx(0)) = \cN\Bigl(\bmu(t, \bx(0)), \bsigma^2(t, \bx(0)) \cdot \bI \Bigr) 
+		q(\bx(t) | \bx(0)) = \cN\Bigl(\bmu(\bx(0), t), \bsigma^2(t, \bx(0)) \cdot \bI \Bigr) 
 	\]
 	\[
 		\nabla_{\bx(t)} \log q(\bx(t) | \bx(0)) = - \frac{1}{\bsigma^2} \odot (\bx(t) - \bmu)
@@ -379,19 +379,19 @@
 	\[
 		d \bx = - \frac{1}{2} \beta(t) \bx(t) dt + \sqrt{\beta(t)} \cdot d \bw \ \ \mbox{(Variance Preserving SDE)}
 	\]
-	Is it possible to explicitly derive $\bmu(t, \bx(0))$ and $\bSigma(t, \bx(0))$ for VE-SDE and VP-SDE?
+	Is it possible to explicitly derive $\bmu(\bx(0), t)$ and $\bSigma(\bx(0), t)$ for VE-SDE and VP-SDE?
 \end{frame}
 %=======
 \begin{frame}{Score-Based Generative Models Through SDEs}
 	\myfootnotewithlink{https://users.aalto.fi/~asolin/sde-book/sde-book.pdf}{Särkkä S., Solin A. Applied stochastic differential equations, 2019}
 	\[
-		q(\bx(t) | \bx(0)) = \cN\Bigl(\bmu(t, \bx(0)), \bsigma^2(t, \bx(0)) \cdot \bI\Bigr)
+		q(\bx(t) | \bx(0)) = \cN\Bigl(\bmu(\bx(0), t), \bsigma^2(t, \bx(0)) \cdot \bI\Bigr)
 	\]
 	\vspace{-0.5cm}
 	\begin{block}{Theorem}
 		The moments of the SDE $d\bx = f(t) \bx dt + g(t) d \bw$ satisfy:
 		\[
-			\frac{d \bmu(t, \bx(0))}{dt} = f(t) \bmu(t, \bx(0))
+			\frac{d \bmu(\bx(0), t)}{dt} = f(t) \bmu(\bx(0), t)
 		\]
 		\[
 			\frac{d \bsigma^2(t, \bx(0))}{dt} = 2 f(t) \bsigma^2(t, \bx(0)) + g^2(t) \cdot \bI
@@ -403,7 +403,7 @@
 		\begin{align*}
 			\bbE\left[{\color{violet}d\bx} | \bx(0) \right] &= \bbE\left[{\color{violet}f(t) \bx dt} | \bx(0) \right] + \bbE\left[{\color{violet}g(t) d \bw} | \bx(0) \right]
 			\nextonslide{\\ &= f(t) \bbE\left[\bx | \bx(0) \right] dt + g(t) \bbE\left[d \bw | \bx(0) \right]}
-			\nextonslide{\\ &= f(t) \bmu(t, \bx(0)) dt}
+			\nextonslide{\\ &= f(t) \bmu(\bx(0), t) dt}
 		\end{align*}
 	\end{block}
 \end{frame}
@@ -413,7 +413,7 @@
 	\begin{block}{Theorem}
 		\vspace{-0.3cm}
 		\[
-			\frac{d \bmu(t, \bx(0))}{dt} = f(t) \bmu(t, \bx(0))
+			\frac{d \bmu(\bx(0), t)}{dt} = f(t) \bmu(\bx(0), t)
 		\]
 		\vspace{-0.5cm}
 	\end{block}
@@ -421,11 +421,11 @@
 	\begin{block}{Proof (Continued)}
 		\vspace{-0.3cm}
 		\[
-			\bbE\left[d\bx | \bx(0) \right] = f(t) \bmu(t, \bx(0)) dt
+			\bbE\left[d\bx | \bx(0) \right] = f(t) \bmu(\bx(0), t) dt
 		\]
         \eqpause
 		\[
-			\frac{d \bbE\left[\bx(t) | \bx(0) \right]}{dt} = \frac{d \bmu(t, \bx(0))}{dt} = f(t) \bmu(t, \bx(0)) 
+			\frac{d \bbE\left[\bx(t) | \bx(0) \right]}{dt} = \frac{d \bmu(\bx(0), t)}{dt} = f(t) \bmu(\bx(0), t) 
 		\]
 	\end{block}
     \eqpause
@@ -458,7 +458,7 @@
 		\vspace{-0.7cm}
 	\end{block}
 	\[
-		q(\bx(t) | \bx(0)) = \cN\Bigl(\bmu(t, \bx(0)), \bSigma(t, \bx(0))\Bigr)
+		q(\bx(t) | \bx(0)) = \cN\Bigl(\bmu(\bx(0), t), \bSigma(\bx(0), t)\Bigr)
 	\]
     \eqpause
 	\vspace{-0.5cm}
@@ -579,19 +579,15 @@
 %=======
 \begin{frame}{Flow Matching}
     \myfootnotewithlink{https://arxiv.org/abs/2302.00482}{Tong A., et al. Improving and Generalizing Flow-Based Generative Models with Minibatch Optimal Transport, 2023}
-	\vspace{-0.5cm}
-	\begin{block}{Latent Variable Model}
-		Let's introduce the latent variable $\bz$:
-		\[
-			p_t(\bx) = \int p_t(\bx | \bz) p(\bz) d \bz 
-		\]
-		\vspace{-0.5cm}
-	\end{block}
+	Let's introduce the latent variable $\bz$:
+	\[
+		p_t(\bx) = \int p_t(\bx | \bz) p(\bz) d \bz 
+	\]
 	Here, $p_t(\bx | \bz)$ is a \textbf{conditional probability path}.
 	\eqpause
 	The conditional probability path $p_t(\bx | \bz)$ satisfies the KFP theorem:
 	\[
-		{\color{violet}\frac{\partial p_t(\bx | \bz)}{\partial t} = - \diver\left(\bff(\bx, \bz, t) p_t(\bx | \bz)\right)},
+		\frac{\partial p_t(\bx | \bz)}{\partial t} = - \diver\left(\bff(\bx, \bz, t) p_t(\bx | \bz)\right),
 	\]
 	where $\bff(\bx, \bz, t)$ is a \textbf{conditional vector field}:
 	\eqpause

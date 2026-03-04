@@ -221,6 +221,56 @@
 \end{frame}
 %=======
 \begin{frame}{Conditional Flow Matching}
+	\myfootnotewithlink{https://arxiv.org/abs/2510.21890}{Lai C. H. et al. The principles of diffusion models, 2025.}
+	\begin{block}{Continuity Equations}
+		\vspace{-0.5cm}
+		\begin{align*}
+			\frac{\partial p_t(\bx)}{\partial t} &= - \diver\left(\bff(\bx, t) \cdot p_t(\bx)\right) \\
+			\frac{\partial p_t(\bx | \bz)}{\partial t} &= - \diver\left(\bff(\bx, \bz, t) \cdot p_t(\bx | \bz)\right)
+		\end{align*}
+		\vspace{-0.5cm}
+	\end{block}
+	What is the relationship between $p_t(\bx)$ and $\bff(\bx, t)$?
+	\eqpause
+	\begin{itemize}
+		\item $\bff(\bx, t)$ (under regularity conditions) and initial condition $p_0(\bx)$ uniquely determine $p_t(\bx)$.
+		\eqpause
+		\item But the reverse is not true: any divergence-free vector field $\diver(\tilde{\bff}(\bx, t)p_t(\bx)) = 0$ can generate a valid probability path.
+		\eqpause
+		\item Moreover, not  every given path $p_t(\bx)$ can actually arise from particles moving under
+		some velocity field $\bff(\bx, t)$.
+	\end{itemize}
+\end{frame}
+%=======
+\begin{frame}{Conditional Flow Matching}
+	\begin{block}{Probability Paths}
+		\vspace{-0.3cm}
+		\[
+			p_t(\bx) = \int p_t(\bx | \bz) p(\bz) d \bz
+		\]
+		\vspace{-0.5cm}
+	\end{block}
+	\eqpause
+	\begin{itemize}
+		\item $p_t(\bx | \bz)$ and $p(\bz)$ uniquely determine $p_t(\bx)$.
+		\item The reverse is not true: many different conditional families integrate to the same marginal.
+	\end{itemize}
+	\eqpause
+	\begin{block}{Vector fields}
+		\vspace{-0.3cm}
+		\[
+			\bff(\bx, t) = \bbE_{p_t(\bz | \bx)} \bff(\bx, \bz, t) = \int \bff(\bx, \bz, t) \frac{p_t(\bx | \bz) p(\bz)}{p_t(\bx)} d \bz
+		\]
+		\vspace{-0.5cm}
+	\end{block}
+	\eqpause
+	\begin{itemize}
+		\item $\bff(\bx, \bz, t)$ and $p_t(\bx | \bz)$ uniquely determine $\bff(\bx, t)$.
+		\item But marginal velocity does not determine conditional velocities (many decompositions exist).
+	\end{itemize}
+\end{frame}
+%=======
+\begin{frame}{Conditional Flow Matching}
     \myfootnotewithlink{https://dl.heeere.com/conditional-flow-matching/blog/conditional-flow-matching}{image credit: A Visual Dive into Conditional Flow Matching}
 	\begin{figure}
 		\centering

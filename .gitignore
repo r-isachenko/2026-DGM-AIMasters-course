@@ -22,3 +22,5 @@
 
 #Hide helper code for seminars
 seminars/seminar?/seminar?_utils.py
+
+site/
