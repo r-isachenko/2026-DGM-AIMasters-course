@@ -249,6 +249,30 @@
 	\end{itemize}
 \end{frame}
 %=======
+\begin{frame}{It\^{o} Integration Basics}
+	\myfootnotewithlink{https://arxiv.org/abs/2510.21890}{Lai C. et al. The Principles of Diffusion Models, 2025}
+	The SDE should be understood in its \textbf{integral form} (It\^{o} sense):
+	\[
+		\bx(t) = \bx(0) + {\color{violet}\int_0^t \bff(\bx(s), s) \, ds} + {\color{teal}\int_0^t g(s) \, d\bw(s)}
+	\]
+	\eqpause
+	\vspace{-0.5cm}
+	\begin{itemize}
+		\item {\color{violet}The first integral} is a classical (Riemann) integral.
+		\item {\color{teal}The second integral} is an \textbf{It\^{o} stochastic integral}.
+	\end{itemize}
+	\eqpause
+	\[
+		\int_0^t g(s) \, d\bw(s) = \lim_{N \to \infty} \sum_{i=0}^{N-1} g(t_i) \bigl(\bw(t_{i+1}) - \bw(t_i)\bigr)
+	\]
+	\vspace{-0.3cm}
+	\begin{itemize}
+		\item Brownian paths are continuous but a.s. \textbf{nowhere differentiable} $\Rightarrow$ Fundamental Theorem of Calculus fails.
+		\item Instead, SDEs require \textbf{It\^{o} calculus} (e.g., It\^{o}'s lemma).
+		\item Expressions $d\bx$, $dt$, $d\bw$ are \textbf{formal shorthand} for infinitesimal increments.
+	\end{itemize}
+\end{frame}
+%=======
 \begin{frame}{Stochastic Differential Equation (SDE)}
 	\[
 		d\bx = \bff(\bx, t) dt + g(t) d \bw
