@@ -122,19 +122,19 @@
 	\begin{block}{Continuous-Time Dynamics (Neural ODE)}
 		\vspace{-0.5cm}
 		\begin{align*}
-			\frac{d \bx(t)}{dt} &= \bff_{\btheta}(\bx(t), t);\quad \text{where } \bx(t_0) = \bx_0. \\
-			\bpsi_t(\bx_0) &= \int^{t_1}_{t_0} \bff_{\btheta}(\bx(t), t) d t  + \bx_0 \approx {\color{teal}\ODESolve_f(\bx_0, \btheta, t_0, t_1)}.
+			\frac{d \bx(t)}{dt} &= \bv_{\btheta}(\bx(t), t);\quad \text{where } \bx(t_0) = \bx_0. \\
+			\bpsi_t(\bx_0) &= \int^{t_1}_{t_0} \bv_{\btheta}(\bx(t), t) d t  + \bx_0 \approx {\color{teal}\ODESolve_v(\bx_0, \btheta, t_0, t_1)}.
 		\end{align*}
 		\vspace{-0.5cm}
 	\end{block}
 	\begin{itemize}
-		\item $\bff_{\btheta}: \bbR^m \times [t_0, t_1] \rightarrow \bbR^m$ is a vector field.
+		\item $\bv_{\btheta}: \bbR^m \times [t_0, t_1] \rightarrow \bbR^m$ is a vector field.
 		\item $\bpsi: \bbR^m \times [t_0, t_1] \rightarrow \bbR^m$ is a flow (the solution of ODE):
 	\end{itemize}
 	\begin{block}{Euler Update Step (ODESolve)}
 		\vspace{-0.3cm}
 		\[
-  			\bx(t + h) = \bx(t) + h \cdot \bff_{\btheta}(\bx(t), t)
+  			\bx(t + h) = \bx(t) + h \cdot \bv_{\btheta}(\bx(t), t)
 		\]
 	\end{block}
 	More advanced numerical methods (such as Runge-Kutta) are often used instead of unstable Euler update step.
@@ -144,7 +144,7 @@
 	\myfootnotewithlink{https://arxiv.org/abs/1810.01367}{Grathwohl W. et al. FFJORD: Free-form Continuous Dynamics for Scalable Reversible Generative Models, 2018}  
 	\vspace{-0.3cm}
 	\[
- 		\frac{d \bx(t)}{dt} = \bff_{\btheta}(\bx(t), t);\quad \bx(t_0) = \bx_0
+ 		\frac{d \bx(t)}{dt} = \bv_{\btheta}(\bx(t), t);\quad \bx(t_0) = \bx_0
 	\]
 	\vspace{-0.3cm}
 	\begin{itemize}
@@ -161,14 +161,14 @@
 \begin{frame}{Recap of Previous Lecture}
 	\myfootnotewithlink{https://arxiv.org/abs/1806.07366}{Chen R. T. Q. et al. Neural Ordinary Differential Equations, 2018}   
 	\begin{block}{Theorem (Picard)}
-		If $\bff$ is uniformly Lipschitz continuous in $\bx$ and continuous in $t$, then the ODE has a \textbf{unique} solution.
+		If $\bv$ is uniformly Lipschitz continuous in $\bx$ and continuous in $t$, then the ODE has a \textbf{unique} solution.
 	\end{block}
 	This means the ODE can be \textbf{uniquely inverted}:
 	\begin{align*}
-		\bx(1) &= \bx(0) + \int_{0}^{1} \bff_{\btheta}(\bx(t), t) dt \\
-		\bx(0) &= \bx(1) + \int_{1}^{0} \bff_{\btheta}(\bx(t), t) dt
+		\bx(1) &= \bx(0) + \int_{0}^{1} \bv_{\btheta}(\bx(t), t) dt \\
+		\bx(0) &= \bx(1) + \int_{1}^{0} \bv_{\btheta}(\bx(t), t) dt
 	\end{align*}
-	\textbf{Note:} Unlike discrete-time NF, $\bff$ need not be invertible (uniqueness ensures bijectivity).
+	\textbf{Note:} Unlike discrete-time NF, $\bv$ need not be invertible (uniqueness ensures bijectivity).
 	
 	How can we compute $p_t(\bx)$ for any $t$?
 \end{frame}
@@ -182,9 +182,9 @@
 \begin{frame}{Continuous-Time NF}
 	\myfootnotewithlink{https://arxiv.org/abs/1806.07366}{Chen R. T. Q. et al. Neural Ordinary Differential Equations, 2018}   
 	\begin{block}{Theorem (Continuity Equation)}
-		If $\bff$ is uniformly Lipschitz continuous in $\bx$ and continuous in $t$, then
+		If $\bv$ is uniformly Lipschitz continuous in $\bx$ and continuous in $t$, then
 		\[
-			\frac{d \log p_t(\bx(t))}{d t} = - \tr \left( \frac{\partial \bff(\bx(t), t)}{\partial \bx(t)} \right)
+			\frac{d \log p_t(\bx(t))}{d t} = - \tr \left( \frac{\partial \bv(\bx(t), t)}{\partial \bx(t)} \right)
 		\]
 		\vspace{-0.3cm}
 	\end{block}
@@ -193,7 +193,7 @@
 	\begin{block}{Solution of the Continuity Equation}
 		\vspace{-0.3cm}
 		\[
-			\log p_1(\bx(1)) = \log p_0(\bx(0)) - {\color{teal}\int_{0}^{1} \tr  \left( \frac{\partial \bff(\bx(t), t)}{\partial \bx(t)} \right) dt}.
+			\log p_1(\bx(1)) = \log p_0(\bx(0)) - {\color{teal}\int_{0}^{1} \tr  \left( \frac{\partial \bv(\bx(t), t)}{\partial \bx(t)} \right) dt}.
 		\]
 		\vspace{-0.3cm}
 	\end{block}
@@ -232,7 +232,7 @@
 %=======
 \begin{frame}{Stochastic Differential Equation (SDE)}
 	\[
- 		\frac{d \bx}{dt} = \bff(\bx, t) \Rightarrow d\bx = \bff(\bx, t) dt
+ 		\frac{d \bx}{dt} = \bv(\bx, t) \Rightarrow d\bx = \bv(\bx, t) dt
 	\]
 	\eqpause
 	Let's define a stochastic process $\bx(t)$ with initial condition $\bx(0) \sim p_0(\bx) = \pd(\bx)$:
@@ -333,7 +333,7 @@
 		\item The KFP theorem is a necessary and sufficient condition (it uniquely defines $p_t(\bx)$).
 		\item This generalizes the continuity equation for continuous-time NF:
 		\[
-			\frac{d \log p_t(\bx(t))}{d t} = - \tr \left( \frac{\partial \bff(\bx, t)}{\partial \bx} \right).
+			\frac{d \log p_t(\bx(t))}{d t} = - \tr \left( \frac{\partial \bv(\bx, t)}{\partial \bx} \right).
 		\]
 	\end{itemize}
 	\eqpause
@@ -517,12 +517,12 @@
 	\begin{block}{ODE and Continuity Equation}
 		\vspace{-0.3cm}
 		\[
-			d\bx = \bff(\bx, t) dt
+			d\bx = \bv(\bx, t) dt
 		\]
 		\[
-			\frac{d \log p_t(\bx(t))}{d t} = - \tr \left( \frac{\partial \bff_{\btheta}(\bx, t)}{\partial \bx} \right) 
+			\frac{d \log p_t(\bx(t))}{d t} = - \tr \left( \frac{\partial \bv(\bx, t)}{\partial \bx} \right) 
 			\quad  \Leftrightarrow  \quad 
- 			\frac{\partial p_t(\bx)}{\partial t} = - \diver(\bff(\bx, t) p_t(\bx))
+ 			\frac{\partial p_t(\bx)}{\partial t} = - \diver(\bv(\bx, t) p_t(\bx))
  		\]
 		The only source of randomness is the initial distribution $p_0(\bx)$.
 	\end{block}
@@ -546,7 +546,7 @@
 		Then, there exists an ODE with the same probability path $p_t(\bx)$, given by
 		\vspace{-0.3cm}
 		\[
-			d\bx = \left(\bff(\bx, t) -\frac{1}{2} g^2(t) \frac{\partial}{\partial \bx} \log p_t(\bx) \right) dt
+			d\bx = \bv(\bx, t) dt = \left(\bff(\bx, t) -\frac{1}{2} g^2(t) \frac{\partial}{\partial \bx} \log p_t(\bx) \right) dt
 		\]
 		\vspace{-0.7cm}
 	\end{block}
@@ -564,7 +564,7 @@
 		Then, there exists an ODE with the same probability path $p_t(\bx)$, given by
 		\vspace{-0.3cm}
 		\[
-			d\bx = \left(\bff(\bx, t) -\frac{1}{2} g^2(t) \frac{\partial}{\partial \bx} \log p_t(\bx) \right) dt
+			d\bx = \bv(\bx, t) dt = \left(\bff(\bx, t) -\frac{1}{2} g^2(t) \frac{\partial}{\partial \bx} \log p_t(\bx) \right) dt
 		\]
 		\vspace{-0.7cm}
 	\end{block}
@@ -587,17 +587,17 @@
  		\vspace{-0.7cm}
  		\begin{multline*}
  			\frac{\partial p_t(\bx)}{\partial t} =  \tr\left( - \frac{\partial}{\partial \bx} \left[ \left( {\color{teal}\bff(\bx, t) - \frac{1}{2} g^2(t) \frac{\partial}{\partial \bx}\log p_t(\bx)}\right) p_t(\bx) \right]  \right) 
-			\nextonslide{=\\ =  \tr\left( - \frac{\partial}{\partial \bx} \left[ {\color{teal}\tilde{\bff}(\bx, t)} p_t(\bx) \right]  \right) = -  \diver\left(\tilde{\bff}(\bx, t) p_t(\bx)\right)}
+			\nextonslide{=\\ =  \tr\left( - \frac{\partial}{\partial \bx} \left[ {\color{teal}\bv(\bx, t)} p_t(\bx) \right]  \right) = -  \diver\left(\bv(\bx, t) p_t(\bx)\right)}
  		\end{multline*}
 		\eqpause
 		\[
-			\tilde{\bff}(\bx, t) = \bff(\bx, t) -\frac{1}{2} g^2(t) \frac{\partial}{\partial \bx} \log p_t(\bx); \quad \tilde{g}(t) = 0
+			\bv(\bx, t) = \bff(\bx, t) -\frac{1}{2} g^2(t) \frac{\partial}{\partial \bx} \log p_t(\bx); \quad \tilde{g}(t) = 0
 		\]
 	 	\[
-	 		d \bx = \tilde{\bff}(\bx, t) dt + 0 \cdot d \bw = \left(\bff(\bx, t) -\frac{1}{2} g^2(t) \frac{\partial}{\partial \bx} \log p_t(\bx) \right) dt
+	 		d \bx = \bv(\bx, t) dt + 0 \cdot d \bw = \left(\bff(\bx, t) -\frac{1}{2} g^2(t) \frac{\partial}{\partial \bx} \log p_t(\bx) \right) dt
 	 	\]
 		\[
-			\frac{\partial p_t(\bx)}{\partial t} = - \diver(\tilde{\bff}(\bx, t) p_t(\bx)) + \frac{1}{2}\tilde{g}^2(t) \Delta_{\bx}p_t(\bx)
+			\frac{\partial p_t(\bx)}{\partial t} = - \diver(\bv(\bx, t) p_t(\bx)) + \frac{1}{2}\tilde{g}^2(t) \Delta_{\bx}p_t(\bx)
 		\]
  	\end{block}
 \end{frame}
@@ -607,12 +607,15 @@
 	\vspace{-0.3cm}
 	\begin{align*}
 		d\bx &= \bff(\bx, t) dt + g(t) d \bw \;\; - \text{SDE} \\
-		d\bx &= \left(\bff(\bx, t) -\frac{1}{2} g^2(t) \frac{\partial}{\partial \bx} \log p_t(\bx) \right) dt  \;\; - \text{Probability Flow ODE}
+		d\bx &= \bv(\bx, t) dt  \;\; - \text{Probability Flow ODE}
 	\end{align*}
+	\[
+		\bv(\bx, t) = \bff(\bx, t) -\frac{1}{2} g^2(t) \frac{\partial}{\partial \bx} \log p_t(\bx)
+	\]
 	\eqpause
 	\vspace{-0.5cm}
 	\begin{itemize}
-		\item The term $\bs(\bx, t) = \frac{\partial}{\partial \bx} \log p_t(\bx)$ is the score function in continuous time.
+		\item $\bs(\bx, t) = \frac{\partial}{\partial \bx} \log p_t(\bx)$ is the continuous-time score function.
 		\eqpause
 		\item The ODE produces more stable trajectories.
 	\end{itemize}

@@ -15,14 +15,14 @@
 	\begin{block}{Flow Matching (FM)}
 		\vspace{-0.5cm}
 		\[
-			\bbE_{t \sim U[0, 1]} \bbE_{\bx \sim p_t(\bx)}\left\| \bff(\bx, t) - \bff_{\btheta}(\bx, t) \right\|^2 \rightarrow \min_{\btheta}
+			\bbE_{t \sim U[0, 1]} \bbE_{\bx \sim p_t(\bx)}\left\| \bv(\bx, t) - \bv_{\btheta}(\bx, t) \right\|^2 \rightarrow \min_{\btheta}
 		\]
 		\vspace{-0.5cm}
 	\end{block}
 	\begin{block}{Conditional Flow Matching (CFM)}
 		\vspace{-0.5cm}
 		\[
-			\bbE_{t \sim U[0, 1]} \bbE_{\bz \sim p(\bz)} \bbE_{\bx \sim p_t(\bx | \bz)}\left\| \bff(\bx, \bz, t) - \bff_{\btheta}(\bx, t) \right\|^2 \rightarrow \min_{\btheta}
+			\bbE_{t \sim U[0, 1]} \bbE_{\bz \sim p(\bz)} \bbE_{\bx \sim p_t(\bx | \bz)}\left\| \bv(\bx, \bz, t) - \bv_{\btheta}(\bx, t) \right\|^2 \rightarrow \min_{\btheta}
 		\]
 		\vspace{-0.7cm}
 	\end{block}
@@ -74,7 +74,7 @@
 		\]
 		\vspace{-0.3cm}
 		\[
-			\bff(\bx, \bz, t) =  \bmu_t'(\bz) + \frac{\bsigma_t'(\bz)}{\bsigma_t(\bz)} \odot (\bx - \bmu_t(\bz))
+			\bv(\bx, \bz, t) =  \bmu_t'(\bz) + \frac{\bsigma_t'(\bz)}{\bsigma_t(\bz)} \odot (\bx - \bmu_t(\bz))
 		\]
 		\vspace{-0.3cm}
 	\end{block}
@@ -139,16 +139,16 @@
 	\]
 	\vspace{-0.3cm}
 	\[
-		\bff(\bx_t, \bx_1, t) = \frac{\bx_1 - \bx_t}{1-t} = \bx_1 - \bx_0
+		\bv(\bx_t, \bx_1, t) = \frac{\bx_1 - \bx_t}{1-t} = \bx_1 - \bx_0
 	\]
 	\vspace{-0.7cm}
 	\begin{multline*}
-		\bbE_{\bz \sim p(\bz)} \bbE_{\bx \sim p_t(\bx | \bz)}\left\| \bff(\bx, \bz, t) - \bff_{\btheta}(\bx, t) \right\|^2
-		 = \\ = \bbE_{\bx_1 \sim \pd(\bx)} \bbE_{\bx_0 \sim \cN(0, \bI)}\left\| (\bx_1 - \bx_0) - \bff_{\btheta}\left(t \bx_1 + (1 - t) \bx_0, t\right) \right\|^2
+		\bbE_{\bz \sim p(\bz)} \bbE_{\bx \sim p_t(\bx | \bz)}\left\| \bv(\bx, \bz, t) - \bv_{\btheta}(\bx, t) \right\|^2
+		 = \\ = \bbE_{\bx_1 \sim \pd(\bx)} \bbE_{\bx_0 \sim \cN(0, \bI)}\left\| (\bx_1 - \bx_0) - \bv_{\btheta}\left(t \bx_1 + (1 - t) \bx_0, t\right) \right\|^2
 	\end{multline*}
 	\vspace{-0.7cm}
 	\begin{itemize}
-		\item $\bff(\bx_t, \bx_1, t)$ defines straight lines between $\pd(\bx)$ and $\cN(0, \bI)$.
+		\item $\bv(\bx_t, \bx_1, t)$ defines straight lines between $\pd(\bx)$ and $\cN(0, \bI)$.
 		\item The \textbf{marginal} path $p_t(\bx)$ does not give straight lines.
 	\end{itemize}
 	\vspace{-0.5cm}
@@ -170,14 +170,14 @@
 	\myfootnotewithlink{https://arxiv.org/abs/2210.02747}{Lipman Y., et al. Flow Matching for Generative Modeling, 2022}
 	\vspace{-0.3cm}
 	\[
-	 \bbE_{t \sim U[0, 1]} \bbE_{\bx_1 \sim \pd(\bx)} \bbE_{\bx_0 \sim \cN(0, \bI)}\left\| (\bx_1 - \bx_0) - \bff_{\btheta}(\bx_t, t) \right\|^2  \rightarrow \min_{\btheta}
+	 \bbE_{t \sim U[0, 1]} \bbE_{\bx_1 \sim \pd(\bx)} \bbE_{\bx_0 \sim \cN(0, \bI)}\left\| (\bx_1 - \bx_0) - \bv_{\btheta}(\bx_t, t) \right\|^2  \rightarrow \min_{\btheta}
 	\]
 	\begin{block}{Training}
 		\begin{enumerate}
 			\item Sample $\bx_1 \sim \pd(\bx)$.
 			\item Sample time $t \sim U[0, 1]$ and $\bx_0 \sim \cN(0, \bI)$.
 			\item Obtain the noisy image $\bx_t = t \bx_1 + (1 - t) \bx_0$.
-			\item Compute the loss $ \cL = \left\| (\bx_1 - \bx_0) - \bff_{\btheta}(\bx_t, t) \right\|^2 $.
+			\item Compute the loss $ \cL = \left\| (\bx_1 - \bx_0) - \bv_{\btheta}(\bx_t, t) \right\|^2 $.
 		\end{enumerate}
 	\end{block}
 	\vspace{-0.3cm}
@@ -186,7 +186,7 @@
 			\item Sample $\bx_0 \sim \cN(0, \bI)$.
 			\item Solve the ODE to obtain $\bx_1$:
 			\[
-				\bx_1 = \ODESolve_f(\bx_0, \btheta, t_0=0, t_1=1)
+				\bx_1 = \ODESolve_v(\bx_0, \btheta, t_0=0, t_1=1)
 			\]
 		\end{enumerate}
 	\end{block}
@@ -256,7 +256,7 @@
 			\item Sample $(\bx_0, \bx_1) \sim p(\bx_0, \bx_1)$.
 			\item Sample time $t \sim U[0, 1]$.
 			\item Compute the noisy image $\bx_t = t \bx_1 + (1 - t) \bx_0$.
-			\item Compute the loss $ \cL = \left\| (\bx_1 - \bx_0) - \bff_{\btheta}(\bx_t, t) \right\|^2 $.
+			\item Compute the loss $ \cL = \left\| (\bx_1 - \bx_0) - \bv_{\btheta}(\bx_t, t) \right\|^2 $.
 		\end{enumerate}
 	\end{block}
 	\vspace{-0.3cm}
@@ -265,7 +265,7 @@
 			\item Sample $\bx_0 \sim p_0(\bx)$.
 							\item Solve the ODE to obtain $\bx_1$:
 			\[
-				\bx_1 = \ODESolve_f(\bx_0, \btheta, t_0=0, t_1=1)
+				\bx_1 = \ODESolve_v(\bx_0, \btheta, t_0=0, t_1=1)
 			\]
 		\end{enumerate}
 	\end{block}
@@ -325,11 +325,11 @@
 	\begin{block}{Flow Matching Probability Path}
 		\vspace{-0.3cm}
 		\[
-			p_t(\bx | \bx_1) = \cN\left(t \bx_1, (1-t)^2 \bI\right); \quad \bff(\bx_t, \bx_1, t) = \frac{\bx_1  - \bx_t}{1-t}
+			p_t(\bx | \bx_1) = \cN\left(t \bx_1, (1-t)^2 \bI\right); \quad \bv(\bx_t, \bx_1, t) = \frac{\bx_1  - \bx_t}{1-t}
 		\]
 		\vspace{-0.3cm}
 		\[
-	 		\frac{d\bx_t}{dt} = \bff(\bx_t, \bx_1, t) =  \bmu_t'(\bx_1) + \frac{\bsigma_t'(\bx_1)}{\bsigma_t(\bx_1)} \odot (\bx_t - \bmu_t(\bx_1))
+	 		\frac{d\bx_t}{dt} = \bv(\bx_t, \bx_1, t) =  \bmu_t'(\bx_1) + \frac{\bsigma_t'(\bx_1)}{\bsigma_t(\bx_1)} \odot (\bx_t - \bmu_t(\bx_1))
 		\]
 	\end{block}
 	\eqpause
@@ -339,14 +339,14 @@
 \begin{frame}{Flow Matching vs Score-Based SDE Models}
 	\myfootnotewithlink{https://arxiv.org/abs/2210.02747}{Lipman Y., et al. Flow Matching for Generative Modeling, 2022}
 	\[
-		\frac{d\bx_t}{dt} = \bff(\bx_t, \bx_1, t) =  \bmu_t'(\bx_1) + \frac{\bsigma_t'(\bx_1)}{\bsigma_t(\bx_1)} \odot (\bx_t - \bmu_t(\bx_1))
+		\frac{d\bx_t}{dt} = \bv(\bx_t, \bx_1, t) =  \bmu_t'(\bx_1) + \frac{\bsigma_t'(\bx_1)}{\bsigma_t(\bx_1)} \odot (\bx_t - \bmu_t(\bx_1))
 	\]
 	\eqpause
 	\begin{block}{Variance Exploding SDE Probability Path}
 		\vspace{-0.5cm}
 		\[
 				p_t(\bx | \bx_1) = \cN\left(\bx_1, \sigma^2_{1-t}  \bI\right) \quad \Rightarrow \quad 
-				\bff(\bx_t, \bx_1, t) = - \frac{\sigma'_{1-t}}{\sigma_{1-t}} (\bx_t - \bx_1)
+				\bv(\bx_t, \bx_1, t) = - \frac{\sigma'_{1-t}}{\sigma_{1-t}} (\bx_t - \bx_1)
 		\]
 		\vspace{-0.3cm}
 	\end{block}
@@ -356,7 +356,7 @@
 		{\small
 		\[
 			p_t(\bx | \bx_1) = \cN\left(\alpha_{1-t}  \bx_1, (1 - \alpha^2_{1-t})  \bI \right)  \, \Rightarrow \, 
-		\bff(\bx_t, \bx_1, t) = \frac{\alpha'_{1-t}}{1 - \alpha^2_{1-t}}\cdot \left(\alpha_{1-t}  \bx_t - \bx_1\right)
+		\bv(\bx_t, \bx_1, t) = \frac{\alpha'_{1-t}}{1 - \alpha^2_{1-t}}\cdot \left(\alpha_{1-t}  \bx_t - \bx_1\right)
 		\]
 		}
 	\end{block}
