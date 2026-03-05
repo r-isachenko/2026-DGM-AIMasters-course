@@ -43,15 +43,21 @@
 %=======
 \begin{frame}{Recap of Previous Lecture}
 	\myfootnotewithlink{https://arxiv.org/abs/2011.13456}{Song Y., et al. Score-Based Generative Modeling through Stochastic Differential Equations, 2020}
-	\vspace{-0.5cm}
+	\[
+		d\bx = \bff(\bx, t) dt + g(t) d \bw
+	\]
+	\vspace{-0.3cm}
+	\[
+		\bv(\bx, t) = \bff(\bx, t) - \frac{1}{2} g^2(t) \bs(\bx, t), \quad \text{where} \quad \bs(\bx, t) = \nabla_{\bx} \log p_t(\bx)
+	\]
+	\vspace{-0.3cm}
 	\begin{align*}
-		d\bx &= \bff(\bx, t) dt + g(t) d \bw \qquad\quad\;\:\, \text{(SDE)} \\
-		d\bx &= \bv(\bx, t) dt \;\,\,\, \text{(probability flow ODE)} \\
-		d\bx &= \left(\bff(\bx, t) - g^2(t) \frac{\partial }{\partial \bx}\log p_t(\bx)\right) dt + g(t) d \bar{\bw} \quad \text{(reverse SDE)}
+		d\bx &= \bv(\bx, t) dt \;\; - \textbf{Probability Flow ODE} \\
+		d\bx &= \bigl({\color{violet}\bv(\bx, t) - \frac{1}{2} g^2(t) \bs(\bx, t)}\bigr) dt + g(t) d \bar{\bw} \;\; - \textbf{Reverse SDE}
 	\end{align*}
-	\vspace{-0.5cm}
+	\vspace{-0.7cm}
 	\begin{figure}
-		\includegraphics[width=\linewidth]{figs/sde}
+		\includegraphics[width=1.0\linewidth]{figs/sde}
 	\end{figure}
 \end{frame}
 %=======

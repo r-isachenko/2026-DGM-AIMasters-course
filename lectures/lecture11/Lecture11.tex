@@ -166,7 +166,7 @@
 		There exists a reverse SDE for $d\bx = \bff(\bx, t) dt + g(t) d \bw$, given by:
 		\vspace{-0.3cm}
 		\[
-			d\bx = \left(\bff(\bx, t) {\color{violet}- g^2(t) \frac{\partial}{\partial \bx}\log p_t(\bx)}\right) dt + g(t) d \bar{\bw}
+			d\bx = \left(\bff(\bx, t) - g^2(t) \frac{\partial}{\partial \bx}\log p_t(\bx)\right) dt + g(t) d \bar{\bw}
 		\]
 		\vspace{-0.5cm}\\
 		where $dt<0$ and $\bar{\bw}$ is a reverse-time Wiener process.
@@ -185,7 +185,11 @@
 		where $dt<0$ and $\bar{\bw}(t)$ is a reverse-time Wiener process.
 	\end{block}
 	\eqpause
-	\textbf{Note:} Again, the score function appears: $\bs(\bx, t) = \frac{\partial}{\partial \bx} \log p_t(\bx)$.
+	\begin{itemize}
+		\item Here the score function appears: $\bs(\bx, t) = \frac{\partial}{\partial \bx} \log p_t(\bx)$.
+		\item Since $\bv(\bx, t) = \bff(\bx, t) - \frac{1}{2} g^2(t) \bs(\bx, t)$ (PF-ODE), the reverse drift equals $\bff - g^2 \bs = \bv - \frac{1}{2} g^2 \bs$.
+	\end{itemize}
+	\eqpause
 	\begin{block}{Proof Sketch}
 		\begin{itemize}
 			\item Convert the initial SDE to a probability flow ODE.
@@ -257,21 +261,22 @@
 %=======
 \begin{frame}{Reverse SDE}
 	\myfootnotewithlink{https://arxiv.org/abs/2011.13456}{Song Y., et al. Score-Based Generative Modeling through Stochastic Differential Equations, 2020}
+	\[
+		d\bx = \bff(\bx, t) dt + g(t) d \bw
+	\]
+	\vspace{-0.3cm}
+	\[
+		\bv(\bx, t) = \bff(\bx, t) - \frac{1}{2} g^2(t) \bs(\bx, t), \quad \text{where} \quad \bs(\bx, t) = \nabla_{\bx} \log p_t(\bx)
+	\]
 	\vspace{-0.3cm}
 	\begin{align*}
-		d\bx &= \bff(\bx, t) dt + g(t) d \bw \;\; - \text{SDE} \\
-		d\bx &= \bv(\bx, t) dt \;\; - \text{Probability Flow ODE} \\
-		d\bx &= \left(\bff(\bx, t) - g^2(t) \frac{\partial}{\partial \bx}\log p_t(\bx)\right) dt + g(t) d \bar{\bw} \;\; - \text{Reverse SDE}
+		d\bx &= \bv(\bx, t) dt \;\; - \textbf{Probability Flow ODE} \\
+		d\bx &= \bigl({\color{violet}\bv(\bx, t) - \frac{1}{2} g^2(t) \bs(\bx, t)}\bigr) dt + g(t) d \bar{\bw} \;\; - \textbf{Reverse SDE}
 	\end{align*}
 	\eqpause
 	\vspace{-0.7cm}
-	\begin{itemize}
-		\item This framework allows us to transform one distribution into another via an SDE with a prescribed probability path $p_t(\bx)$.
-		\item We can invert this process using the score function.
-	\end{itemize}
-	\vspace{-0.3cm}
 	\begin{figure}
-		\includegraphics[width=0.9\linewidth]{figs/sde}
+		\includegraphics[width=1.0\linewidth]{figs/sde}
 	\end{figure}
 \end{frame}
 %=======
