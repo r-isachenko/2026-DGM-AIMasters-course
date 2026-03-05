@@ -771,15 +771,33 @@
 \end{frame}
 %=======
 \begin{frame}{Towards Continuous-Time Normalizing Flows}
-	\begin{itemize}
-		\item Up to this point, we have considered discrete-time normalizing flows:
-		\vspace{-0.3cm}
-		 \[
-		 	 \bx_{t+1} = \bff_{\btheta}(\bx_t, t); \quad \log p(\bx_{t+1}) = \log p(\bx_{t}) - \log \left| \det \frac{\partial \bff_{\btheta}(\bx_t)}{\partial \bx_{t}} \right| .
-		 \]
-		\item Let us now move to the general case of continuous time, using a mapping $\bx(t): \bbR \rightarrow \bbR^m$ to describe continuous dynamics.
-	\end{itemize}
+	\myfootnotewithlink{https://arxiv.org/abs/1906.02735}{Chen R. T. Q. et al. Residual Flows for Invertible Generative Modeling, 2019}
+	Up to this point, we have considered discrete-time normalizing flows:
+	\[
+		\bx_{t+1} = \bff_{\btheta}(\bx_t, t); \quad \log p(\bx_{t+1}) = \log p(\bx_{t}) - \log \left| \det \frac{\partial \bff_{\btheta}(\bx_t)}{\partial \bx_{t}} \right| .
+	\]
 	\eqpause
+	\begin{block}{Residual Flows}
+		Let's condider the flow $\bff_{\btheta}(\bx, t) = \bx + \bv_{\btheta}(\bx, t)$:
+		\[
+			\bx_{t+1} = \bff_{\btheta}(\bx_t, t) = \bx_t + \bv_{\btheta}(\bx_t, t)
+		\]
+		\eqpause
+		\vspace{-0.3cm}
+		\begin{itemize}
+			\item Here $\bff_{\btheta}$ is the NF \textbf{bijection}, $\bv_{\btheta}$ is the \textbf{velocity} (vector field).
+			\item The update $\bx_{t+1} - \bx_t = \bv_{\btheta}(\bx_t, t)$ is a \textbf{finite-difference} approximation of a derivative.
+		\end{itemize}
+	\end{block}
+\end{frame}
+%=======
+\begin{frame}{Towards Continuous-Time Normalizing Flows}
+	Residual dynamics $\bx_{t+1} = \bx_t + \bv_{\btheta}(\bx_t, t)$ is an Euler step with $h=1$:
+	\[
+		\frac{\bx(t + h) - \bx(t)}{h} = \bv_{\btheta}(\bx(t), t)
+	\]
+	\eqpause
+	Taking the limit $h \rightarrow 0$, we obtain continuous-time dynamics.
 	\begin{block}{Continuous-Time Dynamics}
 		Consider an Ordinary Differential Equation (ODE):
 		\vspace{-0.3cm}
@@ -791,7 +809,7 @@
 		\end{align*}
 		\vspace{-0.6cm}
 	\end{block}
-	Here, $\bv_{\btheta}: \bbR^m \times [t_0, t_1] \rightarrow \bbR^m$ is a \textbf{vector field}.
+	Here, $\bv_{\btheta}: \bbR^m \times [t_0, t_1] \rightarrow \bbR^m$ is a \textbf{velocity vector field}.
 \end{frame}
 %=======
 \begin{frame}{Ordinary Differential Equations (ODEs)}
