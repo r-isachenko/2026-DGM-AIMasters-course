@@ -274,81 +274,65 @@
 		\includegraphics[width=0.75\linewidth]{figs/cfm_uncond_to_cond}
 	\end{figure}
     \eqpause
-	\begin{itemize}
-		\item We don't want to directly model $p_t(\bx)$, since it's complex.
-		\item We've shown it's possible to solve the CFM task instead of the FM task.
-		\eqpause
-		\item Let's choose a convenient conditioning latent variable $\bz$.
-		\item We'll parametrize $p_t(\bx | \bz)$ instead of $p_t(\bx)$. It should satisfy the following constraints:
-		\[
-			p(\bx) = \cN(0, \bI) = \bbE_{p(\bz)} p_0(\bx | \bz); \quad \pd(\bx) = \bbE_{p(\bz)} p_1(\bx | \bz).
-		\]
-	\end{itemize}
-\end{frame}
-%=======
-\begin{frame}{Gaussian Conditional Probability Paths}
-	\myfootnotewithlink{https://arxiv.org/abs/2302.00482}{Tong A., et al. Improving and Generalizing Flow-Based Generative Models with Minibatch Optimal Transport, 2023}
-	\vspace{-0.3cm}
-	\[
-		\bbE_{t \sim U[0, 1]} \bbE_{\bz \sim p(\bz)} \bbE_{\bx \sim p_t(\bx | \bz)}\left\| \bv(\bx, \bz, t) - \bv_{\btheta}(\bx, t) \right\|^2 \rightarrow \min_{\btheta}
-	\]
-	\eqpause
-	\vspace{-0.4cm}
 	\begin{block}{Open Questions}
 		\begin{itemize}
-			\item[Q1] How should we choose the conditioning latent variable $\bz$?
-			\item[Q2] How can we define $p_t(\bx | \bz)$ to enforce the constraints?
+			\item[Q1] How should we choose the convenient conditioning latent variable $\bz$?
+			\item[Q2] How can we parametrize $p_t(\bx)$ (or $p_t(\bx | \bz)$) to enforce the following constraints?
+			\[
+				\bbE_{p(\bz)} p_0(\bx | \bz) = \cN(0, \bI); \quad \bbE_{p(\bz)} p_1(\bx | \bz)= \pd(\bx).
+			\]
 		\end{itemize}
 	\end{block}
-	\eqpause
-	\vspace{-0.3cm}
-	\begin{block}{Gaussian Conditional Probability Path [Q2]}
-		\vspace{-0.3cm}
-		\[
-			p_t(\bx | \bz) = \cN\left(\bmu_t(\bz), \bsigma_t^2(\bz)\right)
-		\]
-		\eqpause
-		\vspace{-0.5cm}
-	\end{block}
-	\begin{itemize}
-		\item There are infinitely many vector fields that generate a particular probability path.
-		\item Let's consider the following dynamics:
-		\[
-			\bx_t = \bmu_t(\bz) + \bsigma_t(\bz) \odot \bepsilon, \quad {\color{violet} \text{with fixed } \bepsilon \sim \cN(0, \bI)}
-		\]
-	\end{itemize}
 \end{frame}
 %=======
-\begin{frame}{Deriving the Conditional Vector Field}
+\begin{frame}{Gaussian Conditional Probability Paths [Q2]}
+	\myfootnotewithlink{https://arxiv.org/abs/2302.00482}{Tong A., et al. Improving and Generalizing Flow-Based Generative Models with Minibatch Optimal Transport, 2023}
+	Let's consider the following parametrization:
+	\vspace{-0.3cm}
+	\[
+		p_t(\bx | \bz) = \cN\left(\bmu_t(\bz), \bsigma_t^2(\bz) \right)
+	\]
+	\eqpause
+	The concrete $\bmu_t(\bz)$, $\bsigma_t(\bz)$ (which satisfies the boundary constraints) will be fixed once we choose $\bz$ [Q1].
+	\begin{block}{Gaussian flow}
+		\begin{itemize}
+			\item Let's derive the vector field for \textbf{any} Gaussian path $p_t(\bx | \bz)$.
+			\item There are infinitely many flows $\bpsi_t(\bx_0, \bz)$ (or, equivalently, vector fields $\bv(\bx_t, \bz, t)$) that generate a particular probability path $p_t(\bx | \bz)$.
+			\eqpause
+			\item Let's consider the following flow:
+			\vspace{-0.3cm}
+			\[
+				\bx_t = \bpsi_t(\bx_0, \bz) = \bmu_t(\bz) + \bsigma_t(\bz) \odot \bepsilon,
+			\]
+			where $\bepsilon$ is fixed by the condition: $\bx_0 = \bmu_0(\bz) + \bsigma_0(\bz) \odot \bepsilon$.
+		\end{itemize}
+	\end{block}
+\end{frame}
+%=======
+\begin{frame}{Gaussian Conditional Vector Field}
 	\myfootnotewithlink{https://arxiv.org/abs/2302.00482}{Tong A., et al. Improving and Generalizing Flow-Based Generative Models with Minibatch Optimal Transport, 2023}
 	\begin{block}{Gaussian Conditional Probability Path}
-		\vspace{-0.3cm}
+		\vspace{-0.5cm}
 		\[
-			p_t(\bx | \bz) = \cN\left(\bmu_t(\bz), \bsigma_t^2(\bz)\right); \quad \bx_t = \bmu_t(\bz) + \bsigma_t(\bz) \odot \bepsilon
+			p_t(\bx | \bz) = \cN\left(\bmu_t(\bz), \bsigma_t^2(\bz)\right); \quad \bx_t = \bpsi_t(\bx_0, \bz) = \bmu_t(\bz) + \bsigma_t(\bz) \odot \bepsilon
 		\]
 		\vspace{-0.5cm}
 	\end{block}
-	Is it possible to derive the expression for $\bv(\bx_t, \bz, t)$?
 	\eqpause
-	\begin{block}{Statement}
-		\vspace{-0.3cm}
-		\[
-			\bv(\bx_t, \bz, t) =  \bmu_t'(\bz) + \frac{\bsigma_t'(\bz)}{\bsigma_t(\bz)} \odot (\bx_t - \bmu_t(\bz))
-		\]
-		\vspace{-0.3cm}
-	\end{block}
+	How to derive the expression for $\bv(\bx_t, \bz, t)$ for this particular flow $\bpsi_t(\bx_0, \bz)$?
 	\eqpause
-	\vspace{-0.2cm}
-	\begin{block}{Proof}
-		\vspace{-0.2cm}
-		\[
-			\frac{d\bx_t}{dt} = \bv(\bx_t, \bz, t); \quad \bepsilon = \frac{1}{\bsigma_t(\bz)} \odot (\bx_t - \bmu_t(\bz))
-		\]
-		\eqpause
-		\[
-			\frac{d\bx_t}{dt} = \bmu_t'(\bz) + \bsigma_t'(\bz) \odot {\color{violet}\bepsilon} =  \bmu_t'(\bz) + \frac{\bsigma_t'(\bz)}{{\color{violet}\bsigma_t(\bz)}} \odot {\color{violet}(\bx_t - \bmu_t(\bz))}
-		\]
-	\end{block}
+	\vspace{-0.3cm}
+	\[
+		\frac{d\bx_t}{dt} = \bv(\bx_t, \bz, t); \quad {\color{violet}\bepsilon = \frac{1}{\bsigma_t(\bz)} \odot (\bx_t - \bmu_t(\bz))}
+	\]
+	\eqpause
+	\[
+		\frac{d\bx_t}{dt} = \bmu_t'(\bz) + \bsigma_t'(\bz) \odot {\color{violet}\bepsilon} 
+	\]
+	\eqpause
+	\[
+		\boxed{\bv(\bx_t, \bz, t) = \bpsi_t'\left(\bpsi_t(\bx_t, \bz)^{-1}, \bz\right) = \bmu_t'(\bz) + \frac{\bsigma_t'(\bz)}{\bsigma_t(\bz)} \odot (\bx_t - \bmu_t(\bz))}
+	\]
 \end{frame}
 %=======
 \section{One-Sided Conditioning}
@@ -375,8 +359,8 @@
 	We need to ensure the boundary constraints:
 	\[
 		\begin{cases}
-			p(\bx) = \bbE_{p(\bz)} p_0(\bx | \bz); {\color{gray}(= \cN(0, \bI))} \\
-			\pd(\bx) = \bbE_{p(\bz)} p_1(\bx | \bz)
+			\bbE_{p(\bz)} p_0(\bx | \bz) = \cN(0, \bI) \\
+			\bbE_{p(\bz)} p_1(\bx | \bz) = \pd(\bx)
 		\end{cases}
 		\quad 
 		\nextonslide{

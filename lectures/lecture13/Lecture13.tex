@@ -20,6 +20,7 @@
 		\vspace{-0.5cm}
 	\end{block}
 \end{frame}
+%=======
 \begin{frame}{Recap of Previous Lecture}
 	\myfootnotewithlink{https://arxiv.org/abs/2302.00482}{Tong A., et al. Improving and Generalizing Flow-Based Generative Models with Minibatch Optimal Transport, 2023}
 	\begin{block}{Flow Matching (FM)}
@@ -56,21 +57,19 @@
 	\begin{block}{Constraints}
 		\vspace{-0.3cm}
 		\[
-			p(\bx) = \cN(0, \bI) = \bbE_{p(\bz)} p_0(\bx | \bz); \quad \pd(\bx) = \bbE_{p(\bz)} p_1(\bx | \bz).
+			\bbE_{p(\bz)} p_0(\bx | \bz) = \cN(0, \bI); \quad \bbE_{p(\bz)} p_1(\bx | \bz)= \pd(\bx).
 		\]
 		\vspace{-0.5cm}
 	\end{block}
 	\begin{itemize}
-		\item How should we choose the conditioning latent variable $\bz$?
-		\item How can we define $p_t(\bx | \bz)$ so that it meets the constraints?
+		\item[Q1] How should we choose the convenient conditioning latent variable $\bz$?
+		\item[Q2] How can we parametrize $p_t(\bx | \bz)$ to enforce the constraints?
 	\end{itemize}
-	\begin{block}{Gaussian Conditional Probability Path}
-		\vspace{-0.3cm}
+	\begin{block}{Gaussian Probability Path and Flow}
+		\vspace{-0.5cm}
 		\[
-			p_t(\bx | \bz) = \cN\left(\bmu_t(\bz), \bsigma_t^2(\bz)\right)
-		\]
-		\[
-			\bx_t = \bmu_t(\bz) + \bsigma_t(\bz) \odot \bx_0, \quad {\color{violet} \bx_0 \sim p_0(\bx) = \cN(0, \bI)}
+			p_t(\bx | \bz) = \cN\left(\bmu_t(\bz), \bsigma_t^2(\bz)\right) \quad
+			\bx_t = \bpsi_t(\bx_0, \bz) = \bmu_t(\bz) + \bsigma_t(\bz) \odot \bepsilon
 		\]
 	\end{block}
 \end{frame}
@@ -78,13 +77,13 @@
 \begin{frame}{Recap of Previous Lecture}
     \myfootnotewithlink{https://arxiv.org/abs/2210.02747}{Lipman Y., et al. Flow Matching for Generative Modeling, 2022}
 	\begin{block}{Gaussian Conditional Probability Path}
-		\vspace{-0.3cm}
+		\vspace{-0.5cm}
 		\[
-			p_t(\bx | \bz) = \cN\left(\bmu_t(\bz), \bsigma_t^2(\bz)\right); \quad \bx_t = \bmu_t(\bz) + \bsigma_t(\bz) \odot \bx_0
+			p_t(\bx | \bz) = \cN\left(\bmu_t(\bz), \bsigma_t^2(\bz)\right); \quad \bx_t = \bpsi_t(\bx_0, \bz) = \bmu_t(\bz) + \bsigma_t(\bz) \odot \bepsilon
 		\]
-		\vspace{-0.3cm}
+		\vspace{-0.5cm}
 		\[
-			\bv(\bx, \bz, t) =  \bmu_t'(\bz) + \frac{\bsigma_t'(\bz)}{\bsigma_t(\bz)} \odot (\bx - \bmu_t(\bz))
+			\bv(\bx_t, \bz, t) = \bpsi_t'\left(\bpsi_t(\bx_t, \bz)^{-1}, \bz\right) =  \bmu_t'(\bz) + \frac{\bsigma_t'(\bz)}{\bsigma_t(\bz)} \odot (\bx_t - \bmu_t(\bz))
 		\]
 		\vspace{-0.3cm}
 	\end{block}
@@ -98,8 +97,8 @@
 	We must ensure the boundary constraints:
 	\[
 		\begin{cases}
-			p(\bx) = \bbE_{p(\bz)} p_0(\bx | \bz); {\color{gray}(= \cN(0, \bI))} \\
-			\pd(\bx) = \bbE_{p(\bz)} p_1(\bx | \bz).
+			\bbE_{p(\bz)} p_0(\bx | \bz) = \cN(0, \bI) \\
+			\bbE_{p(\bz)} p_1(\bx | \bz) = \pd(\bx)
 		\end{cases}
 		\quad \Rightarrow \quad 
 		\begin{cases}
