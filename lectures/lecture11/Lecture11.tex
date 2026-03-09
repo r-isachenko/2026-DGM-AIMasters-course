@@ -515,14 +515,14 @@
 	\[
 		\frac{d \bx_t}{dt} = \bv (\bx_t, t),  \quad \text{with initial condition } \bx(0) = \bx_0.
 	\]
+	The velocity $\bv$ determines a flow $\bpsi_t$: $\bx_t = \bpsi_t(\bx_0)$.
     \eqpause
-	\vspace{-0.3cm}
 	\begin{block}{KFP Theorem (Continuity Equation)}
 		\vspace{-0.5cm}
 		\[
 			\frac{\partial p_t(\bx)}{\partial t} = - \diver\left(\bv(\bx, t) p_t(\bx)\right) \Leftrightarrow \frac{d \log p_t(\bx(t))}{d t} = - \tr \left( \frac{\partial \bv(\bx(t), t)}{\partial \bx(t)} \right)
 		\]
-		\vspace{-0.3cm}
+		\vspace{-0.5cm}
 	\end{block}
     \eqpause
 	\begin{itemize}
@@ -542,7 +542,7 @@
 	\end{block}
 	\begin{itemize}
 		\item Knowing the vector field $\bv (\bx, t)$, the KFP (or continuity) equation allows us to compute the density $p_t(\bx)$.
-		\item Flow matching provides an alternative approach to Neural ODEs.
+		\item Flow matching provides scalable approach to Neural ODEs.
 	\end{itemize}
     \eqpause
 	\begin{block}{Flow Matching}
@@ -555,7 +555,7 @@
     \eqpause
 	\begin{itemize}
 		\item Approximate the true vector field $\bv (\bx, t)$ using $\bv_{\btheta}(\bx, t)$.
-		\item Use $\bv_{\btheta}(\bx, t)$ for deterministic sampling from the ODE.
+		\item Use the learned flow $\bpsi_t$ for deterministic sampling: $\bx_1 = \bpsi_1(\bx_0)$.
 	\end{itemize}
 \end{frame}
 %=======
