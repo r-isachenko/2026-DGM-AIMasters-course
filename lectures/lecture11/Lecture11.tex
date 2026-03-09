@@ -630,34 +630,6 @@
 		\frac{d\bx_t}{dt} = \bv(\bx_t, t) \quad \Rightarrow \quad \frac{d\bx_t}{dt} = \bv(\bx_t, \bz, t)
 	\]
 	\vspace{-0.3cm}
-	What's the relationship between $\bv(\bx, t)$ and $\bv(\bx, \bz, t)$?
-\end{frame}
-%=======
-\begin{frame}{Flow Matching}
-    \myfootnotewithlink{https://arxiv.org/abs/2302.00482}{Tong A., et al. Improving and Generalizing Flow-Based Generative Models with Minibatch Optimal Transport, 2023}
-	\[
-		{\color{violet}\frac{\partial p_t(\bx | \bz)}{\partial t} = - \diver\left(\bv(\bx, \bz, t) p_t(\bx | \bz)\right)},
-	\]
-	\vspace{-0.3cm}
-	\begin{block}{Theorem}
-		The following vector field generates the probability path $p_t(\bx)$:
-		\vspace{-0.2cm}
-		\[
-			\bv(\bx, t) = \bbE_{p_t(\bz | \bx)} \bv(\bx, \bz, t)  = {\color{teal}\int \bv(\bx, \bz, t)} \frac{\color{teal}p_t(\bx | \bz) p(\bz)}{p_t(\bx)} {\color{teal}d \bz}
-		\]
-		\vspace{-0.5cm}
-	\end{block}
-    \eqpause
-	\begin{block}{Proof}
-		\vspace{-0.7cm}
-		\begin{multline*}
-			\frac{\partial p_t(\bx)}{\partial t} = \frac{\partial}{\partial t} \int p_t(\bx | \bz) p(\bz) d \bz 
-			\nextonslide{=  \int \left( {\color{violet} \frac{\partial p_t(\bx | \bz)}{\partial t} } \right) p(\bz) d \bz}
-			\nextonslide{ = \\ = \int \left( {\color{violet} - \diver\left(\bv(\bx, \bz, t) p_t(\bx | \bz)\right) } \right) p(\bz) d \bz}
-			\nextonslide{ = \\ = - \diver \left({\color{teal}\int \bv(\bx, \bz, t) p_t(\bx | \bz) p(\bz) d \bz }\right)} 
-			\nextonslide{= - \diver  \left(\bv(\bx, t) p_t(\bx)\right)}
-		\end{multline*}
-	\end{block}
 \end{frame}
 %=======
 \begin{frame}{Flow Matching}
@@ -683,6 +655,66 @@
     \eqpause
 	\begin{block}{Proof}
 		This can be proved in a similar way as in the denoising score matching theorem.
+	\end{block}
+\end{frame}
+%=======
+\begin{frame}{Conditional Flow Matching}
+    \myfootnotewithlink{https://arxiv.org/abs/2302.00482}{Tong A., et al. Improving and Generalizing Flow-Based Generative Models with Minibatch Optimal Transport, 2023}
+	\begin{block}{Theorem}
+		\vspace{-0.7cm}
+		\begin{multline*}
+			\argmin_{\btheta} \bbE_{t \sim U[0, 1]} \bbE_{\bx \sim p_t(\bx)}\left\| \bv(\bx, t) - \bv_{\btheta}(\bx, t) \right\|^2 = \\
+			= \argmin_{\btheta} \bbE_{t \sim U[0, 1]} \bbE_{\bz \sim p(\bz)} \bbE_{\bx \sim p_t(\bx | \bz)}\left\| \bv(\bx, \bz, t) - \bv_{\btheta}(\bx, t) \right\|^2
+		\end{multline*}
+		\vspace{-0.7cm}
+	\end{block}
+    \eqpause
+	\begin{block}{Proof}
+		\vspace{-0.5cm}
+		{\small
+		\begin{multline*}
+			\bbE_{\bx \sim p_t(\bx)}\left\| \bv(\bx, t) - \bv_{\btheta}(\bx, t) \right\|^2 = \\ 
+			= {\color{olive}\bbE_{\bz \sim p(\bz)} \bbE_{\bx \sim p_t(\bx | \bz)}}\left[\| \bv_{\btheta}(\bx, t) \|^2 - 2 {\color{teal}\bv_{\btheta}^\top(\bx, t)\bv(\bx, t)} \right] + \text{const}(\btheta)
+		\end{multline*}
+		}
+		\eqpause
+		\vspace{-1.0cm}
+		{\small
+		\begin{multline*}
+			\bbE_{p_t(\bx)} \left[{\color{teal}\bv_{\btheta}^\top(\bx, t)\bv(\bx, t)} \right] = \int p_t(\bx) \left[\bv_{\btheta}^\top(\bx, t) \left( \int p_t(\bz | \bx)\bv(\bx, \bz, t)d\bz \right) \right] d\bx 
+			\nextonslide{ = \\ = \int \int {\color{violet}p_t(\bx) p_t(\bz | \bx)} \left[\bv_{\btheta}^\top(\bx, t) \bv(\bx, \bz, t) \right] d\bz d\bx}
+			\nextonslide{ = \\ = {\color{violet}\bbE_{p(\bz)} \bbE_{p_t(\bx | \bz)}} \left[\bv_{\btheta}^\top(\bx, t) \bv(\bx, \bz, t) \right]}
+		\end{multline*}
+		}
+	\end{block}
+\end{frame}
+%=======
+\begin{frame}{Conditional Flow Matching: Training and Sampling}
+	\myfootnotewithlink{https://arxiv.org/abs/2210.02747}{Lipman Y., et al. Flow Matching for Generative Modeling, 2022}
+	\[
+		\bbE_{t \sim U[0, 1]} \bbE_{\bz \sim p(\bz)} \bbE_{\bx \sim p_t(\bx | \bz)}\left\| \bv(\bx, \bz, t) - \bv_{\btheta}(\bx, t) \right\|^2 \rightarrow \min_{\btheta}
+	\]
+	\[
+		\bbE_{p(\bz)} p_0(\bx | \bz) = \cN(0, \bI); \quad \bbE_{p(\bz)} p_1(\bx | \bz) = \pd(\bx).
+	\]
+	\eqpause
+	\vspace{-0.3cm}
+	\begin{block}{Training}
+		\begin{enumerate}
+			\item Sample a time $t \sim U[0, 1]$ and $\bz \sim p(\bz)$.
+			\item Draw $\bx_t \sim p_t(\bx | \bz)$.
+			\item Compute the loss $ \cL = \left\| \bv(\bx_t, \bz, t) - \bv_{\btheta}(\bx_t, t) \right\|^2 $.
+		\end{enumerate}
+	\end{block}
+	\eqpause
+	\begin{block}{Sampling}
+		\begin{enumerate}
+			\item Sample $\bx_0 \sim \cN(0, \bI)$.
+			\item Solve the ODE to obtain $\bx_1$:
+			\[
+				\bx_1 = \bpsi_1(\bx_0) = \ODESolve_v(\bx_0, \btheta, t_0=0, t_1=1).
+			\]
+		\end{enumerate}
 	\end{block}
 \end{frame}
 %=======
