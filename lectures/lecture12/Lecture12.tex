@@ -217,6 +217,29 @@
 	\end{block}
 \end{frame}
 %=======
+\begin{frame}{Marginal-to-Conditional: Scores vs Velocities}
+	\begin{block}{Denoising Score Matching}
+		\vspace{-0.3cm}
+		\[
+			\bbE_{\pd(\bx)} \bbE_{q(\bx_{\sigma} | \bx)}\left\| \bs_{\btheta, \sigma}(\bx_{\sigma}) - \nabla_{\bx_{\sigma}} \log q(\bx_{\sigma} | \bx) \right\|_2^2 \rightarrow \min_{\btheta}
+		\]
+		\vspace{-0.3cm}
+	\end{block}
+	Optimal predictor: $\bs_{\btheta^*, \sigma}(\bx_\sigma) = \bbE_{q(\bx | \bx_\sigma)} \left[\nabla_{\bx_\sigma} \log q(\bx_\sigma | \bx) \right] = \nabla_{\bx_\sigma} \log q(\bx_\sigma)$
+	\eqpause
+	\begin{block}{Conditional Flow Matching}
+		\vspace{-0.3cm}
+		\[
+			\bbE_{t \sim U[0, 1]} \bbE_{\bz \sim p(\bz)} \bbE_{\bx \sim p_t(\bx | \bz)}\left\| \bv(\bx, \bz, t) - \bv_{\btheta}(\bx, t) \right\|^2 \rightarrow \min_{\btheta}
+		\]
+		\vspace{-0.3cm}
+	\end{block}
+	Optimal predictor: $\bv_{\btheta^*}(\bx, t) = \bbE_{p_t(\bz | \bx)} \bv(\bx, \bz, t) = \bv(\bx, t)$. \\
+	\eqpause
+	\vspace{0.2cm}
+	In both cases, the optimal MSE predictor is the posterior mean of the \textbf{conditional} target, which equals the intractable \textbf{marginal} quantity (score or velocity).
+\end{frame}
+%=======
 \begin{frame}{Conditional Flow Matching: Continuity Equations}
 	\myfootnotewithlink{https://arxiv.org/abs/2510.21890}{Lai C. H. et al. The principles of diffusion models, 2025.}
 	\begin{block}{Continuity Equations}

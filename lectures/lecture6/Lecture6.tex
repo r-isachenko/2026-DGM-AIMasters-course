@@ -546,6 +546,35 @@
 \end{frame}
 %=======
 \begin{frame}{Denoising Score Matching}
+	\myfootnotewithlink{http://www.iro.umontreal.ca/~vincentp/Publications/smdae_techreport.pdf}{Vincent P. A Connection Between Score Matching and Denoising Autoencoders, 2010}
+	\begin{block}{Denoising Score Matching Objective}
+		\vspace{-0.3cm}
+		\[
+			\bbE_{\pd(\bx)} \bbE_{q(\bx_{\sigma} | \bx)}\left\| \bs_{\btheta, \sigma}(\bx_{\sigma}) - \nabla_{\bx_{\sigma}} \log q(\bx_{\sigma} | \bx) \right\|_2^2 \rightarrow \min_{\btheta}
+		\]
+		\vspace{-0.5cm}
+	\end{block}
+	\eqpause
+	The optimal MSE predictor is the posterior mean of the regression target:
+	\[
+		\bs_{\btheta^*, \sigma}(\bx_\sigma) = \bbE_{q(\bx | \bx_\sigma)} \left[\nabla_{\bx_\sigma} \log q(\bx_\sigma | \bx) \right]
+	\]
+	\eqpause
+	\vspace{-0.5cm}
+	\begin{block}{Marginal Score via Conditional Scores}
+		\vspace{-0.5cm}
+		\begin{multline*}
+			\nabla_{\bx_\sigma} \log q(\bx_\sigma) = \frac{\nabla_{\bx_\sigma} {\color{violet}\int q(\bx_\sigma | \bx) \pd(\bx) d\bx}}{q(\bx_\sigma)}
+			\nextonslide{= \\ = \int \nabla_{\bx_\sigma} \log q(\bx_\sigma | \bx) \cdot {\color{olive}\frac{q(\bx_\sigma | \bx) \pd(\bx)}{q(\bx_\sigma)}} d\bx}
+			\nextonslide{= \bbE_{\color{olive}q(\bx | \bx_\sigma)} \left[\nabla_{\bx_\sigma} \log q(\bx_\sigma | \bx) \right]}
+		\end{multline*}
+		\vspace{-0.5cm}
+	\end{block}
+	\eqpause
+	\textbf{Therefore:} $\bs_{\btheta^*, \sigma}(\bx_\sigma) = \nabla_{\bx_\sigma} \log q(\bx_\sigma)$ -- the optimal model learns the true \textbf{marginal} score!
+\end{frame}
+%=======
+\begin{frame}{Denoising Score Matching}
     \myfootnotewithlink{https://yang-song.github.io/blog/2021/score/}{Song Y. Generative Modeling by Estimating Gradients of the Data Distribution, blog post, 2021}
 	Original objective:
 	\vspace{-0.2cm}
