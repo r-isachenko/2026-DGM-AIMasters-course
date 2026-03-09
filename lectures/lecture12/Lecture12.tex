@@ -226,6 +226,35 @@
 	\end{block}
 \end{frame}
 %=======
+\begin{frame}{Conditional Flow Matching: Training and Sampling}
+	\myfootnotewithlink{https://arxiv.org/abs/2210.02747}{Lipman Y., et al. Flow Matching for Generative Modeling, 2022}
+	\[
+		\bbE_{t \sim U[0, 1]} \bbE_{\bz \sim p(\bz)} \bbE_{\bx \sim p_t(\bx | \bz)}\left\| \bv(\bx, \bz, t) - \bv_{\btheta}(\bx, t) \right\|^2 \rightarrow \min_{\btheta}
+	\]
+	\[
+		\bbE_{p(\bz)} p_0(\bx | \bz) = \cN(0, \bI); \quad \bbE_{p(\bz)} p_1(\bx | \bz) = \pd(\bx).
+	\]
+	\eqpause
+	\vspace{-0.3cm}
+	\begin{block}{Training}
+		\begin{enumerate}
+			\item Sample a time $t \sim U[0, 1]$ and $\bz \sim p(\bz)$.
+			\item Draw $\bx_t \sim p_t(\bx | \bz)$.
+			\item Compute the loss $ \cL = \left\| \bv(\bx_t, \bz, t) - \bv_{\btheta}(\bx_t, t) \right\|^2 $.
+		\end{enumerate}
+	\end{block}
+	\eqpause
+	\begin{block}{Sampling}
+		\begin{enumerate}
+			\item Sample $\bx_0 \sim \cN(0, \bI)$.
+			\item Solve the ODE to obtain $\bx_1$:
+			\[
+				\bx_1 = \bpsi_1(\bx_0) = \ODESolve_v(\bx_0, \btheta, t_0=0, t_1=1).
+			\]
+		\end{enumerate}
+	\end{block}
+\end{frame}
+%=======
 \begin{frame}{Conditional Flow Matching: Continuity Equations}
 	\myfootnotewithlink{https://arxiv.org/abs/2510.21890}{Lai C. H. et al. The principles of diffusion models, 2025.}
 	\begin{block}{Continuity Equations}
@@ -293,35 +322,6 @@
 			p(\bx) = \cN(0, \bI) = \bbE_{p(\bz)} p_0(\bx | \bz); \quad \pd(\bx) = \bbE_{p(\bz)} p_1(\bx | \bz).
 		\]
 	\end{itemize}
-\end{frame}
-%=======
-\begin{frame}{Conditional Flow Matching: Training and Sampling}
-	\myfootnotewithlink{https://arxiv.org/abs/2210.02747}{Lipman Y., et al. Flow Matching for Generative Modeling, 2022}
-	\[
-		\bbE_{t \sim U[0, 1]} \bbE_{\bz \sim p(\bz)} \bbE_{\bx \sim p_t(\bx | \bz)}\left\| \bv(\bx, \bz, t) - \bv_{\btheta}(\bx, t) \right\|^2 \rightarrow \min_{\btheta}
-	\]
-	\[
-		p(\bx) = \cN(0, \bI) = \bbE_{p(\bz)} p_0(\bx | \bz); \quad \pd(\bx) = \bbE_{p(\bz)} p_1(\bx | \bz).
-	\]
-	\eqpause
-	\vspace{-0.3cm}
-	\begin{block}{Training}
-		\begin{enumerate}
-			\item Sample a time $t \sim U[0, 1]$ and $\bz \sim p(\bz)$.
-			\item Draw $\bx_t \sim p_t(\bx | \bz)$.
-			\item Compute the loss $ \cL = \left\| \bv(\bx_t, \bz, t) - \bv_{\btheta}(\bx_t, t) \right\|^2 $.
-		\end{enumerate}
-	\end{block}
-	\eqpause
-	\begin{block}{Sampling}
-		\begin{enumerate}
-			\item Sample $\bx_0 \sim \cN(0, \bI)$.
-			\item Solve the ODE to obtain $\bx_1$:
-			\[
-				\bx_1 = \bpsi_1(\bx_0) = \ODESolve_v(\bx_0, \btheta, t_0=0, t_1=1).
-			\]
-		\end{enumerate}
-	\end{block}
 \end{frame}
 %=======
 \begin{frame}{Gaussian Conditional Probability Paths}
