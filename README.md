@@ -40,7 +40,8 @@ The course is supported by seminars and hands-on assignments that help build int
 |  |  | <b>Seminar 4:</b>  VAE: Implementation hints. Vanilla 2D VAE coding. VAE on Binarized MNIST visualization. Posterior collapse. Beta VAE on MNIST. | [slides](seminars/seminar4/) |
 | 5 | March, 5 | <b>Lecture 5:</b> Generative Adversarial Networks (GAN). Wasserstein distance. Wasserstein GAN (WGAN). Evaluation of generative models (FID, Precision-Recall, CLIP score, human eval). | [slides](lectures/lecture5/Lecture5.pdf) |
 |  |  | <b>Seminar 5:</b> Vanilla GAN in 1D coding. Mode collapse and vanishing gradients. Non-saturating GAN. Wasserstein GAN (WGAN) and WGAN-GP | [slides](lectures/lecture6/Lecture6.pdf) |
-|  |  | <b>Seminar 6:</b> Progressive Growing GAN. StyleGAN | [slides](seminars/seminar6/seminar6_wgan.ipynb) |
+| 6 | March, 12 | <b>Lecture 6:</b> Evaluation of generative models (FID, Precision-Recall, CLIP score, human eval). Langevin dynamic. Score matching. Denoising score matching. | [slides](lectures/lecture6/Lecture6.pdf) |
+|  |  | <b>Seminar 6:</b> Progressive Growing GAN. StyleGAN | [slides](seminars/seminar6/) |
 <!---
 | 7 | October, 28 | <b>Lecture 7:</b> Forward gaussian diffusion process. Denoising score matching for diffusion. Reverse Gaussian diffusion process. | [slides](lectures/lecture7/Lecture7.pdf) |
 |  |  | <b>Seminar 7:</b> Progressive Growing GAN. StyleGAN | [slides](seminars/seminar7/) |
