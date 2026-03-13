@@ -241,23 +241,6 @@
 \end{frame}
 %=======
 \begin{frame}{Langevin Dynamics}
-	\myfootnotewithlink{https://arxiv.org/abs/1704.04752}{Dalalyan A. Further and stronger analogy between sampling and optimization: Langevin Monte Carlo and gradient descent, 2017.}
-	\begin{block}{Theorem}
-		Consider energy-based model $p(\bx) = \frac{\hat{p}(\bx)}{Z}$, $\hat{p}(\bx) = \exp(-f(\bx))$, with continuously differentiable $f(\bx): \bbR^m \rightarrow \bbR$ that satisfies
-		\begin{itemize}
-			\item $L$-smoothness: $\| \nabla f(\bx) - \nabla f(\by)\| \leq L \|\bx - \by \|$;
-			\item Strong convexity: $(\nabla f(\bx) - \nabla f(\by))^\top(\bx - \by) \geq m \| \bx - \by \|^2 $ for some $m > 0$.
-		\end{itemize}
-		Consider a Markov chain $\bx_{l + 1} = \bx_l + \frac{\eta}{2} \cdot \nabla_{\bx_l} \log \hat{p}(\bx_l) + \sqrt{\eta} \cdot \bepsilon_l$, where $\bepsilon_l \sim \cN(0, \bI)$.
-		Then, for any $\eta < \frac{2}{L}$
-		\begin{itemize}
-			\item The Markov chain has a unique stationary distribution $\pi_\eta$.
-			\item $W_2(\pi_\eta, p) \le C \eta$, and as $\eta \to 0$ we have $\pi_\eta \xrightarrow{d} p$.
-		\end{itemize}
-	\end{block}
-\end{frame}
-%=======
-\begin{frame}{Langevin Dynamics}
 	\myfootnotewithlink{https://arxiv.org/abs/2510.21890}{Lai C. H. et al. The principles of diffusion models, 2025.}
 	\vspace{-0.4cm}
 	\begin{block}{Theorem (Informal)}
@@ -709,9 +692,7 @@
 		\vfill
 		\item Score matching proposes minimizing Fisher divergence to estimate the score function.
 		\vfill
-		\item Denoising score matching optimizes Fisher divergence on noisy data, making it estimable with samples.
-		\vfill
-		\item Denoising score matching minimizes the Fisher divergence on corrupted samples, making the divergence estimable via sampling
+		\item Denoising score matching minimizes the Fisher divergence on corrupted samples, making the divergence estimable via sampling.
 		\vfill 
 		\item The Noise-Conditioned Score Network leverages a range of noise levels and annealed Langevin dynamics to learn the score function and enable sampling	
 	\end{itemize}
