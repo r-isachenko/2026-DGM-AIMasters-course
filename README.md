@@ -40,11 +40,11 @@ The course is supported by seminars and hands-on assignments that help build int
 |  |  | <b>Seminar 4:</b>  VAE: Implementation hints. Vanilla 2D VAE coding. VAE on Binarized MNIST visualization. Posterior collapse. Beta VAE on MNIST. | [slides](seminars/seminar4/) |
 | 5 | March, 5 | <b>Lecture 5:</b> Generative Adversarial Networks (GAN). Wasserstein distance. Wasserstein GAN (WGAN). Evaluation of generative models (FID, Precision-Recall, CLIP score, human eval). | [slides](lectures/lecture5/Lecture5.pdf) |
 |  |  | <b>Seminar 5:</b> Vanilla GAN in 1D coding. Mode collapse and vanishing gradients. Non-saturating GAN. Wasserstein GAN (WGAN) and WGAN-GP | [slides](lectures/lecture6/Lecture6.pdf) |
-| 6 | March, 12 | <b>Lecture 6:</b> Evaluation of generative models (FID, Precision-Recall, CLIP score, human eval). Langevin dynamic. Score matching. Denoising score matching. | [slides](lectures/lecture6/Lecture6.pdf) |
+| 6 | March, 12 | <b>Lecture 6:</b> Langevin dynamic. Score matching. Denoising score matching. Noise conditioned score network (NCSN). | [slides](lectures/lecture6/Lecture6.pdf) |
 |  |  | <b>Seminar 6:</b> Progressive Growing GAN. StyleGAN | [slides](seminars/seminar6/) |
-<!---
-| 7 | October, 28 | <b>Lecture 7:</b> Forward gaussian diffusion process. Denoising score matching for diffusion. Reverse Gaussian diffusion process. | [slides](lectures/lecture7/Lecture7.pdf) |
+| 7 | March, 19 | <b>Lecture 7:</b> Forward gaussian diffusion process. Reverse Gaussian diffusion process. Gaussian diffusion model as VAE. ELBO for Gaussian diffusion model. | [slides](lectures/lecture7/Lecture7.pdf) |
 |  |  | <b>Seminar 7:</b> Progressive Growing GAN. StyleGAN | [slides](seminars/seminar7/) |
+<!---
 | 8 | November, 3 | <b>Lecture 8:</b> Gaussian diffusion model as VAE. ELBO for Denoising diffusion probabilistic model (DDPM). Reparametrization and overview of DDPM. | [slides](lectures/lecture8/Lecture8.pdf) |
 |  |  | <b>Seminar 8:</b> Noise Conditioned Score Network (NCSN). Heuristic diffusion model. | [slides](seminars/seminar8/) |
 | 9 | November, 18 | <b>Lecture 9:</b> Denoising diffusion as score-based generative model. Model guidance: classifier guidance, classfier-free guidance. Continuous-in-time NF and neural ODE. | [slides](lectures/lecture9/Lecture9.pdf) |
