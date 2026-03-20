@@ -44,10 +44,10 @@ The course is supported by seminars and hands-on assignments that help build int
 |  |  | <b>Seminar 6:</b> Progressive Growing GAN. StyleGAN | [slides](seminars/seminar6/) |
 | 7 | March, 19 | <b>Lecture 7:</b> Forward gaussian diffusion process. Reverse Gaussian diffusion process. Gaussian diffusion model as VAE. ELBO for Gaussian diffusion model. | [slides](lectures/lecture7/Lecture7.pdf) |
 |  |  | <b>Seminar 7:</b> Progressive Growing GAN. StyleGAN | [slides](seminars/seminar7/) |
-<!---
-| 8 | November, 3 | <b>Lecture 8:</b> Gaussian diffusion model as VAE. ELBO for Denoising diffusion probabilistic model (DDPM). Reparametrization and overview of DDPM. | [slides](lectures/lecture8/Lecture8.pdf) |
+| 8 | November, 3 | <b>Lecture 8:</b> ELBO for Gaussian diffusion model (continued). Reparametrization and overview of DDPM. Denoising diffusion as score-based generative model. | [slides](lectures/lecture8/Lecture8.pdf) |
 |  |  | <b>Seminar 8:</b> Noise Conditioned Score Network (NCSN). Heuristic diffusion model. | [slides](seminars/seminar8/) |
-| 9 | November, 18 | <b>Lecture 9:</b> Denoising diffusion as score-based generative model. Model guidance: classifier guidance, classfier-free guidance. Continuous-in-time NF and neural ODE. | [slides](lectures/lecture9/Lecture9.pdf) |
+<!---
+| 9 | November, 18 | <b>Lecture 9:</b> Model guidance: classifier guidance, classfier-free guidance. Continuous-in-time NF and neural ODE. | [slides](lectures/lecture9/Lecture9.pdf) |
 |  |  | <b>Seminar 9:</b> Denoising diffusion probabilistic model (DDPM). Denoising Diffusion Implicit Models (DDIM). | [slides](seminars/seminar9/) |
 | 10 | November, 25 | <b>Lecture 10:</b> Continuity equation for NF log-likelihood. SDE basics. Kolmogorov-Fokker-Planck equation. Probability flow ODE. Reverse SDE. | [slides](lectures/lecture10/Lecture10.pdf) |
 |  |  | <b>Seminar 10:</b> Guidance. CLIP, GLIDE, DALL-E 2, Imagen. | [slides](seminars/seminar10/) |

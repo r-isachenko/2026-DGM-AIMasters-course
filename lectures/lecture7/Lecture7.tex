@@ -602,72 +602,6 @@
     \end{itemize}
 \end{frame}
 %=======
-\begin{frame}{ELBO for Gaussian Diffusion Model}
-    \myfootnotewithlink{https://arxiv.org/abs/2208.11970}{Luo C. Understanding Diffusion Models: A Unified Perspective, 2022}
-    \begin{figure}
-        \includegraphics[width=\linewidth]{figs/diffusion_objective}
-    \end{figure}
-    \[
-        \cL_t = \bbE_{q(\bx_t | \bx_0)} \KL \bigl(q(\bx_{t-1} | \bx_t, \bx_0) \| \pt(\bx_{t-1} | \bx_t)\bigr)
-    \]
-    \begin{align*}
-        q(\bx_{t-1} | \bx_t, \bx_0) &= \cN(\bx_{t-1} | \tilde{\bmu}_t(\bx_t, \bx_0), \tilde{\beta}_t \bI), \\
-        \pt(\bx_{t - 1} | \bx_t) &= \cN \bigl(\bx_{t - 1} | \bmu_{\btheta, t}(\bx_t), \bsigma_{\btheta, t}^2(\bx_t)\bigr)
-    \end{align*}
-\end{frame}
-%=======
-\begin{frame}{ELBO for Gaussian Diffusion Model}
-    \myfootnotewithlink{https://arxiv.org/abs/2006.11239}{Ho J. Denoising Diffusion Probabilistic Models, 2020}
-    \[
-        \cL_t = \bbE_{q(\bx_t | \bx_0)} \KL \bigl(q(\bx_{t-1} | \bx_t, \bx_0) \| \pt(\bx_{t-1} | \bx_t)\bigr)
-    \]
-    \vspace{-0.7cm}
-    \begin{align*}
-        q(\bx_{t-1} | \bx_t, \bx_0) &= \cN(\bx_{t-1} | \tilde{\bmu}_t(\bx_t, \bx_0), \tilde{\beta}_t \bI), \\
-        \pt(\bx_{t - 1} | \bx_t) &= \cN \bigl(\bx_{t - 1} | \bmu_{\btheta, t}(\bx_t), {\color{violet}\bsigma_{\btheta, t}^2(\bx_t)}\bigr)
-    \end{align*}
-    \eqpause
-    Let's assume that
-    \[
-        {\color{violet}\bsigma_{\btheta, t}^2(\bx_t) = \tilde{\beta}_t \bI} \quad \Rightarrow \quad \pt(\bx_{t - 1} | \bx_t) = \cN \bigl(\bx_{t - 1} | \bmu_{\btheta, t}(\bx_t), {\color{violet}\tilde{\beta}_t \bI} \bigr).
-    \]
-    \eqpause
-    Theoretically, the optimal $\bsigma_{\btheta, t}^2(\bx_t)$ lies in $[\tilde{\beta}_t, \beta_t]$:
-    \begin{itemize}
-        \item $\beta_t$ is optimal for $\bx_0 \sim \cN(0, \bI)$;
-        \item $\tilde{\beta}_t$ is optimal for $\bx_0 \sim \delta(\bx_0 - \bx^*)$.
-    \end{itemize}
-    \eqpause
-    \begin{align*}
-        \cL_t &= \bbE_{q(\bx_t | \bx_0)} KL\Bigl(\cN\bigl(\tilde{\bmu}_t(\bx_t, \bx_0), \tilde{\beta}_t \bI \bigr) \| \cN\bigl(\bmu_{\btheta, t}(\bx_t), \tilde{\beta}_t \bI\bigr)\Bigr) \\ 
-        \nextonslide{&= \bbE_{q(\bx_t | \bx_0)} \left[\frac{1}{2\tilde{\beta}_t} \bigl\| \tilde{\bmu}_t(\bx_t, \bx_0) - \bmu_{\btheta, t}(\bx_t) \bigr\|^2  \right]}
-    \end{align*}
-\end{frame}
-%=======
-\begin{frame}{ELBO for Gaussian Diffusion Model}
-    \myfootnotewithlink{https://arxiv.org/abs/2006.11239}{Ho J. Denoising Diffusion Probabilistic Models, 2020}
-    \begin{block}{Training}
-        \begin{enumerate}
-            \item Obtain a sample $\bx_0 \sim \pd(\bx)$.
-            \item Generate a noisy image $\bx_t = \sqrt{\bar{\alpha}_t} \cdot \bx_0 + \sqrt{1 - \bar{\alpha}_t} \cdot \bepsilon$, with $\bepsilon \sim \cN(0, \bI)$.
-            \item Compute the ELBO
-            \vspace{-0.3cm}
-            \begin{multline*}
-                \cL_{\bphi, \btheta}(\bx) =  {\color{olive}\bbE_{q(\bx_1 | \bx_0)} \log \pt(\bx_0 | \bx_1)} - {\color{violet}\KL\bigl(q(\bx_T | \bx_0) \| p(\bx_T)\bigr)} - \\
-                - {\color{teal}\sum_{t=2}^T \underbrace{ \bbE_{q(\bx_t | \bx_0)} \left[\frac{1}{2\tilde{\beta}_t} \bigl\| \tilde{\bmu}_t(\bx_t, \bx_0) - \bmu_{\btheta, t}(\bx_t) \bigr\|^2  \right]}_{\cL_t}}
-            \end{multline*}
-            \vspace{-0.7cm}
-        \end{enumerate}
-    \end{block}
-    \eqpause
-    \begin{block}{Sampling}
-        \begin{enumerate}
-            \item Sample $\bx_T \sim \cN(0, \bI)$.
-            \item Denoise: $\bx_{t - 1} = \bmu_{\btheta, t}(\bx_t) +  \sqrt{\tilde{\beta}_t} \cdot \bepsilon$, $\bepsilon \sim \cN(0, \bI)$.
-        \end{enumerate}
-    \end{block}
-\end{frame}
-%=======
 \begin{frame}{Summary}
 	\begin{itemize}
 		\item The Gaussian diffusion process is a Markov chain that incrementally corrupts data with specific Gaussian noise.
@@ -676,11 +610,11 @@
 		\vfill
 		\item The reverse process reconstructs data from noise samples, although its precise form is intractable.
         \vfill 
-        \item DDPM approximates the reverse process using normality assumptions.     
+        \item We approximate the reverse process using normality assumptions.     
         \vfill
-        \item DDPM can be interpreted as a VAE with a hierarchy of latent variables.
+        \item Gaussian diffusion model can be interpreted as a VAE with a hierarchy of latent variables.
         \vfill
-        \item The ELBO for DDPM may be formulated as a sum over many KL divergence terms.
+        \item The ELBO for Gaussian diffusion model may be formulated as a sum over many KL divergence terms.
 	\end{itemize}
 \end{frame}
 %=======
