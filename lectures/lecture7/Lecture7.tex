@@ -232,31 +232,34 @@
  \end{frame}
 %=======
 \begin{frame}{Forward Gaussian Diffusion Process}
-    \myfootnote{\href{https://arxiv.org/abs/2403.18103}{Chan S. Tutorial on Diffusion Models for Imaging and Vision, 2024} \\ \href{http://proceedings.mlr.press/v37/sohl-dickstein15.pdf}{Sohl-Dickstein J. Deep Unsupervised Learning using Nonequilibrium Thermodynamics, 2015}}
+    \myfootnotewithlink{https://arxiv.org/abs/2403.18103}{Chan S. Tutorial on Diffusion Models for Imaging and Vision, 2024}
 	\vspace{-0.3cm}
 	{\small
 	\[
 		q(\bx_t | \bx_{t-1}) = \cN\left(\sqrt{1 - \beta_t} \bx_{t-1}, \beta_t \bI\right); \quad q(\bx_t | \bx_0) = \cN\left(\sqrt{\bar{\alpha}_t} \bx_0, (1 - \bar{\alpha}_t) \bI\right)
 	\]
 	}
-	\vspace{-0.8cm}
+	\vspace{-0.7cm}
 	\begin{figure}
 		\includegraphics[width=0.8\linewidth]{figs/conditional_diffusion}
 	\end{figure}
     \eqpause
-	\vspace{-0.5cm}
+	\vspace{-0.3cm}
 	\begin{block}{Statement 2}
 		Applying the Markov chain to any distribution $\pd(\bx)$ yields $\bx_\infty \sim p_\infty(\bx) = \cN(0, \bI)$, the \textbf{stationary} (limiting) distribution:
 		\[
 			p_\infty(\bx) = \int q(\bx | \bx') p_\infty(\bx') d\bx' 
 		\]
 
-		\vspace{-0.5cm}
+		\vspace{-0.7cm}
         \eqpause
 		\[
 			p_\infty(\bx) = \int q(\bx_\infty | \bx_0) \pd(\bx_0) d\bx_0 \approx \cN(0, \bI) \int \pd(\bx_0) d\bx_0 = \cN(0, \bI)
 		\]
 	\end{block}
+	\eqpause
+	\vspace{-0.3cm}
+	\textbf{Note:} This holds iff $\bar{\alpha}_t \rightarrow 0$, i.e., $\sum_{t=1}^{\infty} \beta_t = +\infty$.
  \end{frame}
 %=======
 \begin{frame}{Forward Gaussian Diffusion Process}
