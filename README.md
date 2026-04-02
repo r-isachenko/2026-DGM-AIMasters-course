@@ -45,9 +45,9 @@ The course is supported by seminars and hands-on assignments that help build int
 | 7 | March, 19 | <b>Lecture 7:</b> Forward gaussian diffusion process. Reverse Gaussian diffusion process. Gaussian diffusion model as VAE. ELBO for Gaussian diffusion model. | [slides](lectures/lecture7/Lecture7.pdf) |
 |  |  | <b>Seminar 7:</b> Noise Conditioned Score Network (NCSN). Heuristic diffusion model. | [slides](seminars/seminar7/) |
 | 8 | March, 26 | <b>Lecture 8:</b> ELBO for Gaussian diffusion model (continued). Reparametrization and overview of DDPM. Denoising diffusion as score-based generative model. Model guidance: classifier guidance, classfier-free guidance. | [slides](lectures/lecture8/Lecture8.pdf) |
-|  |  | <b>Seminar 8:</b> Guidance. CLIP, GLIDE, DALL-E 2, Imagen. | [slides](seminars/seminar9/) |
+|  |  | <b>Seminar 8:</b> Guidance. CLIP, GLIDE, DALL-E 2, Imagen. | [slides](seminars/seminar8/) |
 | 9 | April, 2 | <b>Lecture 9:</b> Continuous-in-time NF and neural ODE. Continuity equation for NF log-likelihood. SDE basics. Kolmogorov-Fokker-Planck equation. Variance Preserving and Variance Exploding SDEs. | [slides](lectures/lecture9/Lecture9.pdf) |
-|  |  | <b>Seminar 11:</b> Latent Diffusion Model. Stable Diffusion. | [slides](seminars/seminar11/) <a href="https://colab.research.google.com/github/r-isachenko/2025-DGM-AIMasters-course/blob/main/seminars/seminar11/seminar11_SD.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> |
+|  |  | <b>Seminar 9:</b> Latent Diffusion Model. Stable Diffusion. | [slides](seminars/seminar11/) <a href="https://colab.research.google.com/github/r-isachenko/2025-DGM-AIMasters-course/blob/main/seminars/seminar11/seminar11_SD.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> |
 <!---
 | 10 | November, 25 | <b>Lecture 10:</b> Probability flow ODE. Reverse SDE. | [slides](lectures/lecture10/Lecture10.pdf) |
 |  |  | <b>Seminar 11:</b> Latent Diffusion Model. Stable Diffusion. | [slides](seminars/seminar11/) <a href="https://colab.research.google.com/github/r-isachenko/2025-DGM-AIMasters-course/blob/main/seminars/seminar11/seminar11_SD.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> |
