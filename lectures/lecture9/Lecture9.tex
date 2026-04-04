@@ -278,19 +278,19 @@
 	\begin{block}{Numerical Solution of ODEs}
 		\vspace{-0.5cm}
 		\[
-			\bpsi_t(\bx_0) = \int^{t_1}_{t_0} \bv_{\btheta}(\bx(t), t) d t  + \bx_0 \nextonslide{\approx {\color{teal}\ODESolve_v(\bx_0, \btheta, t_0, t_1)}.}
+			\bpsi_t(\bx_0) = \int^{t}_{t_0} \bv_{\btheta}(\bx(s), s) d s  + \bx_0 \nextonslide{\approx {\color{teal}\ODESolve_v(\bx_0, \btheta, t_0, t)}.}
 		\]
 		\eqpause
-		Here, we require the numerical routine $\ODESolve_v(\bx_0, \btheta, t_0, t_1)$.
+		Here, we require the numerical routine $\ODESolve_v(\bx_0, \btheta, t_0, t)$.
 	\end{block}
 \end{frame}
 %=======
 \begin{frame}{Numerical Solution of ODEs}
 	\myfootnotewithlink{https://en.wikipedia.org/wiki/Heun's\_method}{Image credit: https://en.wikipedia.org/wiki/Heun's\_method}   
 	\[
-		\bpsi_t(\bx_0) = \int^{t_1}_{t_0} \bv_{\btheta}(\bx(t), t) d t  + \bx_0 \approx {\color{teal}\ODESolve_v(\bx_0, \btheta, t_0, t_1)}.
+		\bpsi_t(\bx_0) = \int^{t}_{t_0} \bv_{\btheta}(\bx(s), s) d s  + \bx_0 \nextonslide{\approx {\color{teal}\ODESolve_v(\bx_0, \btheta, t_0, t)}.}
 	\]
-	$\ODESolve_v(\bx_0, \btheta, t_0, t_1)$ consists of sequence of iterative update steps.
+	$\ODESolve_v(\bx_0, \btheta, t_0, t)$ consists of sequence of iterative update steps.
 	\eqpause
 	\begin{block}{Euler Update Step}
 		\begin{minipage}[t]{0.5\columnwidth}
@@ -394,7 +394,7 @@
 \begin{frame}{Continuous-Time NF}
 	\myfootnotewithlink{https://arxiv.org/abs/1806.07366}{Chen R. T. Q. et al. Neural Ordinary Differential Equations, 2018}   
 	\begin{block}{Theorem (Continuity Equation)}
-		If $\bv$ is uniformly Lipschitz continuous in $\bx$ and continuous in $t$, then
+		If $\bv$ is continuously differentiable in $\bx$ (with bounded derivative) and continuous in $t$, then
 		\[
 			\frac{d \log p_t(\bx(t))}{d t} = - \tr \left( \frac{\partial \bv(\bx(t), t)}{\partial \bx(t)} \right)
 		\]
@@ -402,7 +402,7 @@
 	\end{block}
 	\eqpause
 	This result states: given $\bx_0 = \bx(0)$, the solution to the continuity equation gives the density $p_1(\bx(1))$.
-	\begin{block}{Solution of the Continuity Equation}
+	\begin{block}{Solution}
 		\vspace{-0.3cm}
 		\[
 			\log p_1(\bx(1)) = \log p_0(\bx(0)) - {\color{teal}\int_{0}^{1} \tr  \left( \frac{\partial \bv(\bx(t), t)}{\partial \bx(t)} \right) dt}.
@@ -411,7 +411,7 @@
 	\end{block}
 	\eqpause
 	\begin{itemize}
-		\item This provides the density along the trajectory (not the total probability path).
+		\item This provides the density \textbf{along the trajectory}.
 		\item However, {\color{teal}the latter term} is difficult to estimate efficiently.
 	\end{itemize}
 \end{frame}
@@ -537,7 +537,7 @@
 	\]
 	\vspace{-0.4cm}
 	\begin{block}{Theorem (Kolmogorov-Fokker-Planck)}
-		The evolution of $p_t(\bx)$ is governed by
+		If $p_t(\bx) \in C^{1,2}$ (i.e., $C^1$ in $t$ and $C^2$ in $\bx$), then
 		\vspace{-0.2cm}
 		\[
 			\frac{\partial p_t(\bx)}{\partial t} = - \diver\left(\bff(\bx, t) p_t(\bx)\right) + \frac{1}{2}g^2(t) \Delta_{\bx}p_t(\bx)
@@ -619,6 +619,7 @@
 		\]
 		\vspace{-0.4cm}
 	\end{block}
+	\eqpause
 	\begin{block}{Langevin Dynamic}
 		\vspace{-0.3cm}
 		\[
