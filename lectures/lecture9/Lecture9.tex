@@ -394,7 +394,7 @@
 \begin{frame}{Continuous-Time NF}
 	\myfootnotewithlink{https://arxiv.org/abs/1806.07366}{Chen R. T. Q. et al. Neural Ordinary Differential Equations, 2018}   
 	\begin{block}{Theorem (Continuity Equation)}
-		If $\bv$ is continuously differentiable in $\bx$ (with bounded derivative) and continuous in $t$, then
+		If $\bv$ is continuously differentiable in $\bx$ (with bounded derivative) and continuous in $t$, and $p_t(\bx) > 0$, then
 		\[
 			\frac{d \log p_t(\bx(t))}{d t} = - \tr \left( \frac{\partial \bv(\bx(t), t)}{\partial \bx(t)} \right)
 		\]
@@ -569,7 +569,7 @@
 		\item The KFP theorem is a necessary and sufficient condition (it uniquely defines $p_t(\bx)$).
 		\item This generalizes the continuity equation for continuous-time NF:
 		\[
-			\frac{d \log p_t(\bx(t))}{d t} = - \tr \left( \frac{\partial \bv(\bx, t)}{\partial \bx} \right).
+			\frac{d \log p_t(\bx(t))}{d t} = - \tr \left( \frac{\partial \bv(\bx(t), t)}{\partial \bx(t)} \right).
 		\]
 	\end{itemize}
 	\eqpause
