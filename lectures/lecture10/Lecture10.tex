@@ -671,19 +671,125 @@
 	\end{itemize}
 \end{frame}
 %=======
+\section{Flow Matching}
+%=======
+\begin{frame}{Continuous-Time Normalizing Flows}
+    \myfootnotewithlink{https://arxiv.org/abs/1806.07366}{Chen R. T. Q. et al. Neural Ordinary Differential Equations, 2018}   
+
+	Let's return to ODE dynamics $\bx_t = \bx(t)$ in the interval $t \in [0, 1]$:
+	\begin{itemize}
+		\item $\bx_0 \sim p_0(\bx)$, where $p_0(\bx)$ is a base distribution (mostly $\cN(0, \bI)$);
+		\item $\bx_1 \sim p_1(\bx)$, where $p_1(\bx)$ is the true data distribution $\pd(\bx)$.
+	\end{itemize}
+	\[
+		\frac{d \bx_t}{dt} = \bv (\bx_t, t),  \quad \text{with initial condition } \bx(0) = \bx_0.
+	\]
+	The velocity $\bv$ determines a flow $\bpsi_t$: $\bx_t = \bpsi_t(\bx_0)$.
+    \eqpause
+	\begin{block}{KFP Theorem (Continuity Equation)}
+		\vspace{-0.5cm}
+		\[
+			\frac{\partial p_t(\bx)}{\partial t} = - \diver\left(\bv(\bx, t) p_t(\bx)\right) \Leftrightarrow \frac{d \log p_t(\bx(t))}{d t} = - \tr \left( \frac{\partial \bv(\bx(t), t)}{\partial \bx(t)} \right)
+		\]
+		\vspace{-0.5cm}
+	\end{block}
+    \eqpause
+	\begin{itemize}
+		\item It's hard to solve the continuity equation directly due to the trace term.
+		\item There's a method (the adjoint method) that solves this equation directly, but it's unstable and unscalable.
+	\end{itemize}
+\end{frame}
+%=======
+\begin{frame}{Continuous-Time Normalizing Flows}
+    \myfootnotewithlink{https://arxiv.org/abs/2210.02747}{Lipman Y., et al. Flow Matching for Generative Modeling, 2022}
+	\begin{block}{KFP Theorem (Continuity Equation)}
+		\vspace{-0.5cm}
+		\[
+			\frac{\partial p_t(\bx)}{\partial t} = - \diver\left(\bv(\bx, t) p_t(\bx)\right) \Leftrightarrow \frac{d \log p_t(\bx(t))}{d t} = - \tr \left( \frac{\partial \bv(\bx(t), t)}{\partial \bx(t)} \right)
+		\]
+		\vspace{-0.3cm}
+	\end{block}
+	\begin{itemize}
+		\item Knowing the vector field $\bv (\bx, t)$, the KFP (or continuity) equation allows us to compute the density $p_t(\bx)$.
+		\item Flow matching provides scalable approach to Neural ODEs.
+	\end{itemize}
+    \eqpause
+	\begin{block}{Flow Matching}
+		\vspace{-0.3cm}
+		\[
+			\bbE_{t \sim U[0, 1]} \bbE_{\bx \sim p_t(\bx)}\left\| \bv(\bx, t) - \bv_{\btheta}(\bx, t) \right\|^2 \rightarrow \min_{\btheta}
+		\]
+		\vspace{-0.3cm}
+	\end{block}
+    \eqpause
+	\begin{itemize}
+		\item Approximate the true vector field $\bv (\bx, t)$ using $\bv_{\btheta}(\bx, t)$.
+		\item Use the learned flow $\bpsi_t$ for deterministic sampling: $\bx_1 = \bpsi_1(\bx_0)$.
+	\end{itemize}
+\end{frame}
+%=======
+\begin{frame}{Flow Matching: Training and Sampling}
+	\myfootnotewithlink{https://arxiv.org/abs/2210.02747}{Lipman Y., et al. Flow Matching for Generative Modeling, 2022}
+	\[
+		\bbE_{t \sim U[0, 1]} \bbE_{\bx \sim p_t(\bx)}\left\| \bv(\bx, t) - \bv_{\btheta}(\bx, t) \right\|^2 \rightarrow \min_{\btheta}
+	\]
+	\[
+		\bx_0 \sim p_0(\bx) = p(\bx), \quad \bx_1 \sim p_1(\bx) =  \pd(\bx)
+	\]
+	\eqpause
+	\vspace{-0.3cm}
+	\begin{block}{Training}
+		\begin{enumerate}
+			\item Sample a time $t \sim U[0, 1]$ and $\bx \sim p_t(\bx)$.
+			\item Compute the loss $ \cL = \left\| \bv(\bx_t, t) - \bv_{\btheta}(\bx_t, t) \right\|^2 $.
+		\end{enumerate}
+	\end{block}
+	\eqpause
+	\begin{block}{Sampling}
+		\begin{enumerate}
+			\item Sample $\bx_0 \sim \cN(0, \bI)$.
+			\item Solve the ODE to obtain $\bx_1$:
+			\[
+				\bx_1 = \bpsi_1(\bx_0) = \ODESolve_v(\bx_0, \btheta, t_0=0, t_1=1).
+			\]
+		\end{enumerate}
+	\end{block}
+	\vspace{-0.3cm}
+	\eqpause
+	\textbf{Problem:} The true vector field $\bv(\bx, t)$ is \textbf{unknown}.
+\end{frame}
+%=======
+\begin{frame}{Flow Matching}
+    \myfootnotewithlink{https://dl.heeere.com/conditional-flow-matching/blog/conditional-flow-matching}{image credit: A Visual Dive into Conditional Flow Matching}
+	\[
+		\bbE_{t \sim U[0, 1]} \bbE_{\bx \sim p_t(\bx)}\left\| \bv(\bx, t) - \bv_{\btheta}(\bx, t) \right\|^2 \rightarrow \min_{\btheta}
+	\]
+	\vspace{-0.5cm}
+	\begin{itemize}
+		\item There are infinitely many possible $\bv(\bx, t)$ between $p_0(\bx)$ and $p_1(\bx)$.
+		\item We need to select the "best" $\bv(\bx, t)$ and make the objective tractable.
+	\end{itemize}
+	\begin{figure}
+		\centering
+		\includegraphics[width=\linewidth]{figs/multiple_dynamics}
+	\end{figure}
+\end{frame}
+%=======
 \begin{frame}{Summary}
 	\begin{itemize}
 		\item Every SDE admits a corresponding probability flow ODE that follows the same probability path $p_t(\bx)$.
 		\vfill
-		\item Converting SDEs to probability flow ODEs enables efficient numerical solvers, reducing the number of inference steps from $100$--$1000$ to $20$--$50$.
+		\item Converting SDEs to PF-ODEs enables efficient numerical solvers, reducing the number of inference steps from $100$--$1000$ to $20$--$50$.
 		\vfill
 		\item SDEs can be reversed in time using the score function $\nabla_{\bx} \log p_t(\bx)$.
 		\vfill
 		\item The continuous-time score matching objective generalizes DDPM and NCSN to continuous time.
 		\vfill
-		\item For affine-drift SDEs (VE-SDE and VP-SDE), the transition kernel $q(\bx(t) | \bx(0))$ is Gaussian, making the training objective tractable.
+		\item For affine-drift SDEs, the transition kernel $q(\bx(t) | \bx(0))$ is Gaussian, making the training objective tractable.
 		\vfill
-		\item Discretizing the reverse SDE yields ancestral sampling, while discretizing the probability flow ODE yields deterministic sampling.
+		\item Discretizing the reverse SDE yields ancestral sampling, while discretizing the PF-ODE yields deterministic sampling.
+		\vfill
+		\item Flow matching approach suggests fitting the vector field $\bv(\bx, t)$ directly. 
 	\end{itemize}
 \end{frame}
 \end{document}
