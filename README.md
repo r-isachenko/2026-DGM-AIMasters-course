@@ -50,15 +50,15 @@ The course is supported by seminars and hands-on assignments that help build int
 |  |  | <b>Seminar 9:</b> Latent Diffusion Model. Stable Diffusion. | [slides](seminars/seminar9/) <a href="https://colab.research.google.com/github/r-isachenko/2026-DGM-AIMasters-course/blob/main/seminars/seminar9/seminar9_SD.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> |
 | 10 | April, 9 | <b>Lecture 10:</b> Probability flow ODE. Reverse SDE. Score-based generative models through SDE. | [slides](lectures/lecture10/Lecture10.pdf) |
 |  |  | <b>Seminar 10:</b>  Latent Diffusion Models Control Methods: ControlNet, IP-Adapter, Dreambooth, LoRA| [slides](seminars/seminar10/seminar_10_adapters.ipynb)<a href="https://colab.research.google.com/github/r-isachenko/2026-DGM-AIMasters-course/blob/main/seminars/seminar10/seminar_10_adapters.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> |
+| 11 | April, 16 | <b>Lecture 11:</b>  Flow matching. | [slides](lectures/lecture11/Lecture11.pdf) |
+|  |  | <b>Seminar 11:</b> Evolution of Stable Diffusion: SD1.5 → SDXL → SD3.5 → FLUX → FluxKontext → NanoBanana | [slides](seminars/seminar11/seminar11.ipynb) <a href="https://colab.research.google.com/github/r-isachenko/2026-DGM-AIMasters-course/blob/main/seminars/seminar11/seminar11.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> |
 <!---
-| 11 | December, 2 | <b>Lecture 11:</b>  Flow matching. | [slides](lectures/lecture11/Lecture11.pdf) |
-|  |  | <b>Seminar 11:</b> Latent Diffusion Model. Stable Diffusion. | [slides](seminars/seminar11/) <a href="https://colab.research.google.com/github/r-isachenko/2025-DGM-AIMasters-course/blob/main/seminars/seminar11/seminar11_SD.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> |
-| 12 | December, 9 | <b>Lecture 12:</b> Conditional flow matching. One-sided and two-sided conditioning. | [slides](lectures/lecture12/Lecture12.pdf) |
-|  |  | <b>Seminar 12:</b> Latent Diffusion Models Control Methods: ControlNet, IP-Adapter, Dreambooth, LoRA| [slides](seminars/seminar12/seminar_12_adapters.ipynb)|
-| 13 | December, 16 | <b>Lecture 13:</b> Link with diffusion and score matching. Discrete diffusion motivation. Forward discrete process. Reverse discrete process. Discrete ELBO objective. | [slides](lectures/lecture13/Lecture13.pdf) |
-|  |  | <b>Seminar 13:</b> Latent Diffusion Models. Code. | [slides](seminars/seminar13/seminar13_SD.ipynb) <a href="https://colab.research.google.com/github/r-isachenko/2024-DGM-MIPT-YSDA-course/blob/main/seminars/seminar13/seminar13_SD.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> |
-| 14 | December, 23 | <b>Lecture 14:</b> Discrete diffusion for sequence. Absorbing diffusion. Continuous-time masked diffusion language model. Course overview. | [slides](lectures/lecture14/Lecture14.pdf) |
-|  |  | <b>Seminar 14:</b>  The Final Recap| [slides](seminars/seminar14/seminar14.ipynb) |
+| 12 | April, 23 | <b>Lecture 12:</b> Conditional flow matching. One-sided and two-sided conditioning. | [slides](lectures/lecture12/Lecture12.pdf) |
+|  |  | <b>Seminar 12:</b> TBD | |
+| 13 | April, 30 | <b>Lecture 13:</b> Link with diffusion and score matching. Discrete diffusion motivation. Forward discrete process. Reverse discrete process. Discrete ELBO objective. | [slides](lectures/lecture13/Lecture13.pdf) |
+|  |  | <b>Seminar 13:</b> TBD | |
+| 14 | May, 7 | <b>Lecture 14:</b> Discrete diffusion for sequence. Absorbing diffusion. Continuous-time masked diffusion language model. Course overview. | [slides](lectures/lecture14/Lecture14.pdf) |
+|  |  | <b>Seminar 14:</b>  The Final Recap | |
 -->
 
 ## Homeworks
