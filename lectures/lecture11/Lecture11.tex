@@ -619,12 +619,16 @@
 \end{frame}
 %=======
 \begin{frame}{Summary}
-	\begin{itemize}	
+	\begin{itemize}
 		\item Conditional flow matching introduces the latent variable $\bz$, reformulating the initial task in terms of conditional dynamics.
-		\vfill 
-		\item Conditional flow matching makes the FM objective tractable.
 		\vfill
-		\item One-sided conditioning uses endpoint conditioning $\bz = \bx_1$ and serves as an effective FM technique.
+		\item The marginal vector field can be expressed as the posterior mean of conditional vector fields: $\bv(\bx, t) = \bbE_{p_t(\bz | \bx)} \bv(\bx, \bz, t)$.
+		\vfill
+		\item The FM and CFM objectives have the same optimal solution, making CFM a tractable alternative to FM.
+		\vfill
+		\item For Gaussian conditional paths $p_t(\bx | \bz) = \cN(\bmu_t(\bz), \bsigma_t^2(\bz))$, the conditional vector field has a closed form for $\bv(\bx_t, \bz, t)$.
+		\vfill
+		\item One-sided conditioning uses endpoint conditioning $\bz = \bx_1$ with straight conditional paths, yielding the simple vector field $\bv(\bx_t, \bx_1, t) = \bx_1 - \bx_0$.
 	\end{itemize}
 \end{frame}
 %=======
