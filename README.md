@@ -55,11 +55,11 @@ The course is supported by seminars and hands-on assignments that help build int
 | 12 | April, 23 | <b>Lecture 11:</b> Conditional flow matching. One-sided conditioning. | [slides](lectures/lecture11/Lecture11.pdf) |
 |  |  | <b>Seminar 12:</b> Video Diffusion: from 3D U-Net and temporal attention to DiT-based models (Sora, CogVideoX, HunyuanVideo, Wan, LTX) and autoregressive video | [slides](seminars/seminar12/seminar12.ipynb) <a href="https://colab.research.google.com/github/r-isachenko/2026-DGM-AIMasters-course/blob/main/seminars/seminar12/seminar12.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> |
 | 12 | April, 30 | <b>Lecture 12:</b> Two-sided conditioning. Link with diffusion and score matching. Discrete diffusion motivation. Forward discrete process. | [slides](lectures/lecture12/Lecture12.pdf) |
-|  |  | <b>Seminar 12:</b> Latent Diffusion Models Control Methods: ControlNet, IP-Adapter, Dreambooth, LoRA| [slides](seminars/seminar12/seminar_12_adapters.ipynb)|
+|  |  | <b>Seminar 13:</b> – | |
+| 13 | December, 16 | <b>Lecture 13:</b> Reverse discrete process. Discrete ELBO objective. Discrete diffusion for sequence. Absorbing diffusion. Continuous-time masked diffusion language model. Course overview. | [slides](lectures/lecture13/Lecture13.pdf) |
+|  |  | <b>Seminar 14:</b> – |  |
 <!---
-| 13 | December, 16 | <b>Lecture 13:</b> Reverse discrete process. Discrete ELBO objective. | [slides](lectures/lecture13/Lecture13.pdf) |
-|  |  | <b>Seminar 13:</b> Latent Diffusion Models. Code. | [slides](seminars/seminar13/seminar13_SD.ipynb) <a href="https://colab.research.google.com/github/r-isachenko/2024-DGM-MIPT-YSDA-course/blob/main/seminars/seminar13/seminar13_SD.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> |
-| 14 | December, 23 | <b>Lecture 14:</b> Discrete diffusion for sequence. Absorbing diffusion. Continuous-time masked diffusion language model. Course overview. | [slides](lectures/lecture14/Lecture14.pdf) |
+| 14 | December, 23 | <b>Lecture 14:</b>  | [slides](lectures/lecture14/Lecture14.pdf) |
 |  |  | <b>Seminar 14:</b> The Final Recap| [slides](seminars/seminar14/seminar14.ipynb) |
 -->
 
