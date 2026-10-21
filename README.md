@@ -26,7 +26,7 @@ The course is supported by seminars and hands-on assignments that help build int
 - **telegram:** [@roman_isachenko](https://t.me/roman_isachenko)
 - **e-mail:** roman.isachenko@phystech.edu
 
-## Materials
+## Materials ([all videos available here](https://disk.yandex.ru/d/uR7PS70vrK3meA))
 
 | # | Date | Description | Slides |
 |---|---|---|---|
